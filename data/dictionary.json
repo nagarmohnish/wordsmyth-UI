@@ -1,0 +1,334 @@
+[
+  {
+    "word": "butterfly",
+    "pronunciation": "buht uhr fly",
+    "partOfSpeech": "noun",
+    "definitions": [
+      {
+        "text": "An insect with four large, often colorful wings.",
+        "example": "We saw a beautiful butterfly in the garden."
+      },
+      {
+        "text": "A swimming stroke in which both arms move forward together over the head.",
+        "example": "She won the race swimming the butterfly."
+      }
+    ],
+    "synonyms": [],
+    "antonyms": [],
+    "relatedWords": ["caterpillar", "moth", "insect", "wings", "cocoon"],
+    "imageUrl": "/images/placeholder.svg",
+    "audioUrl": "/audio/butterfly.mp3",
+    "wildScene": "forest",
+    "wildCollection": "animals",
+    "translations": { "spanish": "mariposa", "chinese": "蝴蝶" },
+    "level": "children"
+  },
+  {
+    "word": "ocean",
+    "pronunciation": "oh shuhn",
+    "partOfSpeech": "noun",
+    "definitions": [
+      {
+        "text": "The large body of salt water that covers most of the earth's surface.",
+        "example": "The ocean is home to many amazing creatures."
+      },
+      {
+        "text": "A very large amount or number.",
+        "example": "She has an ocean of books in her room."
+      }
+    ],
+    "synonyms": ["sea"],
+    "antonyms": ["land"],
+    "relatedWords": ["sea", "water", "wave", "beach", "fish"],
+    "imageUrl": "/images/placeholder.svg",
+    "audioUrl": "/audio/ocean.mp3",
+    "wildScene": "seashore",
+    "wildCollection": "nature",
+    "translations": { "spanish": "océano", "chinese": "海洋" },
+    "level": "children"
+  },
+  {
+    "word": "courage",
+    "pronunciation": "kur ij",
+    "partOfSpeech": "noun",
+    "definitions": [
+      {
+        "text": "The ability to face fear or danger; bravery.",
+        "example": "It took courage to stand up in front of the whole school."
+      }
+    ],
+    "synonyms": ["bravery", "valor"],
+    "antonyms": ["cowardice", "fear"],
+    "relatedWords": ["brave", "hero", "fearless", "bold"],
+    "imageUrl": "/images/placeholder.svg",
+    "audioUrl": "/audio/courage.mp3",
+    "wildScene": null,
+    "wildCollection": "feelings",
+    "translations": { "spanish": "valor", "chinese": "勇气" },
+    "level": "children"
+  },
+  {
+    "word": "garden",
+    "pronunciation": "gahr duhn",
+    "partOfSpeech": "noun",
+    "definitions": [
+      {
+        "text": "A piece of land used for growing flowers, vegetables, or other plants.",
+        "example": "We planted tomatoes in our garden."
+      }
+    ],
+    "synonyms": ["yard", "plot"],
+    "antonyms": [],
+    "relatedWords": ["flower", "plant", "seed", "soil", "grow"],
+    "imageUrl": "/images/placeholder.svg",
+    "audioUrl": "/audio/garden.mp3",
+    "wildScene": "home",
+    "wildCollection": "nature",
+    "translations": { "spanish": "jardín", "chinese": "花园" },
+    "level": "children"
+  },
+  {
+    "word": "discover",
+    "pronunciation": "dih skuhv uhr",
+    "partOfSpeech": "verb",
+    "definitions": [
+      {
+        "text": "To find or learn something for the first time.",
+        "example": "Scientists discover new species every year."
+      },
+      {
+        "text": "To be the first person to find or see something.",
+        "example": "Who discovered America?"
+      }
+    ],
+    "synonyms": ["find", "uncover", "detect"],
+    "antonyms": ["miss", "overlook"],
+    "relatedWords": ["explore", "search", "find", "learn", "adventure"],
+    "imageUrl": "/images/placeholder.svg",
+    "audioUrl": "/audio/discover.mp3",
+    "wildScene": null,
+    "wildCollection": null,
+    "translations": { "spanish": "descubrir", "chinese": "发现" },
+    "level": "children"
+  },
+  {
+    "word": "elephant",
+    "pronunciation": "el uh fuhnt",
+    "partOfSpeech": "noun",
+    "definitions": [
+      {
+        "text": "A very large mammal with a long trunk, big ears, and thick gray skin.",
+        "example": "The elephant used its trunk to drink water."
+      }
+    ],
+    "synonyms": [],
+    "antonyms": [],
+    "relatedWords": ["trunk", "tusk", "mammal", "Africa", "zoo"],
+    "imageUrl": "/images/placeholder.svg",
+    "audioUrl": "/audio/elephant.mp3",
+    "wildScene": "farm",
+    "wildCollection": "animals",
+    "translations": { "spanish": "elefante", "chinese": "大象" },
+    "level": "children"
+  },
+  {
+    "word": "happy",
+    "pronunciation": "hap ee",
+    "partOfSpeech": "adjective",
+    "definitions": [
+      {
+        "text": "Feeling joy or pleasure; glad.",
+        "example": "She was happy to see her friends at the park."
+      },
+      {
+        "text": "Lucky or fortunate.",
+        "example": "It was a happy coincidence that they both wore the same color."
+      }
+    ],
+    "synonyms": ["glad", "joyful", "cheerful", "pleased"],
+    "antonyms": ["sad", "unhappy", "miserable"],
+    "relatedWords": ["joy", "smile", "laugh", "delight", "cheerful"],
+    "imageUrl": "/images/placeholder.svg",
+    "audioUrl": "/audio/happy.mp3",
+    "wildScene": null,
+    "wildCollection": "feelings",
+    "translations": { "spanish": "feliz", "chinese": "快乐" },
+    "level": "children"
+  },
+  {
+    "word": "mountain",
+    "pronunciation": "moun tuhn",
+    "partOfSpeech": "noun",
+    "definitions": [
+      {
+        "text": "A very high, large piece of land that rises above the area around it.",
+        "example": "We could see snow on the top of the mountain."
+      },
+      {
+        "text": "A very large amount.",
+        "example": "He had a mountain of homework to finish."
+      }
+    ],
+    "synonyms": ["peak", "summit"],
+    "antonyms": ["valley"],
+    "relatedWords": ["hill", "cliff", "rock", "snow", "climb"],
+    "imageUrl": "/images/placeholder.svg",
+    "audioUrl": "/audio/mountain.mp3",
+    "wildScene": "forest",
+    "wildCollection": "nature",
+    "translations": { "spanish": "montaña", "chinese": "山" },
+    "level": "children"
+  },
+  {
+    "word": "teacher",
+    "pronunciation": "tee chuhr",
+    "partOfSpeech": "noun",
+    "definitions": [
+      {
+        "text": "A person who teaches, especially in a school.",
+        "example": "Our teacher read us a story about space."
+      }
+    ],
+    "synonyms": ["instructor", "educator"],
+    "antonyms": ["student"],
+    "relatedWords": ["school", "classroom", "learn", "student", "lesson"],
+    "imageUrl": "/images/placeholder.svg",
+    "audioUrl": "/audio/teacher.mp3",
+    "wildScene": "school",
+    "wildCollection": "jobs",
+    "translations": { "spanish": "maestro", "chinese": "老师" },
+    "level": "children"
+  },
+  {
+    "word": "recipe",
+    "pronunciation": "res uh pee",
+    "partOfSpeech": "noun",
+    "definitions": [
+      {
+        "text": "A set of directions for making food or drinks.",
+        "example": "Grandma shared her recipe for chocolate cake."
+      },
+      {
+        "text": "A method or way of doing something.",
+        "example": "Hard work is a recipe for success."
+      }
+    ],
+    "synonyms": ["formula", "directions"],
+    "antonyms": [],
+    "relatedWords": ["cook", "food", "kitchen", "ingredient", "bake"],
+    "imageUrl": "/images/placeholder.svg",
+    "audioUrl": "/audio/recipe.mp3",
+    "wildScene": "home",
+    "wildCollection": "foods",
+    "translations": { "spanish": "receta", "chinese": "食谱" },
+    "level": "children"
+  },
+  {
+    "word": "adventure",
+    "pronunciation": "ad ven chuhr",
+    "partOfSpeech": "noun",
+    "definitions": [
+      {
+        "text": "An exciting or unusual experience, often involving some risk or danger.",
+        "example": "Going on a camping trip was a great adventure."
+      }
+    ],
+    "synonyms": ["journey", "expedition", "quest"],
+    "antonyms": [],
+    "relatedWords": ["explore", "discover", "travel", "brave", "exciting"],
+    "imageUrl": "/images/placeholder.svg",
+    "audioUrl": "/audio/adventure.mp3",
+    "wildScene": "forest",
+    "wildCollection": null,
+    "translations": { "spanish": "aventura", "chinese": "冒险" },
+    "level": "children"
+  },
+  {
+    "word": "planet",
+    "pronunciation": "plan it",
+    "partOfSpeech": "noun",
+    "definitions": [
+      {
+        "text": "A large body in outer space that moves around a star like the sun.",
+        "example": "Earth is the third planet from the sun."
+      }
+    ],
+    "synonyms": ["world"],
+    "antonyms": [],
+    "relatedWords": ["earth", "sun", "star", "space", "orbit"],
+    "imageUrl": "/images/placeholder.svg",
+    "audioUrl": "/audio/planet.mp3",
+    "wildScene": null,
+    "wildCollection": "nature",
+    "translations": { "spanish": "planeta", "chinese": "行星" },
+    "level": "children"
+  },
+  {
+    "word": "gentle",
+    "pronunciation": "jen tuhl",
+    "partOfSpeech": "adjective",
+    "definitions": [
+      {
+        "text": "Soft and mild; not rough or harsh.",
+        "example": "Be gentle with the baby kitten."
+      },
+      {
+        "text": "Easy and gradual; not steep or sudden.",
+        "example": "The path had a gentle slope."
+      }
+    ],
+    "synonyms": ["soft", "tender", "mild", "kind"],
+    "antonyms": ["rough", "harsh", "violent"],
+    "relatedWords": ["kind", "soft", "careful", "calm", "quiet"],
+    "imageUrl": "/images/placeholder.svg",
+    "audioUrl": "/audio/gentle.mp3",
+    "wildScene": null,
+    "wildCollection": "feelings",
+    "translations": { "spanish": "suave", "chinese": "温柔" },
+    "level": "children"
+  },
+  {
+    "word": "harvest",
+    "pronunciation": "hahr vist",
+    "partOfSpeech": "noun",
+    "definitions": [
+      {
+        "text": "The gathering of crops when they are ripe.",
+        "example": "The farmers celebrated after a good harvest."
+      },
+      {
+        "text": "The crops that are gathered.",
+        "example": "This year's harvest was the biggest ever."
+      }
+    ],
+    "synonyms": ["crop", "yield"],
+    "antonyms": [],
+    "relatedWords": ["farm", "crop", "grow", "season", "field"],
+    "imageUrl": "/images/placeholder.svg",
+    "audioUrl": "/audio/harvest.mp3",
+    "wildScene": "farm",
+    "wildCollection": "nature",
+    "translations": { "spanish": "cosecha", "chinese": "收获" },
+    "level": "children"
+  },
+  {
+    "word": "community",
+    "pronunciation": "kuh myoo nuh tee",
+    "partOfSpeech": "noun",
+    "definitions": [
+      {
+        "text": "A group of people who live in the same area or share something in common.",
+        "example": "Our community built a new playground together."
+      }
+    ],
+    "synonyms": ["neighborhood", "society"],
+    "antonyms": [],
+    "relatedWords": ["neighbor", "town", "city", "people", "together"],
+    "imageUrl": "/images/placeholder.svg",
+    "audioUrl": "/audio/community.mp3",
+    "wildScene": "city",
+    "wildCollection": null,
+    "translations": { "spanish": "comunidad", "chinese": "社区" },
+    "level": "children"
+  }
+]

@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+@theme {
+  /* Original Wordsmyth green theme colors */
+  --color-menu-bg: #C4E4CD;
+  --color-menu-hover: #DCEDD8;
+  --color-menu-selected: #87CC8F;
+  --color-menu-selected-hover: #A1D1A2;
+  --color-sidebar-bg: #FFFFC6;
+  --color-title-green: #18AD4A;
+  --color-search-go: #3d9739;
+  --color-link-red: #C12E48;
+  --color-link-blue: #004B97;
+  --color-footer-bg: #F0F0F0;
+  --color-footer-link: #005CB9;
+  --color-ad-free-yellow: #FFEF21;
+  --color-login-bg: #F0F0F0;
+  --color-login-border: #91a093;
+  --color-parity: #DEEFE7;
+  --color-shop-bg: #FFFFC6;
+  --color-border-blue: #AAC9E1;
+  --color-delimiter: #AAC9E1;
+  --color-white: #ffffff;
+  --color-black: #000000;
+
+  /* WILD specific colors */
+  --color-wild-w: #a53431;
+  --color-wild-i: #388cec;
+  --color-wild-l: #83b15b;
+  --color-wild-d: #eaaf45;
+  --color-wild-teal: #2aa1b8;
+  --color-wild-friend: #5192d1;
+  --color-wild-picture: #107bc4;
+  --color-wild-world: #f1ae00;
+  --color-wild-collection: #2bbd19;
+  --color-wild-book: #2290cb;
+  --color-wild-games: #4f44a6;
+
+  /* Kept for Phase 2 monetization overlays */
+  --color-primary: #004B97;
+  --color-primary-light: #005CB9;
+  --color-secondary: #f5a623;
+  --color-secondary-light: #ffc107;
+  --color-accent: #3d9739;
+  --color-accent-dark: #2d7a2a;
+  --color-bg: #ffffff;
+  --color-bg-light: #F0F0F0;
+  --color-bg-warm: #FFFFC6;
+  --color-text: #333333;
+  --color-text-light: #666666;
+  --color-text-muted: #999999;
+  --color-border: #e0e0e0;
+  --color-danger: #e53935;
+  --color-support: #C12E48;
+  --color-support-light: #fce4ec;
+  --font-heading: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  --font-body: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  --font-wild: 'Poppins', sans-serif;
+}
+
+@layer base {
+  body {
+    font-family: var(--font-body);
+    color: var(--color-text);
+    background-color: var(--color-bg);
+    margin: 0;
+    font-size: 0.9em;
+    line-height: 1.5;
+  }
+  a {
+    color: var(--color-link-blue);
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+}

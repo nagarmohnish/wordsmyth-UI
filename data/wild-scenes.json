@@ -1,0 +1,22 @@
+{
+  "scenes": [
+    { "id": "home", "title": "Home", "description": "Explore things found around the house", "color": "#f5a623", "icon": "🏠", "words": ["garden", "recipe"] },
+    { "id": "school", "title": "School", "description": "Discover words about school and learning", "color": "#2196f3", "icon": "🏫", "words": ["teacher"] },
+    { "id": "farm", "title": "Farm", "description": "Learn about life on the farm", "color": "#8bc34a", "icon": "🌾", "words": ["elephant", "harvest"] },
+    { "id": "forest", "title": "Forest", "description": "Explore the wonders of the forest", "color": "#4caf50", "icon": "🌲", "words": ["butterfly", "mountain", "adventure"] },
+    { "id": "seashore", "title": "Seashore", "description": "Discover creatures and things by the sea", "color": "#00bcd4", "icon": "🏖️", "words": ["ocean"] },
+    { "id": "city", "title": "City", "description": "Explore the busy city and its buildings", "color": "#9e9e9e", "icon": "🏙️", "words": ["community"] },
+    { "id": "park", "title": "Park", "description": "Find words about fun at the park", "color": "#66bb6a", "icon": "🌳", "words": [] },
+    { "id": "market", "title": "Market", "description": "Discover things you can find at the market", "color": "#ff7043", "icon": "🛒", "words": [] }
+  ],
+  "collections": [
+    { "id": "animals", "title": "Animals", "color": "#f5a623", "icon": "🐾", "words": ["butterfly", "elephant"] },
+    { "id": "nature", "title": "Nature", "color": "#4caf50", "icon": "🌿", "words": ["ocean", "garden", "mountain", "harvest", "planet"] },
+    { "id": "feelings", "title": "Feelings", "color": "#e91e63", "icon": "💭", "words": ["courage", "happy", "gentle"] },
+    { "id": "foods", "title": "Foods", "color": "#ff5722", "icon": "🍎", "words": ["recipe"] },
+    { "id": "jobs", "title": "Jobs", "color": "#3f51b5", "icon": "👷", "words": ["teacher"] },
+    { "id": "plants", "title": "Plants", "color": "#8bc34a", "icon": "🌱", "words": ["garden"] },
+    { "id": "places", "title": "Places", "color": "#795548", "icon": "📍", "words": ["mountain", "ocean", "community"] },
+    { "id": "actions", "title": "Actions", "color": "#009688", "icon": "⚡", "words": ["discover"] }
+  ]
+}
