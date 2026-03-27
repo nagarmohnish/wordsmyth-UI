@@ -1,27 +1,12 @@
 /**
- * Go Ad-Free Widget — Plug & Play
+ * Go Ad-Free Widget — Plug & Play v3
+ * One script tag → witty "Go Ad-Free" overlay on every ad.
  *
- * Add this single script to any website to automatically attach
- * a "Go Ad-Free" bar to all ad placements on the page.
- *
- * USAGE:
- *   <script
- *     src="https://your-domain.com/widget/go-ad-free.js"
- *     data-subscribe-url="https://your-domain.com/subscribe"
- *   ></script>
- *
- * CONFIG (data attributes on the script tag):
- *   data-subscribe-url  — URL to redirect when clicked (required)
- *   data-theme          — "light" | "dark" | "accent" (default: "light")
- *   data-delay          — Ms to wait before scanning (default: 1500)
- *   data-poll           — Re-scan interval in ms, 0 to disable (default: 3000)
- *   data-selectors      — Extra CSS selectors to match, comma-separated
- *   data-utm-param      — UTM parameter appended to URL (default: "utm_source=go-ad-free-widget")
+ * <script src="/widget/go-ad-free.js" data-subscribe-url="/subscribe"></script>
  */
 (function () {
   "use strict";
 
-  // ── Config from script tag ───────────────────────────────────
   var scriptEl = document.currentScript || (function () {
     var s = document.getElementsByTagName("script");
     return s[s.length - 1];
@@ -29,7 +14,6 @@
 
   var config = {
     subscribeUrl: scriptEl.getAttribute("data-subscribe-url") || "/subscribe",
-    theme: scriptEl.getAttribute("data-theme") || "light",
     delay: parseInt(scriptEl.getAttribute("data-delay") || "1500", 10),
     poll: parseInt(scriptEl.getAttribute("data-poll") || "3000", 10),
     extraSelectors: scriptEl.getAttribute("data-selectors") || "",
@@ -41,47 +25,36 @@
     redirectUrl += (redirectUrl.indexOf("?") === -1 ? "?" : "&") + config.utmParam;
   }
 
-  // ── Witty messages — rotated per ad slot ─────────────────────
-  var messages = [
-    { left: "Tired of ads?", right: "Go Ad-Free \u2192" },
-    { left: "This could be empty space.", right: "Remove Ads \u2192" },
-    { left: "Ads pay our bills, but you don\u2019t have to see them.", right: "Subscribe \u2192" },
-    { left: "Plot twist: this ad disappears if you subscribe.", right: "Make it vanish \u2192" },
-    { left: "Your eyes deserve better than banner ads.", right: "Go Ad-Free \u2192" },
-    { left: "Imagine this space... completely empty.", right: "Remove Ads \u2192" },
-    { left: "Fun fact: subscribers never see this.", right: "Join them \u2192" },
-    { left: "Less ads. More learning.", right: "Subscribe \u2192" },
-    { left: "Ad blocker? We have something better.", right: "Go legit \u2192" },
-    { left: "Support us & lose the ads. Win-win.", right: "Go Ad-Free \u2192" },
+  // ── Witty copy — different for wide vs narrow ────────────────
+  var wideCopy = [
+    { text: "Tired of ads? \u2728 Read without distractions.", cta: "Go Ad-Free" },
+    { text: "Plot twist: this ad vanishes when you subscribe.", cta: "Make it disappear" },
+    { text: "Your eyes deserve better.", cta: "Remove Ads" },
+    { text: "Imagine this space \u2014 completely yours.", cta: "Go Ad-Free" },
+    { text: "Fun fact: subscribers never see this.", cta: "Join them" },
+    { text: "Ad blocker? We have something better \u2014 and legal.", cta: "Go legit" },
+    { text: "Support education. Lose the ads.", cta: "Subscribe" },
+    { text: "Less noise. More learning.", cta: "Go Ad-Free" },
   ];
 
-  // Short messages for narrow ads (< 350px wide)
-  var shortMessages = [
-    { left: "Tired of ads?", right: "Go Ad-Free \u2192" },
-    { left: "Lose the ads.", right: "Subscribe \u2192" },
-    { left: "No more ads.", right: "Subscribe \u2192" },
-    { left: "Go ad-free!", right: "Learn more \u2192" },
-    { left: "Less ads.", right: "Subscribe \u2192" },
+  var narrowCopy = [
+    { text: "No more ads?", cta: "Yes please" },
+    { text: "Distraction-free", cta: "Go Ad-Free" },
+    { text: "Lose the ads", cta: "Subscribe" },
+    { text: "Ad-free mode", cta: "Unlock" },
+    { text: "Clean reading", cta: "Try it" },
   ];
 
-  var msgIndex = 0;
-  var shortMsgIndex = 0;
-  function nextMessage(narrow) {
-    if (narrow) {
-      var s = shortMessages[shortMsgIndex % shortMessages.length];
-      shortMsgIndex++;
-      return s;
-    }
-    var m = messages[msgIndex % messages.length];
-    msgIndex++;
-    return m;
+  var wIdx = 0, nIdx = 0;
+  function getCopy(narrow) {
+    if (narrow) { var c = narrowCopy[nIdx % narrowCopy.length]; nIdx++; return c; }
+    var w = wideCopy[wIdx % wideCopy.length]; wIdx++; return w;
   }
 
-  // ── Ad detection selectors ───────────────────────────────────
-  var defaultSelectors = [
+  // ── Ad selectors ─────────────────────────────────────────────
+  var sels = [
     'ins.adsbygoogle', '[id^="google_ads"]', '[id^="div-gpt-ad"]',
-    '.gpt-ad', '[data-google-query-id]',
-    '[id^="amzn-assoc"]',
+    '.gpt-ad', '[data-google-query-id]', '[id^="amzn-assoc"]',
     '[id*="freestar"]', '[class*="freestar"]',
     '[id^="mediavine"]', '[class*="mediavine"]', '[data-mediavine]',
     '[class*="adthrive"]',
@@ -100,274 +73,170 @@
 
   if (config.extraSelectors) {
     config.extraSelectors.split(",").forEach(function (s) {
-      var trimmed = s.trim();
-      if (trimmed) defaultSelectors.push(trimmed);
+      var t = s.trim(); if (t) sels.push(t);
     });
   }
 
-  var combinedSelector = defaultSelectors.join(", ");
-
-  // ── Theme colors ─────────────────────────────────────────────
-  var themes = {
-    light: {
-      barBg: "linear-gradient(90deg, #f8f8f8 0%, #efefef 100%)",
-      barText: "#777",
-      ctaBg: "#4CAF50",
-      ctaBgHover: "#43A047",
-      ctaText: "#fff",
-      border: "#ddd",
-      dotColor: "#bbb",
-    },
-    dark: {
-      barBg: "linear-gradient(90deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.85) 100%)",
-      barText: "rgba(255,255,255,0.7)",
-      ctaBg: "#4CAF50",
-      ctaBgHover: "#66BB6A",
-      ctaText: "#fff",
-      border: "rgba(255,255,255,0.1)",
-      dotColor: "rgba(255,255,255,0.3)",
-    },
-    accent: {
-      barBg: "linear-gradient(90deg, #E8F5E9 0%, #C8E6C9 100%)",
-      barText: "#2E7D32",
-      ctaBg: "#2E7D32",
-      ctaBgHover: "#1B5E20",
-      ctaText: "#fff",
-      border: "#A5D6A7",
-      dotColor: "#81C784",
-    },
-  };
-
-  var t = themes[config.theme] || themes.light;
+  var selector = sels.join(", ");
 
   // ── Inject CSS ───────────────────────────────────────────────
-  var styleId = "gafw-styles-v2";
-  if (!document.getElementById(styleId)) {
+  var sid = "gafw-v3";
+  if (!document.getElementById(sid)) {
     var css = document.createElement("style");
-    css.id = styleId;
+    css.id = sid;
     css.textContent = [
-      // Force overflow clip on the ad container itself
-      "[data-gafw-v2] {",
-      "  overflow: hidden !important;",
-      "}",
-      // Bar container
-      ".gafw-bar {",
-      "  position: absolute;",
-      "  top: 0; left: 0;",
-      "  width: 100%;",
-      "  max-width: 100%;",
-      "  z-index: 999999;",
-      "  display: flex;",
-      "  align-items: center;",
-      "  justify-content: space-between;",
-      "  padding: 0 4px 0 8px;",
-      "  height: 26px;",
-      "  background: " + t.barBg + ";",
-      "  border-bottom: 1px solid " + t.border + ";",
-      "  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;",
-      "  font-size: 11px;",
-      "  line-height: 1;",
-      "  box-sizing: border-box;",
+      "[data-gafw] { overflow: hidden !important; }",
+
+      // ── Wide bar: gradient strip across top ──
+      ".gafw {",
+      "  position: absolute; top: 0; left: 0; width: 100%; z-index: 999999;",
+      "  display: flex; align-items: center; justify-content: space-between;",
+      "  height: 30px; padding: 0 6px 0 12px;",
+      "  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);",
+      "  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;",
+      "  font-size: 11px; line-height: 1; box-sizing: border-box;",
       "  overflow: hidden;",
-      "  opacity: 0;",
-      "  transform: translateY(-100%);",
-      "  animation: gafw-slide-in 0.3s ease-out forwards;",
+      "  opacity: 0; animation: gafw-in 0.35s ease-out 0.1s forwards;",
       "}",
-      "@keyframes gafw-slide-in {",
-      "  to { opacity: 1; transform: translateY(0); }",
+      "@keyframes gafw-in { to { opacity: 1; } }",
+
+      // Left text
+      ".gafw-txt {",
+      "  display: flex; align-items: center; gap: 6px;",
+      "  color: rgba(255,255,255,0.75); overflow: hidden;",
+      "  flex: 1 1 0; min-width: 0;",
       "}",
-      // Left side — message (must shrink and truncate)
-      ".gafw-bar-left {",
-      "  display: flex;",
-      "  align-items: center;",
-      "  gap: 4px;",
-      "  color: " + t.barText + ";",
-      "  overflow: hidden;",
-      "  min-width: 0;",
-      "  flex: 1 1 0;",
+      ".gafw-icon {",
+      "  flex-shrink: 0; width: 16px; height: 16px;",
+      "  background: linear-gradient(135deg, #18AD4A, #0d8a3a);",
+      "  border-radius: 50%; display: flex; align-items: center; justify-content: center;",
+      "  font-size: 9px; color: #fff;",
       "}",
-      ".gafw-bar-dot {",
-      "  width: 4px; height: 4px;",
-      "  border-radius: 50%;",
-      "  background: " + t.dotColor + ";",
-      "  flex-shrink: 0;",
+      ".gafw-copy {",
+      "  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;",
+      "  font-weight: 500; letter-spacing: 0.2px;",
       "}",
-      ".gafw-bar-label {",
-      "  font-size: 9px;",
-      "  font-weight: 600;",
-      "  letter-spacing: 0.5px;",
-      "  text-transform: uppercase;",
-      "  opacity: 0.5;",
-      "  flex-shrink: 0;",
-      "  color: " + t.barText + ";",
+
+      // CTA pill
+      ".gafw-cta {",
+      "  flex-shrink: 0; display: inline-flex; align-items: center; gap: 4px;",
+      "  padding: 4px 14px; margin: 0 0 0 6px;",
+      "  background: linear-gradient(135deg, #18AD4A, #12963f);",
+      "  color: #fff !important; font-size: 10px; font-weight: 700;",
+      "  text-decoration: none !important; border-radius: 20px;",
+      "  cursor: pointer; white-space: nowrap;",
+      "  transition: transform 0.15s, box-shadow 0.15s;",
+      "  box-shadow: 0 2px 8px rgba(24,173,74,0.3);",
       "}",
-      ".gafw-bar-msg {",
-      "  font-weight: 500;",
-      "  color: " + t.barText + ";",
-      "  overflow: hidden;",
-      "  text-overflow: ellipsis;",
-      "  white-space: nowrap;",
-      "}",
-      // Right side — CTA button (never shrink)
-      ".gafw-bar-cta {",
-      "  flex-shrink: 0;",
-      "  display: inline-flex;",
-      "  align-items: center;",
-      "  gap: 4px;",
-      "  padding: 3px 10px;",
-      "  margin: 3px 0 3px 4px;",
-      "  background: " + t.ctaBg + ";",
-      "  color: " + t.ctaText + " !important;",
-      "  font-size: 10px;",
-      "  font-weight: 700;",
-      "  letter-spacing: 0.3px;",
-      "  text-decoration: none !important;",
-      "  border-radius: 3px;",
-      "  cursor: pointer;",
-      "  transition: background 0.15s, transform 0.1s;",
-      "  white-space: nowrap;",
-      "}",
-      ".gafw-bar-cta:hover {",
-      "  background: " + t.ctaBgHover + ";",
-      "  transform: scale(1.03);",
+      ".gafw-cta:hover {",
+      "  transform: scale(1.06);",
+      "  box-shadow: 0 4px 14px rgba(24,173,74,0.45);",
       "  text-decoration: none !important;",
       "}",
-      ".gafw-bar-cta:active {",
-      "  transform: scale(0.97);",
+      ".gafw-cta:active { transform: scale(0.96); }",
+
+      // Arrow icon in CTA
+      ".gafw-arrow {",
+      "  display: inline-block; transition: transform 0.2s;",
       "}",
-      // Vertical (skyscraper) variant — compact single row, no message text
-      ".gafw-bar--vertical {",
-      "  height: 22px;",
-      "  width: 100%;",
-      "  max-width: 100%;",
-      "  top: 0; left: 0;",
-      "  padding: 0 3px;",
+      ".gafw-cta:hover .gafw-arrow { transform: translateX(2px); }",
+
+      // ── Narrow (skyscraper): single row, just CTA, no text ──
+      ".gafw--narrow {",
+      "  height: 28px;",
+      "  padding: 0 4px;",
       "  justify-content: center;",
-      "  gap: 0;",
+      "  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);",
       "}",
-      ".gafw-bar--vertical .gafw-bar-left { display: none; }",
-      ".gafw-bar--vertical .gafw-bar-cta {",
-      "  font-size: 9px;",
-      "  padding: 2px 8px;",
-      "  margin: 0;",
+      ".gafw--narrow .gafw-txt { display: none; }",
+      ".gafw--narrow .gafw-cta {",
+      "  font-size: 9px; padding: 3px 10px; margin: 0;",
+      "  box-shadow: none;",
       "}",
     ].join("\n");
     document.head.appendChild(css);
   }
 
   // ── Marker ───────────────────────────────────────────────────
-  var MARKER = "data-gafw-v2";
+  var MK = "data-gafw";
 
-  // ── Attach bar to an ad element ──────────────────────────────
-  function attachBar(adEl) {
-    if (adEl.getAttribute(MARKER)) return;
-    adEl.setAttribute(MARKER, "1");
+  // ── Attach ───────────────────────────────────────────────────
+  function attach(el) {
+    if (el.getAttribute(MK)) return;
+    el.setAttribute(MK, "1");
 
-    var rect = adEl.getBoundingClientRect();
-    if (rect.width < 50 || rect.height < 20) return;
+    var r = el.getBoundingClientRect();
+    if (r.width < 40 || r.height < 20) return;
 
-    // Ensure positioned
-    var pos = window.getComputedStyle(adEl).position;
-    if (pos === "static" || pos === "") {
-      adEl.style.position = "relative";
-    }
+    var pos = window.getComputedStyle(el).position;
+    if (pos === "static" || pos === "") el.style.position = "relative";
 
-    // Detect if narrow (skyscraper) or medium
-    var isNarrow = rect.width < 200;
-    var isMedium = rect.width < 350;
+    var narrow = r.width < 250;
+    var copy = getCopy(narrow);
 
-    // Pick a witty message — shorter for narrow/medium ads
-    var msg = nextMessage(isNarrow || isMedium);
-
-    // Build the bar
     var bar = document.createElement("div");
-    bar.className = "gafw-bar" + (isNarrow ? " gafw-bar--vertical" : "");
+    bar.className = "gafw" + (narrow ? " gafw--narrow" : "");
 
-    // Left: AD label + dot + witty message
-    var left = document.createElement("div");
-    left.className = "gafw-bar-left";
+    // Text side
+    var txt = document.createElement("div");
+    txt.className = "gafw-txt";
 
-    var label = document.createElement("span");
-    label.className = "gafw-bar-label";
-    label.textContent = "AD";
+    var icon = document.createElement("span");
+    icon.className = "gafw-icon";
+    icon.textContent = "\u2728";
 
-    var dot = document.createElement("span");
-    dot.className = "gafw-bar-dot";
+    var copySpan = document.createElement("span");
+    copySpan.className = "gafw-copy";
+    copySpan.textContent = copy.text;
 
-    var msgSpan = document.createElement("span");
-    msgSpan.className = "gafw-bar-msg";
-    msgSpan.textContent = msg.left;
+    txt.appendChild(icon);
+    txt.appendChild(copySpan);
 
-    left.appendChild(label);
-    left.appendChild(dot);
-    left.appendChild(msgSpan);
-
-    // Right: CTA button
+    // CTA
     var cta = document.createElement("a");
-    cta.className = "gafw-bar-cta";
+    cta.className = "gafw-cta";
     cta.href = redirectUrl;
-    cta.textContent = msg.right;
+    cta.innerHTML = copy.cta + ' <span class="gafw-arrow">\u2192</span>';
 
-    bar.appendChild(left);
+    bar.appendChild(txt);
     bar.appendChild(cta);
-    adEl.appendChild(bar);
+    el.appendChild(bar);
   }
 
   // ── Scan ─────────────────────────────────────────────────────
-  function scanAndAttach() {
+  function scan() {
     try {
-      var els = document.querySelectorAll(combinedSelector);
-      for (var i = 0; i < els.length; i++) attachBar(els[i]);
-
-      var iframes = document.querySelectorAll("iframe");
-      for (var j = 0; j < iframes.length; j++) {
-        var iframe = iframes[j];
-        if (iframe.getAttribute(MARKER)) continue;
-        var src = (iframe.src || "").toLowerCase();
-        var id = (iframe.id || "").toLowerCase();
-        var isAd =
-          src.indexOf("doubleclick") !== -1 ||
-          src.indexOf("googlesyndication") !== -1 ||
-          src.indexOf("amazon-adsystem") !== -1 ||
-          src.indexOf("adserver") !== -1 ||
-          src.indexOf("pubads") !== -1 ||
-          id.indexOf("google_ads") !== -1 ||
-          id.indexOf("aswift") !== -1;
-        if (isAd && iframe.parentElement) {
-          attachBar(iframe.parentElement);
+      var els = document.querySelectorAll(selector);
+      for (var i = 0; i < els.length; i++) attach(els[i]);
+      var ifs = document.querySelectorAll("iframe");
+      for (var j = 0; j < ifs.length; j++) {
+        var f = ifs[j]; if (f.getAttribute(MK)) continue;
+        var src = (f.src || "").toLowerCase(), id = (f.id || "").toLowerCase();
+        if ((src.indexOf("doubleclick") > -1 || src.indexOf("googlesyndication") > -1 ||
+             src.indexOf("amazon-adsystem") > -1 || id.indexOf("google_ads") > -1) && f.parentElement) {
+          attach(f.parentElement);
         }
       }
     } catch (e) {}
   }
 
-  // ── MutationObserver ─────────────────────────────────────────
-  function observeDOM() {
+  // ── Observer ─────────────────────────────────────────────────
+  function observe() {
     if (!window.MutationObserver) return;
-    var observer = new MutationObserver(function (mutations) {
-      var scan = false;
-      for (var i = 0; i < mutations.length; i++) {
-        if (mutations[i].addedNodes.length) { scan = true; break; }
-      }
-      if (scan) {
-        clearTimeout(observeDOM._t);
-        observeDOM._t = setTimeout(scanAndAttach, 500);
+    var ob = new MutationObserver(function (muts) {
+      for (var i = 0; i < muts.length; i++) {
+        if (muts[i].addedNodes.length) { clearTimeout(observe._t); observe._t = setTimeout(scan, 500); return; }
       }
     });
-    observer.observe(document.body, { childList: true, subtree: true });
+    ob.observe(document.body, { childList: true, subtree: true });
   }
 
   // ── Init ─────────────────────────────────────────────────────
   function init() {
-    setTimeout(function () {
-      scanAndAttach();
-      observeDOM();
-    }, config.delay);
-    if (config.poll > 0) setInterval(scanAndAttach, config.poll);
+    setTimeout(function () { scan(); observe(); }, config.delay);
+    if (config.poll > 0) setInterval(scan, config.poll);
   }
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init);
-  } else {
-    init();
-  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
+  else init();
 })();
