@@ -2,11 +2,14 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { useUser } from "@/contexts/UserContext";
 
 export default function Header() {
   const { isLoggedIn } = useUser();
+  const pathname = usePathname();
   const [bannerVisible, setBannerVisible] = useState(true);
+  const hideShopBanner = pathname === "/subscribe";
 
   return (
     <header className="bg-white">
@@ -110,7 +113,7 @@ export default function Header() {
 
       {/* Subtitle / Banner Row */}
       <div style={{ borderTop: "3px solid black" }}>
-        {bannerVisible && (
+        {bannerVisible && !hideShopBanner && (
           <div
             className="relative"
             style={{ backgroundColor: "#FFFFC6", minHeight: "90px" }}

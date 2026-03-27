@@ -7,52 +7,40 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: Verdana, Geneva, Arial, sans-serif; color: #333; background: #fff; font-size: 14px; line-height: 1.6; }
-
     .page { max-width: 960px; margin: 0 auto; padding: 20px; }
-
     h1 { color: #18AD4A; font-size: 1.4em; border-bottom: 2px solid #18AD4A; padding-bottom: 6px; margin-bottom: 16px; }
-    h2 { color: #004B97; font-size: 1.1em; margin: 20px 0 8px 0; }
+    h2 { color: #004B97; font-size: 1.1em; margin: 24px 0 10px 0; }
+    p { margin-bottom: 10px; }
 
-    .content-block { margin-bottom: 16px; line-height: 1.8; }
-
-    /* Simulated ad slots using common class names the widget detects */
     .ad-container {
-      background: #2563eb;
       color: white;
       font-family: Arial, sans-serif;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-direction: column;
-      margin: 12px auto;
+      margin: 16px auto;
       position: relative;
+      overflow: visible;
     }
     .ad-container span { font-size: 14px; font-weight: bold; }
     .ad-container small { font-size: 10px; opacity: 0.7; margin-top: 2px; }
 
-    .leaderboard { width: 728px; height: 90px; max-width: 100%; background: #e8453c; }
-    .rectangle { width: 300px; height: 250px; background: #7c3aed; }
-    .banner { width: 468px; height: 60px; max-width: 100%; background: #0891b2; }
-
-    .layout { display: flex; gap: 16px; }
+    .layout { display: flex; gap: 20px; margin: 20px 0; }
     .main { flex: 1; min-width: 0; }
     .sidebar { width: 300px; flex-shrink: 0; }
 
     .code-block {
-      background: #1e1e1e; color: #d4d4d4; padding: 16px; font-family: 'Consolas', 'Courier New', monospace;
+      background: #1e1e1e; color: #d4d4d4; padding: 14px 16px; font-family: 'Consolas', 'Courier New', monospace;
       font-size: 13px; line-height: 1.6; overflow-x: auto; margin: 10px 0; border-radius: 4px;
     }
     .code-block .tag { color: #569cd6; }
     .code-block .attr { color: #9cdcfe; }
     .code-block .str { color: #ce9178; }
-    .code-block .comment { color: #6a9955; }
-
-    .config-table { border-collapse: collapse; width: 100%; font-size: 0.85em; margin: 10px 0; }
-    .config-table th, .config-table td { border: 1px solid #ccc; padding: 6px 10px; text-align: left; }
-    .config-table th { background: #f0f0f0; font-weight: bold; }
-    .config-table code { background: #f5f5f5; padding: 1px 4px; font-size: 0.95em; }
+    .code-block .cmt { color: #6a9955; }
 
     .notice { background: #FFFFC6; border: 1px solid #E0D890; padding: 10px 14px; font-size: 0.85em; margin: 12px 0; }
+    .theme-label { display: inline-block; background: #eee; padding: 2px 8px; font-size: 0.75em; font-weight: bold; color: #555; margin-bottom: 4px; letter-spacing: 0.5px; }
   </style>
 </head>
 <body>
@@ -61,163 +49,92 @@
   <h1>Go Ad-Free Widget — Live Demo</h1>
 
   <div class="notice">
-    <strong>How it works:</strong> This page includes simulated ad slots using common CSS class names
-    (<code>.ad-container</code>, <code>.ad-slot</code>, etc.). The widget script automatically detects
-    them and attaches a "Go Ad-Free" button to each one. <strong>No changes to existing ad code needed.</strong>
+    <strong>How it works:</strong> One script tag. The widget auto-detects every ad on the page and adds a witty, full-width bar above each one inviting users to go ad-free. Each ad gets a different message. Try hovering the green buttons!
   </div>
 
-  <!-- Leaderboard Ad -->
-  <div class="ad-container leaderboard">
-    <span>Leaderboard Ad (728×90)</span>
-    <small>Simulated ad placement</small>
+  <h2>Setup — One Line</h2>
+  <div class="code-block">
+    <span class="cmt">&lt;!-- Just add this before &lt;/body&gt; --&gt;</span><br>
+    <span class="tag">&lt;script</span>
+    <span class="attr"> src</span>=<span class="str">"https://your-domain.com/widget/go-ad-free.js"</span><br>
+    &nbsp;&nbsp;<span class="attr">data-subscribe-url</span>=<span class="str">"https://your-domain.com/subscribe"</span><br>
+    <span class="tag">&gt;&lt;/script&gt;</span>
+  </div>
+
+  <!-- ============ DEMO ADS ============ -->
+
+  <h2>Leaderboard Ad (728 x 90)</h2>
+  <div class="ad-container" style="width:728px; height:90px; max-width:100%; background:#e8453c;">
+    <span>Leaderboard Ad</span>
+    <small>728 x 90 — Simulated</small>
   </div>
 
   <div class="layout">
     <div class="main">
-      <h2>Sample Article Content</h2>
-      <div class="content-block">
-        <p>This demonstrates how the Go Ad-Free widget works on any website. Simply add one script tag
-        and the widget automatically finds all ad placements on the page and adds a discreet
-        "Go Ad-Free" button to each one.</p>
+      <h2>Inline Banner Ad (468 x 60)</h2>
+      <p>The bar slides in with an animation, shows a witty message on the left and a CTA button on the right. Each ad slot gets a different rotating message.</p>
+
+      <div class="ad-container" style="width:468px; height:60px; max-width:100%; background:#0891b2;">
+        <span>Banner Ad</span>
+        <small>468 x 60</small>
       </div>
 
-      <div class="content-block">
-        <p>The widget detects ads from all major networks: Google AdSense, Google Publisher Tags (GPT/DFP),
-        Amazon Associates, Freestar, Mediavine, AdThrive, and any element using common ad-related
-        CSS class names or data attributes.</p>
+      <p>Messages include things like <em>"This could be empty space"</em>, <em>"Plot twist: this ad disappears if you subscribe"</em>, and <em>"Your eyes deserve better than banner ads"</em>.</p>
+
+      <h2>Large Rectangle (336 x 280)</h2>
+      <div class="ad-container" style="width:336px; height:280px; background:#4f46e5;">
+        <span>Large Rectangle</span>
+        <small>336 x 280</small>
       </div>
 
-      <!-- Inline Banner Ad -->
-      <div class="ad-container banner">
-        <span>Inline Banner Ad (468×60)</span>
-        <small>Simulated ad placement</small>
+      <h2>Another Inline Ad</h2>
+      <div class="ad-container" style="width:468px; height:60px; max-width:100%; background:#ea580c;">
+        <span>Inline Ad #2</span>
+        <small>468 x 60</small>
       </div>
 
-      <div class="content-block">
-        <p>When a user clicks the "Go Ad-Free" button, they are redirected to your subscription page.
-        You configure the URL via a <code>data-subscribe-url</code> attribute on the script tag.</p>
-      </div>
-
-      <h2>Setup Instructions</h2>
-      <p>Add this single line before <code>&lt;/body&gt;</code>:</p>
-
-      <div class="code-block">
-        <span class="comment">&lt;!-- Go Ad-Free Widget --&gt;</span><br>
-        <span class="tag">&lt;script</span><br>
-        &nbsp;&nbsp;<span class="attr">src</span>=<span class="str">"https://your-domain.com/widget/go-ad-free.js"</span><br>
-        &nbsp;&nbsp;<span class="attr">data-subscribe-url</span>=<span class="str">"https://your-domain.com/subscribe"</span><br>
-        <span class="tag">&gt;&lt;/script&gt;</span>
-      </div>
-
-      <p>That's it. The widget handles everything else automatically.</p>
-
-      <h2>Configuration Options</h2>
-      <table class="config-table">
-        <thead>
-          <tr>
-            <th>Attribute</th>
-            <th>Default</th>
-            <th>Description</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>data-subscribe-url</code></td>
-            <td><code>/subscribe</code></td>
-            <td>URL to redirect when button is clicked</td>
-          </tr>
-          <tr>
-            <td><code>data-label</code></td>
-            <td><code>✕ Go Ad-Free</code></td>
-            <td>Button text</td>
-          </tr>
-          <tr>
-            <td><code>data-theme</code></td>
-            <td><code>light</code></td>
-            <td><code>light</code> or <code>dark</code></td>
-          </tr>
-          <tr>
-            <td><code>data-position</code></td>
-            <td><code>top-right</code></td>
-            <td><code>top-right</code>, <code>top-left</code>, <code>bottom-right</code>, <code>bottom-left</code></td>
-          </tr>
-          <tr>
-            <td><code>data-delay</code></td>
-            <td><code>1500</code></td>
-            <td>Milliseconds to wait before first scan (ads need time to load)</td>
-          </tr>
-          <tr>
-            <td><code>data-poll</code></td>
-            <td><code>3000</code></td>
-            <td>Re-scan interval in ms for late-loading ads. <code>0</code> to disable</td>
-          </tr>
-          <tr>
-            <td><code>data-selectors</code></td>
-            <td><em>empty</em></td>
-            <td>Extra CSS selectors to match (comma-separated)</td>
-          </tr>
-          <tr>
-            <td><code>data-utm-param</code></td>
-            <td><code>utm_source=go-ad-free-widget</code></td>
-            <td>UTM parameter appended to the redirect URL</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <h2>What It Detects</h2>
-      <div class="content-block">
-        <p>The widget automatically detects ad elements from:</p>
-        <ul style="margin: 6px 0 6px 20px;">
-          <li>Google AdSense (<code>ins.adsbygoogle</code>)</li>
-          <li>Google Publisher Tags / DFP (<code>[id^="div-gpt-ad"]</code>)</li>
-          <li>Amazon Associates (<code>[id^="amzn-assoc"]</code>)</li>
-          <li>Freestar, Mediavine, AdThrive</li>
-          <li>Any element with <code>ad-slot</code>, <code>ad-container</code>, <code>ad-banner</code>, <code>advertisement</code>, or <code>sponsored</code> in class/id</li>
-          <li>Data attributes: <code>data-ad</code>, <code>data-ad-slot</code>, <code>data-ad-unit</code></li>
-          <li>Ad iframes (DoubleClick, Google Syndication, Amazon)</li>
-        </ul>
-        <p>Plus you can add custom selectors via <code>data-selectors</code>.</p>
+      <h2>Data-Attribute Detection</h2>
+      <p>The widget also detects ads via <code>data-ad-slot</code>, <code>data-ad-unit</code>, and similar attributes:</p>
+      <div data-ad-slot="content-bottom" style="width:468px; height:60px; max-width:100%; background:#be185d; color:white; display:flex; align-items:center; justify-content:center; flex-direction:column; position:relative; margin:12px 0;">
+        <span style="font-weight:bold; font-family:Arial;">Detected via [data-ad-slot]</span>
+        <small style="opacity:0.7; font-family:Arial;">No class needed</small>
       </div>
     </div>
 
-    <!-- Sidebar with rectangle ad -->
     <div class="sidebar">
-      <div class="ad-container rectangle">
-        <span>Rectangle Ad</span>
-        <small>300×250</small>
-        <small>Simulated ad placement</small>
+      <h2 style="margin-top:0;">Sidebar Ads</h2>
+
+      <div class="ad-container" style="width:300px; height:250px; background:#7c3aed;">
+        <span>Rectangle</span>
+        <small>300 x 250</small>
       </div>
 
-      <div style="margin-top: 12px; padding: 12px; background: #f0f8f0; border: 1px solid #c8e6c9; font-size: 0.85em;">
-        <strong style="color: #18AD4A;">Dark Theme Example</strong>
-        <p style="margin-top: 4px;">Add <code>data-theme="dark"</code> to the script tag for a dark-styled button that works better on colored ad backgrounds.</p>
-      </div>
-
-      <!-- Another ad with data attribute -->
-      <div data-ad-slot="sidebar-bottom" style="width: 300px; height: 150px; background: #ea580c; color: white; display: flex; align-items: center; justify-content: center; flex-direction: column; margin-top: 12px; position: relative;">
-        <span style="font-weight: bold; font-family: Arial;">Data-Attribute Ad</span>
-        <small style="opacity: 0.7; font-family: Arial;">Detected via [data-ad-slot]</small>
+      <div class="ad-container" style="width:160px; height:600px; background:#1a73e8; margin-top:16px;">
+        <span>Skyscraper</span>
+        <small>160 x 600</small>
+        <small>Vertical layout auto-detected</small>
       </div>
     </div>
   </div>
 
-  <!-- Bottom banner -->
-  <div class="ad-container leaderboard" style="background: #4f46e5; margin-top: 20px;">
-    <span>Bottom Leaderboard Ad (728×90)</span>
-    <small>Simulated ad placement</small>
+  <h2>Bottom Leaderboard</h2>
+  <div class="ad-container" style="width:728px; height:90px; max-width:100%; background:#0d9488;">
+    <span>Bottom Leaderboard</span>
+    <small>728 x 90</small>
   </div>
+
+  <h2 style="margin-top: 30px;">Themes</h2>
+  <p>Set <code>data-theme="dark"</code> or <code>data-theme="accent"</code> on the script tag. This demo uses the default <strong>light</strong> theme.</p>
 </div>
 
-<!-- ============================================== -->
-<!-- THE WIDGET — Just this one script tag needed!  -->
-<!-- ============================================== -->
+<!-- ================================================ -->
+<!-- THE WIDGET — Just this one line on any website!  -->
+<!-- ================================================ -->
 <script
   src="./go-ad-free.js"
   data-subscribe-url="/subscribe"
-  data-label="✕ Go Ad-Free"
   data-theme="light"
-  data-position="top-right"
-  data-delay="500"
+  data-delay="300"
 ></script>
 
 </body>
