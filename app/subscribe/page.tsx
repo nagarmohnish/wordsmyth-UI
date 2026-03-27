@@ -4,34 +4,39 @@ import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import DataMenu from "@/components/DataMenu";
+import products from "@/data/products.json";
 
-const featureRows = [
-  { label: "Comprehensive dictionary lookup", unreg: true, free: true, ind: true, edu: true },
-  { label: "Children's dictionary lookup", unreg: true, free: true, ind: true, edu: true },
-  { label: "Integrated thesaurus", unreg: true, free: true, ind: true, edu: true },
-  { label: "Widget for browser toolbar", unreg: true, free: true, ind: true, edu: true },
-  { label: "Word Parts (roots & affixes)", unreg: false, free: false, ind: true, edu: true },
-  { label: "Word Combinations", unreg: false, free: false, ind: true, edu: true },
-  { label: "Grammatical Patterns", unreg: false, free: false, ind: true, edu: true },
-  { label: "Spanish support", unreg: false, free: false, ind: true, edu: true },
-  { label: "Chinese support", unreg: false, free: false, ind: true, edu: true },
-  { label: "Personalized entry display", unreg: false, free: false, ind: true, edu: true },
-  { label: "Advanced search functions", unreg: false, free: false, ind: true, edu: true },
-  { label: "Wordsmyth Vocabulary Inventory", unreg: false, free: false, ind: true, edu: true },
-  { label: "Unlimited user-made wordlists", unreg: false, free: false, ind: true, edu: true },
-  { label: "Vocabulary activities", unreg: false, free: false, ind: true, edu: true },
-  { label: "Text Analysis", unreg: false, free: false, ind: true, edu: true },
-  { label: "Ad free", unreg: false, free: false, ind: true, edu: true },
-  { label: "40% off kids books & eBooks", unreg: false, free: false, ind: true, edu: true },
-  { label: "14 eBooks worth $50+ — FREE", unreg: false, free: false, ind: true, edu: true },
-  { label: "Unique URL for school/class", unreg: false, free: false, ind: false, edu: true },
-  { label: "Class and student management", unreg: false, free: false, ind: false, edu: true },
-  { label: "Vocabulary lessons & assignments", unreg: false, free: false, ind: false, edu: true },
-  { label: "Report on students' vocabulary growth", unreg: false, free: false, ind: false, edu: true },
+const totalValue = products.reduce((sum, p) => sum + p.price, 0);
+
+const coverColors = [
+  "#e74c3c", "#3498db", "#2ecc71", "#f39c12", "#9b59b6",
+  "#1abc9c", "#e67e22", "#2980b9", "#27ae60", "#c0392b",
+  "#8e44ad", "#16a085", "#d35400", "#f1c40f",
 ];
 
-/* green checkmark as inline SVG data URI */
-const check = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2318AD4A'%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E";
+const featureRows = [
+  { label: "Comprehensive dictionary lookup", silver: true, gold: true, ent: true },
+  { label: "Children's dictionary lookup", silver: true, gold: true, ent: true },
+  { label: "Integrated thesaurus", silver: true, gold: true, ent: true },
+  { label: "Word Parts (roots & affixes)", silver: true, gold: true, ent: true },
+  { label: "Word Combinations", silver: true, gold: true, ent: true },
+  { label: "Grammatical Patterns", silver: true, gold: true, ent: true },
+  { label: "Spanish support", silver: true, gold: true, ent: true },
+  { label: "Chinese support", silver: true, gold: true, ent: true },
+  { label: "Personalized entry display", silver: true, gold: true, ent: true },
+  { label: "Advanced search functions", silver: true, gold: true, ent: true },
+  { label: "Wordsmyth Vocabulary Inventory", silver: true, gold: true, ent: true },
+  { label: "Unlimited user-made wordlists", silver: true, gold: true, ent: true },
+  { label: "Vocabulary activities", silver: true, gold: true, ent: true },
+  { label: "Text Analysis", silver: true, gold: true, ent: true },
+  { label: "Ad free", silver: true, gold: true, ent: true },
+  { label: "40% off kids books & eBooks", silver: false, gold: true, ent: true },
+  { label: "14 eBooks worth $50+ — FREE", silver: false, gold: true, ent: true },
+  { label: "Unique URL for school/class", silver: false, gold: false, ent: true },
+  { label: "Class and student management", silver: false, gold: false, ent: true },
+  { label: "Vocabulary lessons & assignments", silver: false, gold: false, ent: true },
+  { label: "Report on students' vocabulary growth", silver: false, gold: false, ent: true },
+];
 
 function SubscribeContent() {
   const searchParams = useSearchParams();
@@ -41,207 +46,340 @@ function SubscribeContent() {
     <div>
       <DataMenu activeDict="we" />
 
-      <div style={{ maxWidth: "960px", margin: "0 auto", padding: "0 8px" }}>
+      <div style={{ maxWidth: "1000px", margin: "0 auto", padding: "30px 16px 50px" }}>
 
-        {fromAdFree && (
-          <div style={{ backgroundColor: "#FFFFC6", border: "1px solid #E0D890", padding: "6px 12px", margin: "8px 0", fontSize: "0.85em" }}>
-            <strong>Great choice!</strong> Subscribe below to enjoy an ad-free Wordsmyth experience.
+        {/* Hero */}
+        <div style={{ textAlign: "center", marginBottom: "36px" }}>
+          <h1 style={{
+            fontSize: "2em", fontWeight: "800", color: "#1a1a2e",
+            margin: "0 0 8px 0", letterSpacing: "-0.5px",
+            fontFamily: "'Poppins', var(--font-wild), sans-serif",
+          }}>
+            Choose Your Plan
+          </h1>
+          <p style={{ fontSize: "1.05em", color: "#666", margin: 0, maxWidth: "500px", marginLeft: "auto", marginRight: "auto", lineHeight: 1.6 }}>
+            Unlock the full power of Wordsmyth. Pick the plan that fits your needs.
+          </p>
+          {fromAdFree && (
+            <div style={{
+              display: "inline-block", marginTop: "12px", padding: "8px 20px",
+              backgroundColor: "#e8f5e9", border: "1px solid #a5d6a7",
+              borderRadius: "8px", fontSize: "0.9em", color: "#2e7d32",
+            }}>
+              Subscribe below to enjoy an ad-free experience.
+            </div>
+          )}
+        </div>
+
+        {/* ── Pricing Cards ── */}
+        <div style={{
+          display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "20px",
+          alignItems: "start", marginBottom: "40px",
+        }}>
+
+          {/* ── SILVER — $9.95/year ── */}
+          <div style={{
+            border: "1px solid #e0e0e0", borderRadius: "16px", padding: "28px 24px",
+            backgroundColor: "#fff", position: "relative",
+            boxShadow: "0 2px 12px rgba(0,0,0,0.04)",
+          }}>
+            {/* Tier badge */}
+            <div style={{
+              display: "inline-block", padding: "3px 14px", borderRadius: "20px",
+              backgroundColor: "#f5f5f5", color: "#888", fontSize: "0.7em",
+              fontWeight: "700", letterSpacing: "1px", textTransform: "uppercase",
+              marginBottom: "14px",
+            }}>
+              Silver
+            </div>
+
+            <div style={{ marginBottom: "20px" }}>
+              <span style={{ fontSize: "2.4em", fontWeight: "800", color: "#1a1a2e" }}>$9.95</span>
+              <span style={{ fontSize: "0.95em", color: "#999", marginLeft: "4px" }}>/year</span>
+            </div>
+
+            <Link
+              href="/checkout?plan=silver"
+              style={{
+                display: "block", textAlign: "center", padding: "12px",
+                backgroundColor: "#1a1a2e", color: "white",
+                textDecoration: "none", fontWeight: "700", fontSize: "0.95em",
+                borderRadius: "10px", transition: "opacity 0.15s",
+              }}
+            >
+              Get Silver
+            </Link>
+
+            <div style={{ marginTop: "24px", borderTop: "1px solid #f0f0f0", paddingTop: "20px" }}>
+              <p style={{ fontWeight: "700", color: "#1a1a2e", margin: "0 0 10px 0", fontSize: "0.85em", textTransform: "uppercase", letterSpacing: "0.5px" }}>
+                What&apos;s included
+              </p>
+
+              <p style={{ color: "#004B97", fontWeight: "700", margin: "10px 0 4px 0", fontSize: "0.9em" }}>
+                Enhanced Dictionary
+              </p>
+              <ul style={{ paddingLeft: "16px", margin: "0 0 8px 0", fontSize: "0.88em", color: "#444", lineHeight: 1.8 }}>
+                <li>Word Parts (roots &amp; affixes)</li>
+                <li>Word Combinations</li>
+                <li>Grammatical Patterns</li>
+                <li>Spanish support</li>
+                <li>Chinese support</li>
+                <li>Personalized entry display</li>
+                <li>Advanced search functions</li>
+              </ul>
+
+              <p style={{ color: "#004B97", fontWeight: "700", margin: "10px 0 4px 0", fontSize: "0.9em" }}>
+                Full Vocabulary Center
+              </p>
+              <ul style={{ paddingLeft: "16px", margin: "0 0 8px 0", fontSize: "0.88em", color: "#444", lineHeight: 1.8 }}>
+                <li>Wordsmyth Vocabulary Inventory</li>
+                <li>Unlimited user-made wordlists</li>
+                <li>Unlimited sharing</li>
+                <li>Vocabulary activities</li>
+                <li>Text Analysis</li>
+              </ul>
+
+              <div style={{
+                display: "flex", alignItems: "center", gap: "6px",
+                padding: "6px 0", fontSize: "0.9em", fontWeight: "600", color: "#1a1a2e",
+              }}>
+                <span style={{ color: "#18AD4A" }}>&#10003;</span> Ad-free experience
+              </div>
+            </div>
           </div>
-        )}
 
-        {/* ── Three-column pricing ── */}
-        <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.88em", lineHeight: 1.6, tableLayout: "fixed" }}>
-          <tbody>
-            <tr>
+          {/* ── GOLD — $15/year ── */}
+          <div style={{
+            border: "2px solid #18AD4A", borderRadius: "16px", padding: "28px 24px",
+            backgroundColor: "#fff", position: "relative",
+            boxShadow: "0 8px 30px rgba(24,173,74,0.12)",
+            transform: "scale(1.03)",
+          }}>
+            {/* Popular badge */}
+            <div style={{
+              position: "absolute", top: "-14px", left: "50%", transform: "translateX(-50%)",
+              padding: "5px 18px", borderRadius: "20px",
+              backgroundColor: "#18AD4A", color: "white", fontSize: "0.7em",
+              fontWeight: "700", letterSpacing: "1px", textTransform: "uppercase",
+              whiteSpace: "nowrap",
+            }}>
+              Most Popular
+            </div>
 
-              {/* ── Free Registration ── */}
-              <td style={{ width: "33%", verticalAlign: "top", padding: "14px 18px", borderRight: "1px solid #bbb" }}>
-                <h2 style={{ color: "#8B0000", fontSize: "1.15em", fontWeight: "bold", textAlign: "center", margin: "0 0 2px 0" }}>
-                  Free Registration
-                </h2>
+            {/* Tier badge */}
+            <div style={{
+              display: "inline-block", padding: "3px 14px", borderRadius: "20px",
+              backgroundColor: "#e8f5e9", color: "#18AD4A", fontSize: "0.7em",
+              fontWeight: "700", letterSpacing: "1px", textTransform: "uppercase",
+              marginBottom: "14px",
+            }}>
+              Gold
+            </div>
 
-                <div style={{ textAlign: "center", margin: "28px 0 24px 0" }}>
-                  <Link
-                    href="/signup"
+            <div style={{ marginBottom: "4px" }}>
+              <span style={{ fontSize: "2.4em", fontWeight: "800", color: "#18AD4A" }}>$15</span>
+              <span style={{ fontSize: "0.95em", color: "#999", marginLeft: "4px" }}>/year</span>
+            </div>
+            <p style={{ fontSize: "0.8em", color: "#666", margin: "0 0 16px 0" }}>
+              Everything in Silver + Book Bundle
+            </p>
+
+            <Link
+              href="/checkout?plan=gold"
+              style={{
+                display: "block", textAlign: "center", padding: "12px",
+                backgroundColor: "#18AD4A", color: "white",
+                textDecoration: "none", fontWeight: "700", fontSize: "0.95em",
+                borderRadius: "10px",
+              }}
+            >
+              Get Gold
+            </Link>
+
+            <div style={{ marginTop: "24px", borderTop: "1px solid #e8f5e9", paddingTop: "20px" }}>
+              <p style={{ fontWeight: "700", color: "#1a1a2e", margin: "0 0 10px 0", fontSize: "0.85em", textTransform: "uppercase", letterSpacing: "0.5px" }}>
+                Everything in Silver, plus
+              </p>
+
+              <div style={{
+                backgroundColor: "#f0faf0", borderRadius: "10px",
+                padding: "14px", marginBottom: "14px",
+              }}>
+                <p style={{ color: "#18AD4A", fontWeight: "700", margin: "0 0 6px 0", fontSize: "0.95em" }}>
+                  Book Bundle
+                </p>
+                <div style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "0.88em", color: "#333", marginBottom: "4px" }}>
+                  <span style={{ color: "#18AD4A" }}>&#10003;</span>
+                  <strong>40% off</strong> all kids books &amp; eBooks
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "0.88em", color: "#333" }}>
+                  <span style={{ color: "#18AD4A" }}>&#10003;</span>
+                  <strong>14 eBooks FREE</strong> (worth ${Math.floor(totalValue)}+)
+                </div>
+              </div>
+
+              {/* Book list */}
+              <p style={{ fontWeight: "700", color: "#1a1a2e", margin: "0 0 8px 0", fontSize: "0.82em", textTransform: "uppercase", letterSpacing: "0.5px" }}>
+                14 eBooks included
+              </p>
+              <div style={{ maxHeight: "320px", overflowY: "auto", paddingRight: "4px" }}>
+                {products.map((product, i) => (
+                  <div
+                    key={product.id}
                     style={{
-                      display: "inline-block", padding: "7px 22px",
-                      border: "2px solid #777", color: "#333",
-                      textDecoration: "none", fontWeight: "bold", fontSize: "1em",
-                      backgroundColor: "#fff",
+                      display: "flex", alignItems: "center", gap: "8px",
+                      padding: "6px 0",
+                      borderBottom: i < products.length - 1 ? "1px solid #f0f0f0" : "none",
                     }}
                   >
-                    Register. It&apos;s free
-                  </Link>
-                </div>
+                    <div style={{
+                      width: "22px", height: "30px", flexShrink: 0,
+                      borderRadius: "3px",
+                      backgroundColor: coverColors[i % coverColors.length],
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      color: "white", fontSize: "9px",
+                    }}>
+                      📖
+                    </div>
+                    <div style={{ flex: 1, minWidth: 0, fontSize: "0.82em" }}>
+                      <div style={{ fontWeight: "600", color: "#333", lineHeight: 1.3 }}>
+                        {product.title.split("—")[0].split(" — ")[0].trim()}
+                      </div>
+                      <div style={{ color: "#999", fontSize: "0.9em" }}>{product.description.substring(0, 50)}...</div>
+                    </div>
+                    <div style={{ flexShrink: 0, textAlign: "right", fontSize: "0.8em" }}>
+                      <span style={{ textDecoration: "line-through", color: "#bbb" }}>${product.price.toFixed(2)}</span>
+                      <br />
+                      <strong style={{ color: "#18AD4A" }}>FREE</strong>
+                    </div>
+                  </div>
+                ))}
+              </div>
 
-                <ul style={{ paddingLeft: "18px", margin: 0 }}>
-                  <li>Basic dictionary features</li>
-                  <li>Basic search tools</li>
-                  <li>Limited access to Vocabulary Center</li>
-                  <li>Limited number of saved records</li>
-                  <li>Free 15 day trial to full subscription feature</li>
+              <div style={{
+                backgroundColor: "#e8f5e9", borderRadius: "8px",
+                padding: "8px 12px", marginTop: "10px", textAlign: "center",
+                fontSize: "0.85em",
+              }}>
+                Total value: <span style={{ textDecoration: "line-through", color: "#999" }}>${totalValue.toFixed(2)}</span>{" "}
+                <strong style={{ color: "#18AD4A" }}>FREE</strong>
+              </div>
+            </div>
+          </div>
+
+          {/* ── ENTERPRISE ── */}
+          <div style={{
+            border: "1px solid #e0e0e0", borderRadius: "16px", padding: "28px 24px",
+            backgroundColor: "#fff", position: "relative",
+            boxShadow: "0 2px 12px rgba(0,0,0,0.04)",
+          }}>
+            {/* Tier badge */}
+            <div style={{
+              display: "inline-block", padding: "3px 14px", borderRadius: "20px",
+              backgroundColor: "#eee8ff", color: "#5b21b6", fontSize: "0.7em",
+              fontWeight: "700", letterSpacing: "1px", textTransform: "uppercase",
+              marginBottom: "14px",
+            }}>
+              Enterprise
+            </div>
+
+            <div style={{ marginBottom: "4px" }}>
+              <span style={{ fontSize: "2.4em", fontWeight: "800", color: "#1a1a2e" }}>Custom</span>
+            </div>
+            <p style={{ fontSize: "0.8em", color: "#666", margin: "0 0 16px 0" }}>
+              Starting from $20 for 20 users
+            </p>
+
+            <Link
+              href="/contact"
+              style={{
+                display: "block", textAlign: "center", padding: "12px",
+                backgroundColor: "#fff", color: "#1a1a2e",
+                textDecoration: "none", fontWeight: "700", fontSize: "0.95em",
+                borderRadius: "10px", border: "2px solid #1a1a2e",
+              }}
+            >
+              Contact Sales
+            </Link>
+
+            <div style={{ marginTop: "24px", borderTop: "1px solid #f0f0f0", paddingTop: "20px" }}>
+              <p style={{ fontWeight: "700", color: "#1a1a2e", margin: "0 0 10px 0", fontSize: "0.85em", textTransform: "uppercase", letterSpacing: "0.5px" }}>
+                What&apos;s included
+              </p>
+
+              <div style={{ fontSize: "0.88em", color: "#444", lineHeight: 1.8, marginBottom: "10px" }}>
+                <p style={{ margin: "4px 0", fontWeight: "600" }}>Tiered pricing:</p>
+                <ul style={{ paddingLeft: "16px", margin: "2px 0 8px 0" }}>
+                  <li>21&ndash;50 users: <strong>$1.00</strong>/yr per user</li>
+                  <li>51&ndash;400 users: <strong>$0.75</strong>/yr per user</li>
+                  <li>401+: <strong>$0.50</strong>/yr per user</li>
                 </ul>
-              </td>
+              </div>
 
-              {/* ── Individual Subscription ── */}
-              <td style={{ width: "34%", verticalAlign: "top", padding: "14px 18px", borderRight: "1px solid #bbb" }}>
-                <h2 style={{ color: "#8B0000", fontSize: "1.15em", fontWeight: "bold", textAlign: "center", margin: "0 0 2px 0" }}>
-                  Individual Subscription
-                </h2>
-                <p style={{ textAlign: "center", fontSize: "1.05em", margin: "2px 0 0 0" }}>
-                  <span style={{ textDecoration: "line-through", color: "#999" }}>$9.95/year</span>
-                </p>
-                <p style={{ textAlign: "center", fontSize: "1.2em", fontWeight: "bold", margin: "0 0 2px 0" }}>
-                  $15 &ndash; $20/year
-                </p>
+              <p style={{ color: "#004B97", fontWeight: "700", margin: "10px 0 4px 0", fontSize: "0.9em" }}>
+                Everything in Gold, plus
+              </p>
+              <ul style={{ paddingLeft: "16px", margin: "0 0 8px 0", fontSize: "0.88em", color: "#444", lineHeight: 1.8 }}>
+                <li>Unique URL for your school/class</li>
+                <li>Class and student management</li>
+                <li>Vocabulary lessons &amp; assignments</li>
+                <li>Report on students&apos; vocabulary growth</li>
+              </ul>
 
-                <div style={{ textAlign: "center", margin: "16px 0" }}>
-                  <Link
-                    href="/checkout?plan=individual"
-                    style={{
-                      display: "inline-block", padding: "9px 30px",
-                      backgroundColor: "#6B8E23", color: "white",
-                      textDecoration: "none", fontWeight: "bold", fontSize: "1.05em",
-                      border: "1px solid #556B2F", borderRadius: "3px",
-                    }}
-                  >
-                    Subscribe Now
-                  </Link>
-                </div>
+              <p style={{ color: "#004B97", fontWeight: "700", margin: "10px 0 4px 0", fontSize: "0.9em" }}>
+                Teacher Tools
+              </p>
+              <p style={{ margin: "0 0 4px 0", fontSize: "0.88em", color: "#444", lineHeight: 1.6 }}>
+                Learning management system fully integrated with Wordsmyth Vocabulary Center.
+              </p>
 
-                <p style={{ color: "#004B97", fontWeight: "bold", margin: "14px 0 3px 0" }}>
-                  Enhanced dictionary features
-                </p>
-                <ul style={{ paddingLeft: "18px", margin: "0 0 6px 0" }}>
-                  <li>Word Parts (roots &amp; affixes)</li>
-                  <li>Word Combinations</li>
-                  <li>Grammatical Patterns</li>
-                  <li>Spanish support</li>
-                  <li>Chinese support</li>
-                  <li>Personalized entry display</li>
-                  <li>Advanced search functions</li>
-                </ul>
-
-                <p style={{ color: "#004B97", fontWeight: "bold", margin: "10px 0 3px 0" }}>
-                  Full Vocabulary Center
-                </p>
-                <ul style={{ paddingLeft: "18px", margin: "0 0 6px 0" }}>
-                  <li>Wordsmyth Vocabulary Inventory</li>
-                  <li>Unlimited user-made wordlists</li>
-                  <li>Unlimited sharing</li>
-                  <li>Vocabulary activities</li>
-                  <li>Text Analysis</li>
-                </ul>
-
-                <p style={{ color: "#004B97", fontWeight: "bold", margin: "10px 0 3px 0" }}>
-                  Ad free
-                </p>
-
-                <p style={{ color: "#18AD4A", fontWeight: "bold", margin: "10px 0 3px 0" }}>
-                  Book Bundle ($20/year plan)
-                </p>
-                <ul style={{ paddingLeft: "18px", margin: 0 }}>
-                  <li><strong>40% off</strong> all kids books &amp; eBooks</li>
-                  <li><strong>All 14 eBooks FREE</strong> (worth $50+)</li>
-                </ul>
-              </td>
-
-              {/* ── Educational Group Subscription ── */}
-              <td style={{ width: "33%", verticalAlign: "top", padding: "14px 18px" }}>
-                <h2 style={{ color: "#8B0000", fontSize: "1.15em", fontWeight: "bold", textAlign: "center", margin: "0 0 2px 0" }}>
-                  Educational Group Subscription
-                </h2>
-                <p style={{ textAlign: "center", fontSize: "0.9em", margin: "2px 0 0 0" }}>
-                  starting from <strong>$20 for 20 users</strong>
-                </p>
-
-                <ul style={{ paddingLeft: "18px", margin: "10px 0" }}>
-                  <li>Tier 1 (21&ndash;50 users): <strong>$1.00/year</strong> per user</li>
-                  <li>Tier 2 (51&ndash;400 users): <strong>$0.75/year</strong> per user</li>
-                  <li>Tier 3 (401 and up): <strong>$0.50/year</strong> per user</li>
-                </ul>
-
-                <p style={{ textAlign: "center", fontSize: "0.9em", margin: "4px 0 10px 0" }}>
-                  For school districts, please{" "}
-                  <Link href="/contact" style={{ color: "#004B97" }}>contact us</Link>{" "}
-                  for a quote.
-                </p>
-
-                <div style={{ textAlign: "center", margin: "16px 0" }}>
-                  <Link
-                    href="/contact"
-                    style={{
-                      display: "inline-block", padding: "9px 30px",
-                      backgroundColor: "#6B8E23", color: "white",
-                      textDecoration: "none", fontWeight: "bold", fontSize: "1.05em",
-                      border: "1px solid #556B2F", borderRadius: "3px",
-                    }}
-                  >
-                    Subscribe Now
-                  </Link>
-                </div>
-
-                <p style={{ color: "#004B97", fontWeight: "bold", margin: "10px 0 3px 0" }}>
-                  Unique URL for your school/class
-                </p>
-
-                <p style={{ margin: "3px 0" }}>
-                  All individual subscription features are available for students and teachers, including:
-                </p>
-                <ul style={{ paddingLeft: "18px", margin: "0 0 6px 0" }}>
-                  <li>Enhanced dictionary features</li>
-                  <li>Vocabulary Center</li>
-                  <li>Ad free</li>
-                </ul>
-
-                <p style={{ color: "#004B97", fontWeight: "bold", margin: "10px 0 3px 0" }}>
-                  Teacher Tools
-                </p>
-
-                <p style={{ margin: "3px 0" }}>
-                  Learning management system fully integrated with Wordsmyth Vocabulary Center.
-                </p>
-                <ul style={{ paddingLeft: "18px", margin: 0 }}>
-                  <li>Class and student management</li>
-                  <li>Vocabulary lessons and assignments</li>
-                  <li>Report on students&apos; vocabulary growth</li>
-                </ul>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+              <p style={{ textAlign: "center", fontSize: "0.85em", margin: "14px 0 0 0" }}>
+                <Link href="/contact" style={{ color: "#004B97", fontWeight: "600" }}>Contact us</Link> for school district quotes.
+              </p>
+            </div>
+          </div>
+        </div>
 
         {/* ── Feature comparison table ── */}
-        <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.82em", border: "1px solid #aaa", marginTop: "20px", marginBottom: "30px" }}>
-          <thead>
-            <tr style={{ backgroundColor: "#e0e0e0" }}>
-              <th style={{ border: "1px solid #aaa", padding: "6px 10px", textAlign: "left", fontWeight: "bold" }}>Feature list</th>
-              <th style={{ border: "1px solid #aaa", padding: "6px 8px", textAlign: "center", fontWeight: "bold", width: "90px" }}>Unregistered<br />user</th>
-              <th style={{ border: "1px solid #aaa", padding: "6px 8px", textAlign: "center", fontWeight: "bold", width: "90px" }}>Free<br />registration</th>
-              <th style={{ border: "1px solid #aaa", padding: "6px 8px", textAlign: "center", fontWeight: "bold", width: "90px", color: "#004B97" }}>Individual<br />subscription</th>
-              <th style={{ border: "1px solid #aaa", padding: "6px 8px", textAlign: "center", fontWeight: "bold", width: "90px" }}>Educational<br />subscription</th>
-              <th style={{ border: "1px solid #aaa", padding: "6px 10px", textAlign: "left", fontWeight: "bold" }}>Feature Explanation</th>
-            </tr>
-          </thead>
-          <tbody>
-            {featureRows.map((row, i) => (
-              <tr key={row.label} style={{ backgroundColor: i % 2 === 0 ? "#fff" : "#f4f4f4" }}>
-                <td style={{ border: "1px solid #ccc", padding: "4px 10px" }}>{row.label}</td>
-                {[row.unreg, row.free, row.ind, row.edu].map((val, ci) => (
-                  <td key={ci} style={{ border: "1px solid #ccc", padding: "4px 8px", textAlign: "center" }}>
-                    {val && (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img src={check} alt="✓" style={{ width: "20px", height: "20px", verticalAlign: "middle" }} />
-                    )}
-                  </td>
+        <div style={{ marginBottom: "40px" }}>
+          <h2 style={{
+            textAlign: "center", fontSize: "1.4em", fontWeight: "800",
+            color: "#1a1a2e", marginBottom: "20px",
+            fontFamily: "'Poppins', var(--font-wild), sans-serif",
+          }}>
+            Compare Plans
+          </h2>
+
+          <div style={{ borderRadius: "12px", overflow: "hidden", border: "1px solid #e0e0e0" }}>
+            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.84em" }}>
+              <thead>
+                <tr style={{ backgroundColor: "#fafafa" }}>
+                  <th style={{ padding: "12px 14px", textAlign: "left", fontWeight: "700", color: "#1a1a2e", borderBottom: "2px solid #e0e0e0" }}>Feature</th>
+                  <th style={{ padding: "12px 10px", textAlign: "center", fontWeight: "700", color: "#888", borderBottom: "2px solid #e0e0e0", width: "100px" }}>Silver<br /><span style={{ fontWeight: "400", fontSize: "0.85em" }}>$9.95/yr</span></th>
+                  <th style={{ padding: "12px 10px", textAlign: "center", fontWeight: "700", color: "#18AD4A", borderBottom: "2px solid #18AD4A", width: "100px", backgroundColor: "#f0faf0" }}>Gold<br /><span style={{ fontWeight: "400", fontSize: "0.85em" }}>$15/yr</span></th>
+                  <th style={{ padding: "12px 10px", textAlign: "center", fontWeight: "700", color: "#5b21b6", borderBottom: "2px solid #e0e0e0", width: "100px" }}>Enterprise<br /><span style={{ fontWeight: "400", fontSize: "0.85em" }}>Custom</span></th>
+                </tr>
+              </thead>
+              <tbody>
+                {featureRows.map((row, i) => (
+                  <tr key={row.label} style={{ backgroundColor: i % 2 === 0 ? "#fff" : "#fafafa" }}>
+                    <td style={{ padding: "8px 14px", borderBottom: "1px solid #f0f0f0", color: "#444" }}>{row.label}</td>
+                    <td style={{ padding: "8px 10px", textAlign: "center", borderBottom: "1px solid #f0f0f0" }}>
+                      {row.silver ? <span style={{ color: "#18AD4A", fontSize: "1.2em" }}>&#10003;</span> : <span style={{ color: "#ddd" }}>&mdash;</span>}
+                    </td>
+                    <td style={{ padding: "8px 10px", textAlign: "center", borderBottom: "1px solid #f0f0f0", backgroundColor: i % 2 === 0 ? "#f8fdf8" : "#f0faf0" }}>
+                      {row.gold ? <span style={{ color: "#18AD4A", fontSize: "1.2em" }}>&#10003;</span> : <span style={{ color: "#ddd" }}>&mdash;</span>}
+                    </td>
+                    <td style={{ padding: "8px 10px", textAlign: "center", borderBottom: "1px solid #f0f0f0" }}>
+                      {row.ent ? <span style={{ color: "#18AD4A", fontSize: "1.2em" }}>&#10003;</span> : <span style={{ color: "#ddd" }}>&mdash;</span>}
+                    </td>
+                  </tr>
                 ))}
-                <td style={{ border: "1px solid #ccc", padding: "4px 10px", color: "#666", fontSize: "0.92em" }}>
-                  Click on each feature to see a more detailed explanation.
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
       </div>
     </div>
   );
