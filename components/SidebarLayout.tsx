@@ -6,7 +6,6 @@ import Link from "next/link";
 import { useUser } from "@/contexts/UserContext";
 import DataMenu from "./DataMenu";
 import AdSlot from "./AdSlot";
-import SupportCTA from "./SupportCTA";
 
 interface SidebarLayoutProps {
   children: React.ReactNode;
@@ -153,48 +152,10 @@ export default function SidebarLayout({ children, variant = "we" }: SidebarLayou
         {/* Center Column — Main Content */}
         <div className="flex-1 min-w-0 px-2 py-2">
           {children}
-          {/* Support widget at bottom of every page's content */}
-          <SupportCTA size="card" />
         </div>
 
-        {/* Right Sidebar — Ads */}
+        {/* Right Sidebar — Ads only */}
         <div className="shrink-0 p-2" style={{ width: "170px" }}>
-          {/* Ad-free banner */}
-          {!isSubscriber && (
-            <Link
-              href="/subscribe"
-              className="block text-center font-bold mb-3 p-1.5 no-underline"
-              style={{ backgroundColor: "#FFEF21", fontSize: "0.7em", color: "#333", lineHeight: 1.4 }}
-            >
-              Subscribe<br />for ad-free
-            </Link>
-          )}
-
-          {/* Support widget in sidebar */}
-          {!isSubscriber && (
-            <div style={{ marginBottom: "8px" }}>
-              <Link
-                href="/support"
-                className="block no-underline"
-                style={{
-                  backgroundColor: "#f0f8f0",
-                  border: "1px solid #c8e6c9",
-                  padding: "8px",
-                  fontSize: "0.65em",
-                  textAlign: "center",
-                  lineHeight: 1.4,
-                  color: "#333",
-                  textDecoration: "none",
-                }}
-              >
-                <span style={{ fontSize: "1.4em" }}>💚</span><br />
-                <strong style={{ color: "#18AD4A" }}>Support Wordsmyth</strong><br />
-                Free since 1998.<br />
-                <span style={{ color: "#18AD4A", fontWeight: "bold" }}>Donate →</span>
-              </Link>
-            </div>
-          )}
-
           {/* Right skyscraper ad */}
           <AdSlot slotId={`${variant}-skyscraper-right`} size="skyscraper" position="sidebar" showGoAdFree={false} />
         </div>
