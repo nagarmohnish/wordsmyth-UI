@@ -18,12 +18,12 @@ export default function StickyFooterBanner() {
 
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-[var(--color-primary)] text-white py-3 px-4 z-50 flex items-center justify-center gap-4 text-sm shadow-lg">
-      <span>Go ad-free and get $50+ in free eBooks for just $20/year</span>
+      <span>Skip one coffee, go ads-free for a whole year. Just $20.</span>
       <Link
         href="/subscribe?utm_source=sticky-footer"
         className="px-4 py-1.5 bg-[var(--color-secondary)] text-[var(--color-primary)] font-semibold rounded-lg text-sm hover:bg-[var(--color-secondary-light)] transition-colors"
       >
-        Subscribe Now
+        Go Ads-Free
       </Link>
       <button
         onClick={dismissStickyFooter}

@@ -29,7 +29,7 @@ const featureRows = [
   { label: "Unlimited user-made wordlists", silver: true, gold: true, ent: true },
   { label: "Vocabulary activities", silver: true, gold: true, ent: true },
   { label: "Text Analysis", silver: true, gold: true, ent: true },
-  { label: "Ad free", silver: true, gold: true, ent: true },
+  { label: "Ads-free", silver: true, gold: true, ent: true },
   { label: "40% off kids books & eBooks", silver: false, gold: true, ent: true },
   { label: "14 eBooks worth $50+ — FREE", silver: false, gold: true, ent: true },
   { label: "Unique URL for school/class", silver: false, gold: false, ent: true },
@@ -58,7 +58,7 @@ function SubscribeContent() {
             Choose Your Plan
           </h1>
           <p style={{ fontSize: "1.05em", color: "#666", margin: 0, maxWidth: "500px", marginLeft: "auto", marginRight: "auto", lineHeight: 1.6 }}>
-            Unlock the full power of Wordsmyth. Pick the plan that fits your needs.
+            Go ads-free and get the full Wordsmyth experience. Pick the plan that fits your needs.
           </p>
           {fromAdFree && (
             <div style={{
@@ -66,7 +66,7 @@ function SubscribeContent() {
               backgroundColor: "#e8f5e9", border: "1px solid #a5d6a7",
               borderRadius: "8px", fontSize: "0.9em", color: "#2e7d32",
             }}>
-              Subscribe below to enjoy an ad-free experience.
+              Go ads-free — subscribe below to remove all ads.
             </div>
           )}
         </div>
@@ -143,12 +143,12 @@ function SubscribeContent() {
                 display: "flex", alignItems: "center", gap: "6px",
                 padding: "6px 0", fontSize: "0.9em", fontWeight: "600", color: "#1a1a2e",
               }}>
-                <span style={{ color: "#18AD4A" }}>&#10003;</span> Ad-free experience
+                <span style={{ color: "#18AD4A" }}>&#10003;</span> Ads-free experience
               </div>
             </div>
           </div>
 
-          {/* ── GOLD — $15/year ── */}
+          {/* ── GOLD — $19.95/year ── */}
           <div style={{
             border: "2px solid #18AD4A", borderRadius: "16px", padding: "28px 24px",
             backgroundColor: "#fff", position: "relative",
@@ -177,7 +177,7 @@ function SubscribeContent() {
             </div>
 
             <div style={{ marginBottom: "4px" }}>
-              <span style={{ fontSize: "2.4em", fontWeight: "800", color: "#18AD4A" }}>$15</span>
+              <span style={{ fontSize: "2.4em", fontWeight: "800", color: "#18AD4A" }}>$19.95</span>
               <span style={{ fontSize: "0.95em", color: "#999", marginLeft: "4px" }}>/year</span>
             </div>
             <p style={{ fontSize: "0.8em", color: "#666", margin: "0 0 16px 0" }}>
@@ -356,7 +356,7 @@ function SubscribeContent() {
                 <tr style={{ backgroundColor: "#fafafa" }}>
                   <th style={{ padding: "12px 14px", textAlign: "left", fontWeight: "700", color: "#1a1a2e", borderBottom: "2px solid #e0e0e0" }}>Feature</th>
                   <th style={{ padding: "12px 10px", textAlign: "center", fontWeight: "700", color: "#888", borderBottom: "2px solid #e0e0e0", width: "100px" }}>Silver<br /><span style={{ fontWeight: "400", fontSize: "0.85em" }}>$9.95/yr</span></th>
-                  <th style={{ padding: "12px 10px", textAlign: "center", fontWeight: "700", color: "#18AD4A", borderBottom: "2px solid #18AD4A", width: "100px", backgroundColor: "#f0faf0" }}>Gold<br /><span style={{ fontWeight: "400", fontSize: "0.85em" }}>$15/yr</span></th>
+                  <th style={{ padding: "12px 10px", textAlign: "center", fontWeight: "700", color: "#18AD4A", borderBottom: "2px solid #18AD4A", width: "100px", backgroundColor: "#f0faf0" }}>Gold<br /><span style={{ fontWeight: "400", fontSize: "0.85em" }}>$19.95/yr</span></th>
                   <th style={{ padding: "12px 10px", textAlign: "center", fontWeight: "700", color: "#5b21b6", borderBottom: "2px solid #e0e0e0", width: "100px" }}>Enterprise<br /><span style={{ fontWeight: "400", fontSize: "0.85em" }}>Custom</span></th>
                 </tr>
               </thead>

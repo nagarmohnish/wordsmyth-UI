@@ -25,7 +25,7 @@ export default function PrivacyPage() {
         <p style={{ marginBottom: "10px" }}>We use your information to provide and improve our dictionary services, manage your account, and display appropriate advertisements for free-tier users. We do not sell your personal information.</p>
 
         <h3 style={{ color: "#004B97", fontSize: "1em", fontWeight: "bold", margin: "14px 0 4px 0" }}>Cookies and Advertising</h3>
-        <p style={{ marginBottom: "10px" }}>We use cookies to maintain your session. Third-party advertising partners may use cookies to display relevant ads. Subscribers enjoy an ad-free experience.</p>
+        <p style={{ marginBottom: "10px" }}>We use cookies to maintain your session. Third-party advertising partners may use cookies to display relevant ads. Subscribers enjoy an ads-free experience.</p>
 
         <h3 style={{ color: "#004B97", fontSize: "1em", fontWeight: "bold", margin: "14px 0 4px 0" }}>Data Security</h3>
         <p style={{ marginBottom: "10px" }}>We implement appropriate security measures. Payment processing is handled by Stripe and PayPal — we do not store credit card details.</p>

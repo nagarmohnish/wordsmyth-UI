@@ -6,7 +6,7 @@ import SidebarLayout from "@/components/SidebarLayout";
 
 const faqs = [
   { q: "What is Wordsmyth?", a: "Wordsmyth is a free online educational dictionary platform designed for children, students, and teachers. It includes the WILD illustrated dictionary for young learners (K-2), a Children's Dictionary/Word Explorer (grades 3-8), vocabulary activities, and teacher tools." },
-  { q: "Is Wordsmyth free to use?", a: "Yes! The core dictionary and many features are completely free. A premium subscription ($20/year) removes ads, unlocks Spanish and Chinese translations, provides full access to Teacher Tools and Vocabulary Center, and includes all 14 Wordsmyth eBooks (valued at $50+)." },
+  { q: "Is Wordsmyth free to use?", a: "Yes! The core dictionary and many features are completely free. A premium subscription ($20/year) goes ads-free, opens up Spanish and Chinese translations, provides full access to Teacher Tools and Vocabulary Center, and includes all 14 Wordsmyth eBooks (valued at $50+)." },
   { q: "What is WILD?", a: "WILD stands for Wordsmyth Illustrated Learner's Dictionary. It's designed for beginning readers (K-2) and features three ways to explore words: Book (alphabetical), World (visual scenes), and Collections (thematic groups)." },
   { q: "How do I subscribe?", a: "Visit our Subscribe page to choose a plan. Individual subscriptions are $20/year. Educational group plans are available with custom pricing — contact us for details." },
   { q: "What's included in the subscription?", a: "Ad-free experience, Spanish and Chinese translations, full Teacher Tools access, Vocabulary Center with progress tracking, custom glossaries, and all 14 Wordsmyth eBooks for free." },

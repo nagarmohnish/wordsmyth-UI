@@ -200,7 +200,7 @@ export default function CheckoutPage() {
                 <div className="mt-5 bg-[var(--color-accent)]/5 border border-[var(--color-accent)]/20 rounded-lg p-4">
                   <p className="text-xs font-semibold text-[var(--color-accent)] mb-1">Save with a subscription!</p>
                   <p className="text-xs text-[var(--color-text-light)]">
-                    Get all 14 eBooks free + ad-free browsing for just $20/year.
+                    Get all 14 eBooks free + go ads-free for just $20/year.
                   </p>
                   <Link
                     href="/subscribe"

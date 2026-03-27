@@ -1,8 +1,15 @@
 /**
- * Go Ad-Free Widget — Plug & Play v3
- * One script tag → witty "Go Ad-Free" overlay on every ad.
+ * Go Ads-Free Widget — Plug & Play v3
+ * Drop one script tag on any website → witty "Go Ads-Free" overlay on every ad.
+ * Zero dependencies. Works on any site.
  *
- * <script src="/widget/go-ad-free.js" data-subscribe-url="/subscribe"></script>
+ * Usage:
+ *   <script src="https://kids.wordsmyth.net/widget/go-ad-free.js"
+ *     data-subscribe-url="https://kids.wordsmyth.net/subscribe"
+ *     data-delay="1500"
+ *     data-poll="3000"
+ *     data-selectors=".my-custom-ad"
+ *   ></script>
  */
 (function () {
   "use strict";
@@ -27,22 +34,22 @@
 
   // ── Witty copy — different for wide vs narrow ────────────────
   var wideCopy = [
-    { text: "Tired of ads? \u2728 Read without distractions.", cta: "Go Ad-Free" },
-    { text: "Plot twist: this ad vanishes when you subscribe.", cta: "Make it disappear" },
-    { text: "Your eyes deserve better.", cta: "Remove Ads" },
-    { text: "Imagine this space \u2014 completely yours.", cta: "Go Ad-Free" },
-    { text: "Fun fact: subscribers never see this.", cta: "Join them" },
-    { text: "Ad blocker? We have something better \u2014 and legal.", cta: "Go legit" },
-    { text: "Support education. Lose the ads.", cta: "Subscribe" },
-    { text: "Less noise. More learning.", cta: "Go Ad-Free" },
+    { text: "Tired of ads? \u2728 Read without distractions.", cta: "Go Ads-Free" },
+    { text: "Plot twist: this ad vanishes when you subscribe.", cta: "Go Ads-Free" },
+    { text: "Your eyes deserve better.", cta: "Go Ads-Free" },
+    { text: "Imagine this space \u2014 completely yours.", cta: "Go Ads-Free" },
+    { text: "Fun fact: subscribers never see this.", cta: "Go Ads-Free" },
+    { text: "Ad blocker? We have something better \u2014 and legal.", cta: "Go Ads-Free" },
+    { text: "Support education. Lose the ads.", cta: "Go Ads-Free" },
+    { text: "Less noise. More learning.", cta: "Go Ads-Free" },
   ];
 
   var narrowCopy = [
-    { text: "No more ads?", cta: "Yes please" },
-    { text: "Distraction-free", cta: "Go Ad-Free" },
-    { text: "Lose the ads", cta: "Subscribe" },
-    { text: "Ad-free mode", cta: "Unlock" },
-    { text: "Clean reading", cta: "Try it" },
+    { text: "No more ads?", cta: "Go Ads-Free" },
+    { text: "Distraction-free", cta: "Go Ads-Free" },
+    { text: "Lose the ads", cta: "Go Ads-Free" },
+    { text: "Clean reading", cta: "Go Ads-Free" },
+    { text: "Less clutter", cta: "Go Ads-Free" },
   ];
 
   var wIdx = 0, nIdx = 0;

@@ -9,7 +9,7 @@ export default function Header() {
   const { isLoggedIn } = useUser();
   const pathname = usePathname();
   const [bannerVisible, setBannerVisible] = useState(true);
-  const hideShopBanner = pathname === "/subscribe" || pathname === "/support";
+  const hideShopBanner = pathname !== "/";
 
   return (
     <header className="bg-white">

@@ -6,7 +6,7 @@ import Footer from "@/components/Footer";
 import { UserProvider } from "@/contexts/UserContext";
 import StickyFooterBanner from "@/components/StickyFooterBanner";
 import GoAdFreeLoader from "@/components/GoAdFreeLoader";
-import StickySupportWidget from "@/components/StickySupportWidget";
+import DonationWidget from "@/components/DonationWidget";
 
 const poppins = Poppins({ subsets: ["latin"], weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"], variable: "--font-wild" });
 
@@ -25,7 +25,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Footer />
           <StickyFooterBanner />
           <GoAdFreeLoader />
-          <StickySupportWidget />
+          <DonationWidget placement="sticky" />
         </UserProvider>
       </body>
     </html>

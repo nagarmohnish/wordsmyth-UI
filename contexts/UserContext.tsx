@@ -13,6 +13,7 @@ interface UserState {
   sessionLookupCount: number;
   hasSeenSupportCTA: boolean;
   hasDismissedStickyFooter: boolean;
+  hasDismissedDonationWidget: boolean;
   name: string;
   email: string;
 }
@@ -24,6 +25,7 @@ interface UserContextType extends UserState {
   incrementLookup: () => void;
   dismissSupportCTA: () => void;
   dismissStickyFooter: () => void;
+  dismissDonationWidget: () => void;
   setRole: (role: Role) => void;
 }
 
@@ -35,6 +37,7 @@ const defaultState: UserState = {
   sessionLookupCount: 0,
   hasSeenSupportCTA: false,
   hasDismissedStickyFooter: false,
+  hasDismissedDonationWidget: false,
   name: "",
   email: "",
 };
@@ -68,6 +71,10 @@ export function UserProvider({ children }: { children: ReactNode }) {
     setState((s) => ({ ...s, hasDismissedStickyFooter: true }));
   }, []);
 
+  const dismissDonationWidget = useCallback(() => {
+    setState((s) => ({ ...s, hasDismissedDonationWidget: true }));
+  }, []);
+
   const setRole = useCallback((role: Role) => {
     setState((s) => ({ ...s, role }));
   }, []);
@@ -82,6 +89,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
         incrementLookup,
         dismissSupportCTA,
         dismissStickyFooter,
+        dismissDonationWidget,
         setRole,
       }}
     >

@@ -5,9 +5,9 @@ import { useUser } from "@/contexts/UserContext";
 import { useMemo } from "react";
 
 const variations = [
-  "Enjoying Wordsmyth? Go ad-free from just $15/year →",
-  "Remove ads & get 14 books worth $50 free →",
-  "Support education. Go ad-free from $15/year →",
+  "Enjoying Wordsmyth? Go ads-free from just $19.95/year \u2192",
+  "Less ads, more learning. Go ads-free from $19.95/year \u2192",
+  "Support education. Go ads-free from $19.95/year \u2192",
 ];
 
 interface GoAdFreeWidgetProps {
@@ -32,7 +32,7 @@ export default function GoAdFreeWidget({ variant = "inline" }: GoAdFreeWidgetPro
             fontWeight: "bold", fontSize: "0.85em", textDecoration: "none",
           }}
         >
-          Go Ad-Free
+          Go Ads-Free
         </Link>
       </div>
     );

@@ -192,7 +192,7 @@ export default function WordExplorerPage() {
             Individual Subscription
           </p>
           <p style={{ margin: 0, color: "#333" }}>
-            Go ad-free and get access to all 14 Wordsmyth eBooks free! Only $20
+            Go ads-free and get access to all 14 Wordsmyth eBooks free! Only $20
             per year for families and individual users.{" "}
             <Link href="/subscribe" style={{ color: "#004B97" }}>
               Subscribe now &raquo;
@@ -213,7 +213,7 @@ export default function WordExplorerPage() {
             Educational Group Subscription
           </p>
           <p style={{ margin: 0, color: "#333" }}>
-            Schools and districts can get ad-free access for all students and
+            Schools and districts can go ads-free for all students and
             teachers. Contact us at{" "}
             <a href="mailto:support@wordsmyth.net" style={{ color: "#004B97" }}>
               support@wordsmyth.net

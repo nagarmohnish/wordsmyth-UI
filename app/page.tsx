@@ -2,10 +2,28 @@
 
 import Link from "next/link";
 import SidebarLayout from "@/components/SidebarLayout";
+import AdSlot from "@/components/AdSlot";
+import GoAdFreeWidget from "@/components/GoAdFreeWidget";
+import { useUser } from "@/contexts/UserContext";
 
 export default function HomePage() {
+  const { isSubscriber } = useUser();
+
   return (
     <SidebarLayout variant="we">
+      {/* Header ad + Go Ads-Free overlay */}
+      {!isSubscriber && (
+        <div style={{ position: "relative", marginBottom: "10px" }}>
+          <AdSlot slotId="home-header-leaderboard" size="leaderboard" position="top" />
+          <div style={{
+            position: "absolute", top: 0, left: 0, right: 0,
+            display: "flex", justifyContent: "center",
+          }}>
+            <GoAdFreeWidget variant="banner" />
+          </div>
+        </div>
+      )}
+
       {/* Shop link banner */}
       <div
         style={{
@@ -179,6 +197,27 @@ export default function HomePage() {
           lineHeight: 1.5,
         }}
       >
+        {/* Go Ads-Free banner */}
+        <div
+          style={{
+            backgroundColor: "#FFFFC6",
+            border: "1px solid #E0D890",
+            padding: "10px 12px",
+            marginBottom: "10px",
+            textAlign: "center",
+          }}
+        >
+          <p style={{ margin: "0 0 4px 0", fontWeight: "bold", color: "#333", fontSize: "0.95em" }}>
+            Ads are like speed bumps on the road to learning.
+          </p>
+          <p style={{ margin: 0, color: "#555" }}>
+            Go ads-free for just $20/year and give your child a smooth ride.{" "}
+            <Link href="/subscribe?utm_source=homepage-banner" style={{ color: "#004B97", fontWeight: "bold" }}>
+              Go Ads-Free &raquo;
+            </Link>
+          </p>
+        </div>
+
         {/* Individual subscription */}
         <div
           style={{
@@ -192,7 +231,7 @@ export default function HomePage() {
             Individual Subscription
           </p>
           <p style={{ margin: 0, color: "#333" }}>
-            Go ad-free and get access to all 14 Wordsmyth eBooks free! Only $20
+            Go ads-free and get access to all 14 Wordsmyth eBooks free! Only $20
             per year for families and individual users.{" "}
             <Link href="/subscribe" style={{ color: "#004B97" }}>
               Subscribe now &raquo;
@@ -213,7 +252,7 @@ export default function HomePage() {
             Educational Group Subscription
           </p>
           <p style={{ margin: 0, color: "#333" }}>
-            Schools and districts can get ad-free access for all students and
+            Schools and districts can go ads-free for all students and
             teachers. Contact us at{" "}
             <a href="mailto:support@wordsmyth.net" style={{ color: "#004B97" }}>
               support@wordsmyth.net
@@ -222,6 +261,19 @@ export default function HomePage() {
           </p>
         </div>
       </div>
+
+      {/* Footer ad + Go Ads-Free overlay */}
+      {!isSubscriber && (
+        <div style={{ position: "relative", marginTop: "16px" }}>
+          <AdSlot slotId="home-footer-banner" size="banner" position="bottom" />
+          <div style={{
+            position: "absolute", top: 0, left: 0, right: 0,
+            display: "flex", justifyContent: "center",
+          }}>
+            <GoAdFreeWidget variant="banner" />
+          </div>
+        </div>
+      )}
     </SidebarLayout>
   );
 }
