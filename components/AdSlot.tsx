@@ -1,7 +1,6 @@
 "use client";
 
 import { useUser } from "@/contexts/UserContext";
-import Link from "next/link";
 
 const sizes: Record<string, { w: number; h: number }> = {
   banner: { w: 728, h: 90 },
@@ -35,7 +34,7 @@ interface AdSlotProps {
   showGoAdFree?: boolean;
 }
 
-export default function AdSlot({ slotId, size, position = "inline", showGoAdFree = true }: AdSlotProps) {
+export default function AdSlot({ slotId, size, position = "inline" }: AdSlotProps) {
   const { isSubscriber } = useUser();
   if (isSubscriber) return null;
 
@@ -46,6 +45,7 @@ export default function AdSlot({ slotId, size, position = "inline", showGoAdFree
 
   return (
     <div
+      className="ad-container"
       style={{
         position: "relative",
         margin: "6px 0",
@@ -53,30 +53,6 @@ export default function AdSlot({ slotId, size, position = "inline", showGoAdFree
       }}
       data-ad-slot={slotId}
     >
-      {/* ✕ Remove Ad — top right of the SLOT, outside the ad */}
-      <Link
-        href="/subscribe?utm_source=remove-ad"
-        style={{
-          position: "absolute",
-          top: "-1px",
-          right: position === "sidebar" ? "0" : "auto",
-          left: position === "sidebar" ? "auto" : undefined,
-          backgroundColor: "#f0f0f0",
-          color: "#666",
-          fontSize: "10px",
-          padding: "1px 6px",
-          textDecoration: "none",
-          border: "1px solid #ccc",
-          borderBottom: "none",
-          zIndex: 5,
-          transform: "translateY(-100%)",
-          lineHeight: "1.4",
-          whiteSpace: "nowrap",
-        }}
-      >
-        ✕ Go Ad-Free
-      </Link>
-
       {/* Dummy ad */}
       <div
         style={{
@@ -94,14 +70,6 @@ export default function AdSlot({ slotId, size, position = "inline", showGoAdFree
           position: "relative",
         }}
       >
-        {/* Tiny "Ad" label */}
-        <span style={{
-          position: "absolute", top: "2px", left: "4px",
-          fontSize: "8px", opacity: 0.5, letterSpacing: "0.5px",
-        }}>
-          AD
-        </span>
-
         {isVert ? (
           <div style={{ textAlign: "center", padding: "16px 10px" }}>
             <div style={{ fontSize: "15px", fontWeight: "bold", marginBottom: "8px", lineHeight: 1.3 }}>{ad.text}</div>
@@ -122,15 +90,6 @@ export default function AdSlot({ slotId, size, position = "inline", showGoAdFree
           </div>
         )}
       </div>
-
-      {/* Go ad-free text below */}
-      {showGoAdFree && (
-        <div style={{ textAlign: "center", marginTop: "1px" }}>
-          <Link href="/subscribe?utm_source=go-ad-free-widget" style={{ fontSize: "9px", color: "#999", textDecoration: "none" }}>
-            Go ad-free from $15/year →
-          </Link>
-        </div>
-      )}
     </div>
   );
 }

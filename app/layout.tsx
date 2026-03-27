@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { UserProvider } from "@/contexts/UserContext";
 import StickyFooterBanner from "@/components/StickyFooterBanner";
+import GoAdFreeLoader from "@/components/GoAdFreeLoader";
 
 const poppins = Poppins({ subsets: ["latin"], weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"], variable: "--font-wild" });
 
@@ -22,6 +23,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <main className="flex-1">{children}</main>
           <Footer />
           <StickyFooterBanner />
+          <GoAdFreeLoader />
         </UserProvider>
       </body>
     </html>
