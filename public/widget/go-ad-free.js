@@ -55,8 +55,23 @@
     { left: "Support us & lose the ads. Win-win.", right: "Go Ad-Free \u2192" },
   ];
 
+  // Short messages for narrow ads (< 350px wide)
+  var shortMessages = [
+    { left: "Tired of ads?", right: "Go Ad-Free \u2192" },
+    { left: "Lose the ads.", right: "Subscribe \u2192" },
+    { left: "No more ads.", right: "Subscribe \u2192" },
+    { left: "Go ad-free!", right: "Learn more \u2192" },
+    { left: "Less ads.", right: "Subscribe \u2192" },
+  ];
+
   var msgIndex = 0;
-  function nextMessage() {
+  var shortMsgIndex = 0;
+  function nextMessage(narrow) {
+    if (narrow) {
+      var s = shortMessages[shortMsgIndex % shortMessages.length];
+      shortMsgIndex++;
+      return s;
+    }
     var m = messages[msgIndex % messages.length];
     msgIndex++;
     return m;
@@ -131,15 +146,21 @@
     var css = document.createElement("style");
     css.id = styleId;
     css.textContent = [
+      // Force overflow clip on the ad container itself
+      "[data-gafw-v2] {",
+      "  overflow: hidden !important;",
+      "}",
       // Bar container
       ".gafw-bar {",
       "  position: absolute;",
-      "  top: 0; left: 0; right: 0;",
+      "  top: 0; left: 0;",
+      "  width: 100%;",
+      "  max-width: 100%;",
       "  z-index: 999999;",
       "  display: flex;",
       "  align-items: center;",
       "  justify-content: space-between;",
-      "  padding: 0 4px 0 10px;",
+      "  padding: 0 4px 0 8px;",
       "  height: 26px;",
       "  background: " + t.barBg + ";",
       "  border-bottom: 1px solid " + t.border + ";",
@@ -155,19 +176,18 @@
       "@keyframes gafw-slide-in {",
       "  to { opacity: 1; transform: translateY(0); }",
       "}",
-      // Left side — message
+      // Left side — message (must shrink and truncate)
       ".gafw-bar-left {",
       "  display: flex;",
       "  align-items: center;",
-      "  gap: 6px;",
+      "  gap: 4px;",
       "  color: " + t.barText + ";",
-      "  white-space: nowrap;",
       "  overflow: hidden;",
-      "  text-overflow: ellipsis;",
       "  min-width: 0;",
+      "  flex: 1 1 0;",
       "}",
       ".gafw-bar-dot {",
-      "  width: 5px; height: 5px;",
+      "  width: 4px; height: 4px;",
       "  border-radius: 50%;",
       "  background: " + t.dotColor + ";",
       "  flex-shrink: 0;",
@@ -184,15 +204,18 @@
       ".gafw-bar-msg {",
       "  font-weight: 500;",
       "  color: " + t.barText + ";",
+      "  overflow: hidden;",
+      "  text-overflow: ellipsis;",
+      "  white-space: nowrap;",
       "}",
-      // Right side — CTA button
+      // Right side — CTA button (never shrink)
       ".gafw-bar-cta {",
       "  flex-shrink: 0;",
       "  display: inline-flex;",
       "  align-items: center;",
       "  gap: 4px;",
-      "  padding: 3px 12px;",
-      "  margin: 3px 0;",
+      "  padding: 3px 10px;",
+      "  margin: 3px 0 3px 4px;",
       "  background: " + t.ctaBg + ";",
       "  color: " + t.ctaText + " !important;",
       "  font-size: 10px;",
@@ -212,22 +235,28 @@
       ".gafw-bar-cta:active {",
       "  transform: scale(0.97);",
       "}",
-      // Vertical (skyscraper) variant
+      // Vertical (skyscraper) variant — stacks vertically, hides message
       ".gafw-bar--vertical {",
       "  flex-direction: column;",
       "  height: auto;",
-      "  top: 0; left: 0; right: 0;",
-      "  padding: 4px 6px;",
-      "  gap: 3px;",
+      "  width: 100%;",
+      "  max-width: 100%;",
+      "  top: 0; left: 0;",
+      "  padding: 4px 4px;",
+      "  gap: 2px;",
       "  text-align: center;",
       "}",
       ".gafw-bar--vertical .gafw-bar-left {",
       "  justify-content: center;",
-      "  font-size: 9px;",
+      "  flex-wrap: nowrap;",
+      "}",
+      ".gafw-bar--vertical .gafw-bar-msg {",
+      "  font-size: 8px;",
+      "  max-width: 100%;",
       "}",
       ".gafw-bar--vertical .gafw-bar-cta {",
       "  font-size: 9px;",
-      "  padding: 3px 8px;",
+      "  padding: 3px 6px;",
       "}",
       ".gafw-bar--vertical .gafw-bar-label { display: none; }",
       ".gafw-bar--vertical .gafw-bar-dot { display: none; }",
@@ -252,11 +281,12 @@
       adEl.style.position = "relative";
     }
 
-    // Detect if narrow (skyscraper)
+    // Detect if narrow (skyscraper) or medium
     var isNarrow = rect.width < 200;
+    var isMedium = rect.width < 350;
 
-    // Pick a witty message
-    var msg = nextMessage();
+    // Pick a witty message — shorter for narrow/medium ads
+    var msg = nextMessage(isNarrow || isMedium);
 
     // Build the bar
     var bar = document.createElement("div");
