@@ -60,8 +60,8 @@
   if (config.extraSelectors) config.extraSelectors.split(",").forEach(function (s) { var t = s.trim(); if (t) sels.push(t); });
   var selector = sels.join(", ");
 
-  // ── Colors ──
-  var G = "#18AD4A", GD = "#3d9739";
+  // ── Colors (indigo theme matching reference UI) ──
+  var P = "#5468ff", PD = "#4354e0", PL = "#eef0ff", PT = "rgba(84,104,255,0.25)";
 
   // ── Inject CSS ──
   var sid = "gafw-v4";
@@ -81,7 +81,7 @@ border-radius:50px;text-decoration:none!important;cursor:pointer;white-space:now
 box-shadow:0 2px 12px rgba(0,0,0,.15);transition:all .2s;border:none}\
 .gafw4-cta:hover{transform:scale(1.05);box-shadow:0 4px 20px rgba(0,0,0,.2);background:#fff}\
 .gafw4-cta:active{transform:scale(.97)}\
-.gafw4-cta .dot{width:8px;height:8px;border-radius:50%;background:'+G+';flex-shrink:0}\
+.gafw4-cta .dot{width:8px;height:8px;border-radius:50%;background:'+P+';flex-shrink:0}\
 .gafw4-cta .arr{transition:transform .2s;font-size:11px}\
 .gafw4-cta:hover .arr{transform:translateX(2px)}\
 .gafw4--sm .gafw4-txt{display:none}\
@@ -175,17 +175,17 @@ input[type=number]{-moz-appearance:textfield}\
     PRESETS.forEach(function (p) {
       var ac = !S.isCustom && S.preset === p;
       h += '<div style="position:relative;text-align:center">';
-      if (p === POPULAR) h += '<span style="position:absolute;top:-8px;left:50%;transform:translateX(-50%);font-size:8px;font-weight:700;color:' + G + ';white-space:nowrap">Popular</span>';
-      h += '<button data-preset="' + p + '" style="width:100%;padding:10px 0;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;border:1.5px solid ' + (ac ? G : '#e0e0e0') + ';background:' + (ac ? '#f0faf0' : '#fff') + ';color:' + (ac ? G : '#333') + '">$' + p + '</button></div>';
+      if (p === POPULAR) h += '<span style="position:absolute;top:-8px;left:50%;transform:translateX(-50%);font-size:8px;font-weight:700;color:' + P + ';white-space:nowrap">Popular</span>';
+      h += '<button data-preset="' + p + '" style="width:100%;padding:10px 0;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;border:1.5px solid ' + (ac ? P : '#e0e0e0') + ';background:' + (ac ? ''+PL+'' : '#fff') + ';color:' + (ac ? P : '#333') + '">$' + p + '</button></div>';
     });
     h += '</div>';
 
     // Perk
-    h += '<p style="text-align:center;font-size:12px;color:' + G + ';font-weight:500;margin-bottom:18px"><span style="font-size:14px">&#x2714;</span> Includes ads-free experience</p>';
+    h += '<p style="text-align:center;font-size:12px;color:' + P + ';font-weight:500;margin-bottom:18px"><span style="font-size:14px">&#x2714;</span> Includes ads-free experience</p>';
 
     // CTA
     var label = a > 0 ? "Continue with $" + a + gFL() : "Continue";
-    h += '<button data-a="continue" style="width:100%;padding:15px;background:' + G + ';color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;transition:background .15s;box-shadow:0 4px 16px rgba(24,173,74,.25)">' + label + '</button>';
+    h += '<button data-a="continue" style="width:100%;padding:15px;background:' + P + ';color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;transition:background .15s;box-shadow:0 4px 16px '+PT+'">' + label + '</button>';
 
     // Trust
     h += '<div style="margin-top:14px;text-align:center;font-size:10.5px;color:#bbb;display:flex;align-items:center;justify-content:center;gap:6px">&#x1F512; Secure payment';
@@ -204,7 +204,7 @@ input[type=number]{-moz-appearance:textfield}\
     h += '<div style="padding:28px 28px 24px">';
     h += '<p style="font-size:12px;color:#999;margin-bottom:2px">You\'re supporting</p>';
     h += '<p style="font-size:2em;font-weight:800;color:#1a1a2e;margin-bottom:2px;font-family:inherit">$' + a + gFL() + '</p>';
-    h += '<p style="font-size:11.5px;color:' + G + ';font-weight:500;margin-bottom:22px">Helping children discover new words every day</p>';
+    h += '<p style="font-size:11.5px;color:' + P + ';font-weight:500;margin-bottom:22px">Helping children discover new words every day</p>';
 
     // Email
     h += '<div style="margin-bottom:14px"><label style="display:block;font-size:11px;font-weight:600;color:#666;margin-bottom:4px">Email address</label>';
@@ -213,8 +213,8 @@ input[type=number]{-moz-appearance:textfield}\
     h += '<p style="font-size:13px;font-weight:600;margin-bottom:12px">Select payment method</p>';
 
     // Bank
-    h += '<div data-a="method-bank" style="width:100%;padding:14px;margin-bottom:8px;border:1.5px solid ' + (S.method === "bank" ? G : '#e0e0e0') + ';border-radius:12px;background:' + (S.method === "bank" ? '#f0faf0' : '#fff') + ';cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:all .15s">';
-    h += '<div style="display:flex;align-items:center;gap:10px"><span style="width:34px;height:34px;border-radius:8px;background:#f5f5f5;display:flex;align-items:center;justify-content:center;font-size:15px">&#x1F3E6;</span><div><span style="font-size:13px;font-weight:600;display:block">Direct Bank Transfer (ACH)</span><span style="font-size:10px;color:' + G + '">Best for long-term support</span></div></div>';
+    h += '<div data-a="method-bank" style="width:100%;padding:14px;margin-bottom:8px;border:1.5px solid ' + (S.method === "bank" ? P : '#e0e0e0') + ';border-radius:12px;background:' + (S.method === "bank" ? ''+PL+'' : '#fff') + ';cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:all .15s">';
+    h += '<div style="display:flex;align-items:center;gap:10px"><span style="width:34px;height:34px;border-radius:8px;background:#f5f5f5;display:flex;align-items:center;justify-content:center;font-size:15px">&#x1F3E6;</span><div><span style="font-size:13px;font-weight:600;display:block">Direct Bank Transfer (ACH)</span><span style="font-size:10px;color:' + P + '">Best for long-term support</span></div></div>';
     h += '<span style="font-size:12px;color:#999">&#x25BE;</span></div>';
 
     // Express
@@ -226,7 +226,7 @@ input[type=number]{-moz-appearance:textfield}\
     h += '</div>';
 
     // Card
-    h += '<div data-a="method-card" style="width:100%;padding:14px;margin-bottom:4px;border:1.5px solid ' + (S.method === "card" ? G : '#e0e0e0') + ';border-radius:12px;background:' + (S.method === "card" ? '#f0faf0' : '#fff') + ';cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:all .15s">';
+    h += '<div data-a="method-card" style="width:100%;padding:14px;margin-bottom:4px;border:1.5px solid ' + (S.method === "card" ? P : '#e0e0e0') + ';border-radius:12px;background:' + (S.method === "card" ? ''+PL+'' : '#fff') + ';cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:all .15s">';
     h += '<div style="display:flex;align-items:center;gap:10px"><span style="width:34px;height:34px;border-radius:8px;background:#f5f5f5;display:flex;align-items:center;justify-content:center;font-size:15px">&#x1F4B3;</span><span style="font-size:13px;font-weight:600">Card payment</span></div>';
     h += '<span style="font-size:12px;color:#999;transition:transform .2s;' + (S.method === "card" ? "transform:rotate(180deg)" : "") + '">&#x25BE;</span></div>';
 
@@ -241,7 +241,7 @@ input[type=number]{-moz-appearance:textfield}\
     }
 
     h += '<p style="text-align:center;font-size:10.5px;color:#bbb;margin:16px 0">&#x1F512; Secure payment &bull; Powered by Stripe</p>';
-    h += '<button data-a="pay" style="width:100%;padding:16px;background:' + G + ';color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(24,173,74,.25);transition:background .15s">Complete Payment &mdash; $' + a + gFL() + '</button>';
+    h += '<button data-a="pay" style="width:100%;padding:16px;background:' + P + ';color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 4px 16px '+PT+';transition:background .15s">Complete Payment &mdash; $' + a + gFL() + '</button>';
     h += '</div>';
     popup.innerHTML = h;
   }
@@ -255,10 +255,10 @@ input[type=number]{-moz-appearance:textfield}\
     var h = '<button class="gafw4-close" data-a="close">&times;</button>';
     // Header
     h += '<div style="padding:28px 24px 20px;text-align:center;border-bottom:1px solid #f0f0f0">';
-    h += '<div style="width:48px;height:48px;border-radius:50%;background:#f0faf0;border:2px solid ' + G + ';display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:20px;color:' + G + '">&#x2714;</div>';
+    h += '<div style="width:48px;height:48px;border-radius:50%;background:'+PL+';border:2px solid ' + P + ';display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:20px;color:' + P + '">&#x2714;</div>';
     h += '<p style="font-size:13px;color:#666;line-height:1.5">Your $' + a + ' ' + gFT() + ' support is confirmed.</p>';
     h += '<p style="font-size:13px;color:#666;line-height:1.5;margin-bottom:12px">You\'re now one of us &mdash; helping keep learning free for children worldwide.</p>';
-    h += '<span style="display:inline-flex;align-items:center;gap:5px;padding:6px 16px;border-radius:20px;border:1px solid ' + G + ';background:#f0faf0;font-size:11px;font-weight:600;color:' + G + '">&#x1F49A; Official Supporter of Free Learning</span>';
+    h += '<span style="display:inline-flex;align-items:center;gap:5px;padding:6px 16px;border-radius:20px;border:1px solid ' + P + ';background:'+PL+';font-size:11px;font-weight:600;color:' + P + '">&#x1F499; Official Supporter of Free Learning</span>';
     h += '</div>';
 
     // Certificate
@@ -266,7 +266,7 @@ input[type=number]{-moz-appearance:textfield}\
     h += '<div style="border-radius:14px;overflow:hidden;box-shadow:0 6px 24px rgba(0,0,0,.1);border:1px solid #e8e8e8">';
     // Light certificate card (matching reference screenshots)
     h += '<div style="background:#fff;padding:24px 22px;text-align:center;position:relative">';
-    h += '<div style="position:absolute;top:12px;left:16px;font-size:14px;color:' + G + '">&#x1F49A;</div>';
+    h += '<div style="position:absolute;top:12px;left:16px;font-size:14px;color:' + P + '">&#x1F499;</div>';
     h += '<div style="position:absolute;top:12px;right:16px;font-size:14px;color:#ccc;cursor:pointer">&#x2197;</div>';
     h += '<p style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#999;margin:8px 0 16px">Certificate of Support</p>';
     h += '<div style="width:36px;height:1.5px;background:#e0e0e0;margin:0 auto 14px"></div>';
@@ -275,16 +275,16 @@ input[type=number]{-moz-appearance:textfield}\
     h += '<p style="font-size:11px;color:#999;margin-bottom:10px">is a proud supporter of</p>';
     // Logo
     h += '<div style="display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:14px">';
-    h += '<div style="width:30px;height:30px;border-radius:50%;background:' + G + ';display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#fff">W</div>';
-    h += '<span style="font-size:1.15em;font-weight:700;letter-spacing:1px"><span style="color:' + G + '">WORD</span><span style="color:#999">SMYTH</span></span></div>';
+    h += '<div style="width:30px;height:30px;border-radius:50%;background:' + P + ';display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#fff">W</div>';
+    h += '<span style="font-size:1.15em;font-weight:700;letter-spacing:1px"><span style="color:' + P + '">WORD</span><span style="color:#999">SMYTH</span></span></div>';
     h += '<div style="width:36px;height:1px;background:#e8e8e8;margin:0 auto 14px"></div>';
     h += '<p style="font-size:11px;color:#999;font-style:italic;margin-bottom:10px">For keeping learning free &amp; accessible for every child</p>';
     h += '<p style="font-size:1em;font-weight:700;color:#1a1a2e;margin-bottom:2px">$' + a + ' ' + gFT() + '</p>';
     h += '<p style="font-size:11px;color:#bbb">' + date + '</p>';
     h += '</div>';
     // Perk
-    h += '<div style="background:#f8fdf8;padding:12px 16px;border-top:1px solid #f0f0f0;display:flex;align-items:center;gap:8px;font-size:11px;color:#333">';
-    h += '<span style="color:' + G + ';font-size:14px">&#x2714;</span> Your Wordsmyth experience will be <strong style="color:' + G + '">&nbsp;ads-free&nbsp;</strong> while your support is active.</div>';
+    h += '<div style="background:'+PL+';padding:12px 16px;border-top:1px solid #f0f0f0;display:flex;align-items:center;gap:8px;font-size:11px;color:#333">';
+    h += '<span style="color:' + P + ';font-size:14px">&#x2714;</span> Your Wordsmyth experience will be <strong style="color:' + P + '">&nbsp;ads-free&nbsp;</strong> while your support is active.</div>';
     h += '</div>';
 
     // Share
@@ -324,7 +324,7 @@ input[type=number]{-moz-appearance:textfield}\
       if (nameEl) S.name = nameEl.value;
       if (emailEl) S.email = emailEl.value;
       t.textContent = "Processing...";
-      t.style.background = "#C4E4CD";
+      t.style.background = "#c8cfff";
       t.style.cursor = "default";
       setTimeout(function () { S.screen = "success"; renderPopup(); }, 1800);
       return;

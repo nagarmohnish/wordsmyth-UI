@@ -73,12 +73,7 @@ input[type=number]{-moz-appearance:textfield}
 /* ─── ADS ─── */
 .ad-fake{position:relative;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:12px;border-radius:2px;overflow:hidden;flex-direction:column}
 .ad-fake small{font-size:9px;opacity:.7;font-weight:400;margin-top:1px}
-.ad-overlay{position:absolute;top:0;left:0;right:0;height:30px;background:linear-gradient(135deg,#1a1a2e,#16213e);display:flex;align-items:center;justify-content:space-between;padding:0 6px 0 10px;font-size:10px;z-index:5;animation:fadeIn .35s ease-out}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-.ad-overlay .otxt{display:flex;align-items:center;gap:5px;color:rgba(255,255,255,.75);flex:1;overflow:hidden}
-.ad-overlay .oico{width:14px;height:14px;border-radius:50%;background:linear-gradient(135deg,#18AD4A,#0d8a3a);display:flex;align-items:center;justify-content:center;font-size:8px;color:#fff;flex-shrink:0}
-.ad-overlay .ocp{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:500}
-.ad-pill{padding:3px 12px;background:linear-gradient(135deg,#18AD4A,#12963f);color:#fff!important;font-size:9px;font-weight:700;border-radius:20px;text-decoration:none!important;white-space:nowrap;flex-shrink:0;margin-left:5px;box-shadow:0 2px 6px rgba(24,173,74,.3)}
+/* ad overlays injected by v4 go-ad-free script */
 
 /* ─── FOOTER ─── */
 .ftr{background:#F0F0F0;border-top:3px solid #fff;padding:14px;text-align:center;font-size:11px;margin-top:auto}
@@ -237,16 +232,14 @@ input[type=number]{-moz-appearance:textfield}
 <div class="sl-panel"><div class="sl-panel-hdr">Alpha results</div><div class="sl-panel-body">Type a word to search...</div></div>
 <div class="sl-tabs"><div class="sl-tabs-hdr"><div style="background:#87CC8F">Broad</div><div style="background:#C4E4CD">Similar</div></div><div class="sl-panel-body">Search results appear here...</div></div>
 <div style="margin-top:12px">
-<div class="ad-fake" style="width:160px;height:500px;background:linear-gradient(135deg,#1a73e8,#1565c0)">Skyscraper Ad<small>160x600</small>
-<div class="ad-overlay"><div class="otxt"><span class="oico">&#x2728;</span><span class="ocp">Distraction-free</span></div><a class="ad-pill" href="#" onclick="go('subscribe');return false">Go Ads-Free &#x2192;</a></div></div>
+<div class="ad-fake ad-container" data-ad-slot="left-sky" style="width:160px;height:500px;background:linear-gradient(135deg,#1a73e8,#1565c0)">Skyscraper Ad<small>160x600</small></div>
 </div>
 </div>
 
 <!-- Center -->
 <div class="sl-center">
 <!-- Header ad -->
-<div class="ad-fake" style="width:100%;max-width:728px;height:90px;background:linear-gradient(135deg,#7c3aed,#4f46e5);margin-bottom:8px">Leaderboard Ad — 728x90<small>Simulated</small>
-<div class="ad-overlay"><div class="otxt"><span class="oico">&#x2728;</span><span class="ocp">Tired of ads? Read without distractions.</span></div><a class="ad-pill" href="#" onclick="go('subscribe');return false">Go Ads-Free &#x2192;</a></div></div>
+<div class="ad-fake ad-container" data-ad-slot="header-leader" style="width:100%;max-width:728px;height:90px;background:linear-gradient(135deg,#7c3aed,#4f46e5);margin-bottom:8px">Leaderboard Ad — 728x90<small>Simulated</small></div>
 
 <div class="hm-shop"><strong>Visit our Bookstore!</strong> Wordsmyth eBooks, workbooks, and classroom resources. <a href="#">Shop now &raquo;</a></div>
 
@@ -277,14 +270,12 @@ input[type=number]{-moz-appearance:textfield}
 </div>
 
 <!-- Footer ad -->
-<div class="ad-fake" style="width:100%;max-width:728px;height:90px;background:linear-gradient(135deg,#ea580c,#c2410c);margin-top:10px">Footer Banner Ad — 728x90<small>Simulated</small>
-<div class="ad-overlay"><div class="otxt"><span class="oico">&#x2728;</span><span class="ocp">Less noise. More learning.</span></div><a class="ad-pill" href="#" onclick="go('subscribe');return false">Go Ads-Free &#x2192;</a></div></div>
+<div class="ad-fake ad-container" data-ad-slot="footer-banner" style="width:100%;max-width:728px;height:90px;background:linear-gradient(135deg,#ea580c,#c2410c);margin-top:10px">Footer Banner Ad — 728x90<small>Simulated</small></div>
 </div>
 
 <!-- Right -->
 <div class="sl-right">
-<div class="ad-fake" style="width:160px;height:500px;background:linear-gradient(135deg,#e8453c,#c62828)">Rectangle Ad<small>160x600</small>
-<div class="ad-overlay"><div class="otxt"><span class="oico">&#x2728;</span><span class="ocp">Clean reading</span></div><a class="ad-pill" href="#" onclick="go('subscribe');return false">Go Ads-Free &#x2192;</a></div></div>
+<div class="ad-fake ad-container" data-ad-slot="right-sky" style="width:160px;height:500px;background:linear-gradient(135deg,#e8453c,#c62828)">Rectangle Ad<small>160x600</small></div>
 </div>
 </div>
 
@@ -570,6 +561,16 @@ go('success')},1800)}
 renderW(document.getElementById('widget-support'),false);
 document.getElementById('c-date').textContent=new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
 setTimeout(function(){if(curScreen==='home')document.getElementById('st-pill').style.display='flex'},2000);
+</script>
+
+<!-- V4 Go Ads-Free widget (inlined) -->
+<script
+  id="gafw-inline"
+  data-subscribe-url="https://kids.wordsmyth.net/subscribe"
+  data-delay="800"
+  data-poll="2000"
+  data-selectors=".ad-container,[data-ad-slot]"
+  src="https://nagarmohnish.github.io/wordsmyth-UI/widget/go-ad-free.js">
 </script>
 </body>
 </html>
