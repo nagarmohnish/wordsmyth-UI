@@ -3,7 +3,6 @@
 import Link from "next/link";
 import SidebarLayout from "@/components/SidebarLayout";
 import AdSlot from "@/components/AdSlot";
-import GoAdFreeWidget from "@/components/GoAdFreeWidget";
 import { useUser } from "@/contexts/UserContext";
 
 export default function HomePage() {
@@ -11,16 +10,10 @@ export default function HomePage() {
 
   return (
     <SidebarLayout variant="we">
-      {/* Header ad + Go Ads-Free overlay */}
+      {/* Header leaderboard ad — go-ad-free.js auto-overlays this */}
       {!isSubscriber && (
-        <div style={{ position: "relative", marginBottom: "10px" }}>
+        <div style={{ marginBottom: "10px" }}>
           <AdSlot slotId="home-header-leaderboard" size="leaderboard" position="top" />
-          <div style={{
-            position: "absolute", top: 0, left: 0, right: 0,
-            display: "flex", justifyContent: "center",
-          }}>
-            <GoAdFreeWidget variant="banner" />
-          </div>
         </div>
       )}
 
@@ -211,7 +204,7 @@ export default function HomePage() {
             Ads are like speed bumps on the road to learning.
           </p>
           <p style={{ margin: 0, color: "#555" }}>
-            Go ads-free for just $20/year and give your child a smooth ride.{" "}
+            Go ads-free for just $19.95/year and give your child a smooth ride.{" "}
             <Link href="/subscribe?utm_source=homepage-banner" style={{ color: "#004B97", fontWeight: "bold" }}>
               Go Ads-Free &raquo;
             </Link>
@@ -231,7 +224,7 @@ export default function HomePage() {
             Individual Subscription
           </p>
           <p style={{ margin: 0, color: "#333" }}>
-            Go ads-free and get access to all 14 Wordsmyth eBooks free! Only $20
+            Go ads-free and get access to all 14 Wordsmyth eBooks free! Only $19.95
             per year for families and individual users.{" "}
             <Link href="/subscribe" style={{ color: "#004B97" }}>
               Subscribe now &raquo;
@@ -262,16 +255,10 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* Footer ad + Go Ads-Free overlay */}
+      {/* Footer banner ad — go-ad-free.js auto-overlays this */}
       {!isSubscriber && (
-        <div style={{ position: "relative", marginTop: "16px" }}>
+        <div style={{ marginTop: "16px" }}>
           <AdSlot slotId="home-footer-banner" size="banner" position="bottom" />
-          <div style={{
-            position: "absolute", top: 0, left: 0, right: 0,
-            display: "flex", justifyContent: "center",
-          }}>
-            <GoAdFreeWidget variant="banner" />
-          </div>
         </div>
       )}
     </SidebarLayout>

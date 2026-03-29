@@ -27,8 +27,10 @@ export default function GoAdFreeLoader() {
     return () => {
       const el = document.getElementById("gafw-script");
       if (el) el.remove();
-      document.querySelectorAll(".gafw").forEach((bar) => bar.remove());
+      document.querySelectorAll(".gafw,.gafw4").forEach((bar) => bar.remove());
       document.querySelectorAll("[data-gafw]").forEach((el) => el.removeAttribute("data-gafw"));
+      const modalEl = document.querySelector(".gafw4-modal");
+      if (modalEl) modalEl.remove();
     };
   }, [skip]);
 
@@ -38,7 +40,7 @@ export default function GoAdFreeLoader() {
     const timer = setTimeout(() => {
       document.querySelectorAll("[data-gafw]").forEach((el) => {
         el.removeAttribute("data-gafw");
-        el.querySelectorAll(".gafw").forEach((bar) => bar.remove());
+        el.querySelectorAll(".gafw,.gafw4").forEach((bar) => bar.remove());
       });
     }, 1000);
 
