@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wordsmyth — Complete Product Demo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Poppins',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#333;background:#f5f5f5;line-height:1.6}
+    a{color:#004B97;text-decoration:none}
+    input,button{font-family:inherit}
+    input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+    input[type=number]{-moz-appearance:textfield}
+
+    /* Screen navigation */
+    .screen{display:none}
+    .screen.active{display:block}
+
+    /* Top nav bar */
+    .topnav{background:#fff;border-bottom:1px solid #f0f0f0;padding:10px 20px;position:sticky;top:0;z-index:1000}
+    .topnav-inner{max-width:900px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    .topnav-logo{font-size:1.3em;font-weight:800;font-style:italic;color:#2E7D32;cursor:pointer}
+    .topnav-tabs{display:flex;gap:4px}
+    .topnav-tab{padding:6px 14px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid #e0e0e0;background:#fff;color:#666;transition:all .15s}
+    .topnav-tab.active{background:#18AD4A;color:#fff;border-color:#18AD4A}
+    .topnav-tab:hover:not(.active){border-color:#18AD4A;color:#18AD4A}
+    .topnav-badge{font-size:10px;color:#999;font-weight:500}
+
+    /* ──── SCREEN: HOMEPAGE ──── */
+    .home-hero{background:#C4E4CD;padding:12px 20px;text-align:center;font-size:.85em}
+    .home-content{max-width:800px;margin:0 auto;padding:20px}
+    .home-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px}
+    .home-grid h3{color:#18AD4A;font-size:1em;border-bottom:1px solid #ccc;padding-bottom:4px;margin-bottom:10px}
+    .home-grid p{font-size:.85em;color:#444;margin-bottom:8px}
+    .home-ad{position:relative;border-radius:4px;overflow:hidden;margin:10px 0}
+    .home-ad-inner{display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:12px}
+    .home-ad-overlay{position:absolute;top:0;left:0;right:0;height:30px;background:linear-gradient(135deg,#1a1a2e,#16213e);display:flex;align-items:center;justify-content:space-between;padding:0 6px 0 12px;font-size:11px;z-index:10}
+    .home-ad-overlay .txt{display:flex;align-items:center;gap:6px;color:rgba(255,255,255,.75);flex:1;overflow:hidden}
+    .home-ad-overlay .ico{width:16px;height:16px;border-radius:50%;background:linear-gradient(135deg,#18AD4A,#0d8a3a);display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff;flex-shrink:0}
+    .home-ad-overlay .cp{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:500}
+    .gafw-pill{padding:4px 14px;background:linear-gradient(135deg,#18AD4A,#12963f);color:#fff;font-size:10px;font-weight:700;border-radius:20px;text-decoration:none;white-space:nowrap;flex-shrink:0;margin-left:6px}
+    .home-sub-block{background:#F0F8F0;border:1px solid #ccc;padding:10px 12px;margin-bottom:10px;font-size:.85em;border-radius:4px}
+    .home-sub-block strong{color:#18AD4A}
+    .home-goads{background:#FFFFC6;border:1px solid #E0D890;padding:10px 12px;margin-bottom:10px;text-align:center;border-radius:4px;font-size:.85em}
+
+    /* ──── SCREEN: SUPPORT ──── */
+    .support-hero{background:#18AD4A;color:#fff;padding:50px 20px;text-align:center}
+    .support-hero h1{font-size:2em;font-weight:800;margin-bottom:8px;line-height:1.2}
+    .support-hero p{font-size:1em;opacity:.85;max-width:500px;margin:0 auto}
+    .support-body{max-width:860px;margin:0 auto;padding:32px 20px}
+    .support-why{background:#fafafa;padding:40px 20px}
+    .support-why-inner{max-width:650px;margin:0 auto}
+    .support-why h2{font-size:1.4em;font-weight:800;color:#333;text-align:center;margin-bottom:20px}
+    .support-why p{font-size:.95em;color:#444;margin-bottom:14px;line-height:1.8}
+    .support-quote{border-left:4px solid #18AD4A;padding:12px 18px;margin:20px 0;background:#f0faf0;border-radius:0 8px 8px 0;font-style:italic;color:#333;font-size:.9em;line-height:1.7}
+    .support-quote div{margin-top:6px;font-style:normal;font-weight:600;font-size:.85em}
+    .support-stats{padding:40px 20px;background:#fff}
+    .support-stats-inner{max-width:750px;margin:0 auto}
+    .support-stats h2{text-align:center;font-size:1.3em;font-weight:800;margin-bottom:24px}
+    .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;text-align:center;margin-bottom:32px}
+    .stats-grid .num{font-size:1.8em;font-weight:800;margin-bottom:2px}
+    .stats-grid .lbl{font-size:.75em;color:#999}
+    .testimonials{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .tcard{background:#fafafa;border-radius:10px;padding:16px;border:1px solid #f0f0f0}
+    .tcard .avatar{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:.85em;margin-bottom:10px}
+    .tcard .qt{font-size:.8em;color:#555;font-style:italic;line-height:1.5;margin-bottom:10px}
+    .tcard .nm{font-size:.8em;font-weight:700;color:#333}
+    .tcard .rl{font-size:.7em;color:#999}
+
+    /* ──── DONATION WIDGET (used in support + sticky) ──── */
+    .dw-card{width:380px;max-width:100%;background:#fff;border-radius:16px;border:1px solid #f0f0f0;box-shadow:0 4px 24px rgba(0,0,0,.07);overflow:hidden}
+    .dw-body{padding:24px 22px}
+    .dw-title{font-size:1.25em;font-weight:700;text-align:center;margin-bottom:4px}
+    .dw-sub{font-size:11.5px;color:#666;text-align:center;margin-bottom:16px;line-height:1.4}
+    .dw-freq{display:flex;justify-content:center;margin-bottom:14px}
+    .dw-freq-inner{display:inline-flex;background:#fafafa;border-radius:8px;padding:3px;border:1px solid #f0f0f0}
+    .dw-freq-btn{padding:6px 16px;border-radius:6px;border:none;cursor:pointer;font-size:12px;font-weight:600;background:transparent;color:#999;transition:all .15s}
+    .dw-freq-btn.active{background:#fff;color:#333;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+    .dw-amount{text-align:center;font-size:2.2em;font-weight:800;margin-bottom:12px}
+    .dw-amount .daily{font-size:12px;color:#999;font-weight:500;margin-left:8px}
+    .dw-presets{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:8px}
+    .dw-preset{position:relative;text-align:center}
+    .dw-preset-btn{width:100%;padding:9px 0;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;border:2px solid #e0e0e0;background:#fff;color:#333;transition:all .15s}
+    .dw-preset-btn.active{border-color:#18AD4A;background:#f0faf0;color:#18AD4A}
+    .dw-pop{position:absolute;top:-9px;left:50%;transform:translateX(-50%);font-size:8px;font-weight:700;color:#fff;background:#18AD4A;padding:1px 5px;border-radius:4px;white-space:nowrap}
+    .dw-custom{display:flex;align-items:center;border:2px solid #e0e0e0;border-radius:8px;padding:0 12px;margin-bottom:14px;transition:all .15s}
+    .dw-custom.active{border-color:#18AD4A;background:#f0faf0}
+    .dw-custom span{font-size:13px;font-weight:600;color:#666}
+    .dw-custom input{flex:1;border:none;outline:none;padding:9px 6px;font-size:12.5px;font-weight:600;color:#333;background:transparent}
+    .dw-perk{text-align:center;font-size:11.5px;color:#18AD4A;font-weight:500;margin-bottom:14px}
+    .dw-cta{display:block;text-align:center;padding:13px;background:#18AD4A;color:#fff;border-radius:10px;font-weight:700;font-size:13.5px;cursor:pointer;transition:background .15s;border:none;width:100%;text-decoration:none}
+    .dw-cta:hover{background:#3d9739;color:#fff}
+    .dw-trust{margin-top:12px;text-align:center;font-size:10.5px;color:#999}
+    .dw-trust-row{margin-top:8px;display:flex;justify-content:center;gap:10px;font-size:9.5px;color:#999}
+    .dw-dismiss{display:block;width:100%;text-align:center;margin-top:8px;background:none;border:none;color:#999;font-size:10.5px;cursor:pointer}
+    .dw-close{position:absolute;top:-2px;right:-2px;background:none;border:none;color:#999;font-size:18px;cursor:pointer;padding:4px;line-height:1}
+
+    /* Sticky pill */
+    .sticky-pill{position:fixed;bottom:20px;left:20px;z-index:9999999;display:flex;align-items:center;gap:8px;padding:10px 18px;background:#18AD4A;color:#fff;border:none;border-radius:50px;cursor:pointer;font-size:13px;font-weight:600;box-shadow:0 4px 16px rgba(24,173,74,.3);transition:transform .2s}
+    .sticky-pill:hover{transform:scale(1.05)}
+    .sticky-pill .pip{width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:13px}
+    .sticky-expanded{position:fixed;bottom:20px;left:20px;z-index:9999999}
+
+    /* ──── SCREEN: CHECKOUT ──── */
+    .checkout{background:#fafafa;min-height:100vh}
+    .checkout-bar{background:#fff;border-bottom:1px solid #f0f0f0;padding:14px 20px}
+    .checkout-bar-inner{max-width:480px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+    .checkout-body{max-width:480px;margin:0 auto;padding:28px 20px}
+    .checkout-amount{margin-bottom:24px}
+    .checkout-amount .label{font-size:12px;color:#999;margin-bottom:2px}
+    .checkout-amount .big{font-size:2em;font-weight:800}
+    .checkout-amount .note{font-size:11.5px;color:#18AD4A;font-weight:500}
+    .checkout-field{margin-bottom:16px}
+    .checkout-field label{display:block;font-size:11px;font-weight:600;color:#666;margin-bottom:4px}
+    .checkout-input{width:100%;padding:11px 13px;border:1px solid #e0e0e0;border-radius:8px;font-size:13.5px;color:#333;outline:none;transition:border-color .15s;background:#fff}
+    .checkout-input:focus{border-color:#18AD4A}
+    .checkout-method{width:100%;padding:14px;margin-bottom:10px;border:2px solid #e0e0e0;border-radius:10px;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:all .15s}
+    .checkout-method.active{border-color:#18AD4A;background:#f0faf0}
+    .checkout-method .left{display:flex;align-items:center;gap:10px}
+    .checkout-method .icon{width:34px;height:34px;border-radius:8px;background:#f5f5f5;display:flex;align-items:center;justify-content:center;font-size:15px}
+    .checkout-method .name{font-size:13.5px;font-weight:600}
+    .checkout-method .desc{font-size:10.5px;color:#18AD4A}
+    .checkout-method .arrow{font-size:13px;color:#999;transition:transform .2s}
+    .checkout-express{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:16px}
+    .checkout-express button{padding:10px 6px;border-radius:8px;border:1px solid #e0e0e0;background:#fff;cursor:pointer;font-size:11.5px;font-weight:600;color:#333;transition:border-color .15s}
+    .checkout-express button:hover{border-color:#18AD4A}
+    .checkout-card-form{border:1px solid #e0e0e0;border-top:none;border-radius:0 0 10px 10px;padding:14px;background:#fff;margin-bottom:8px}
+    .checkout-card-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .checkout-trust{text-align:center;font-size:10.5px;color:#999;margin:16px 0;display:flex;align-items:center;justify-content:center;gap:5px}
+    .checkout-cta{width:100%;padding:15px;background:#18AD4A;color:#fff;border:none;border-radius:12px;font-size:14.5px;font-weight:700;cursor:pointer;transition:background .15s;box-shadow:0 4px 16px rgba(24,173,74,.25)}
+    .checkout-cta:hover{background:#3d9739}
+    .checkout-cta.processing{background:#C4E4CD;cursor:default}
+
+    /* ──── SCREEN: SUCCESS ──── */
+    .success{background:#fafafa;min-height:100vh}
+    .success-header{background:#fff;padding:36px 20px;text-align:center;border-bottom:1px solid #f0f0f0}
+    .success-check{width:52px;height:52px;border-radius:50%;background:#f0faf0;border:2px solid #18AD4A;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:22px;color:#18AD4A}
+    .success-header p{font-size:13.5px;color:#666;line-height:1.5}
+    .success-badge{display:inline-flex;align-items:center;gap:5px;padding:7px 16px;border-radius:20px;border:1px solid #18AD4A;background:#f0faf0;font-size:11.5px;font-weight:600;color:#18AD4A;margin-top:14px}
+    .cert{max-width:420px;margin:0 auto;padding:28px 20px}
+    .cert-card{border-radius:16px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.1)}
+    .cert-dark{background:#1a2332;color:#fff;padding:28px 24px 24px;text-align:center;position:relative}
+    .cert-heart{position:absolute;top:14px;left:18px;width:30px;height:30px;border-radius:50%;background:rgba(24,173,74,.15);display:flex;align-items:center;justify-content:center;font-size:14px}
+    .cert-share-icon{position:absolute;top:14px;right:18px;font-size:14px;color:rgba(255,255,255,.4);cursor:pointer}
+    .cert-label{font-size:9.5px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.5);margin:10px 0 16px}
+    .cert-line{width:36px;height:2px;background:#18AD4A;margin:0 auto 14px}
+    .cert-line-thin{width:36px;height:1px;background:rgba(255,255,255,.1);margin:0 auto 14px}
+    .cert-sub{font-size:11.5px;color:rgba(255,255,255,.5)}
+    .cert-name{font-size:1.5em;font-weight:800;margin:0 0 14px}
+    .cert-logo{display:flex;align-items:center;justify-content:center;gap:7px;margin-bottom:14px}
+    .cert-logo .w{width:32px;height:32px;border-radius:50%;background:#18AD4A;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff}
+    .cert-logo span span:first-child{color:#18AD4A}
+    .cert-logo span span:last-child{color:rgba(255,255,255,.6)}
+    .cert-italic{font-size:11.5px;color:rgba(255,255,255,.4);font-style:italic;margin-bottom:12px}
+    .cert-amt{font-size:1.05em;font-weight:700;margin-bottom:3px}
+    .cert-date{font-size:11.5px;color:rgba(255,255,255,.4)}
+    .cert-white{background:#fff;padding:16px 24px}
+    .cert-perk{display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:10px;background:#f0faf0;border:1px solid #C4E4CD;font-size:11.5px;color:#333;line-height:1.4}
+    .cert-perk strong{color:#18AD4A}
+    .share-section{margin-top:24px;text-align:center}
+    .share-section .label{font-size:9.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#999;margin-bottom:10px}
+    .share-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px}
+    .share-btn{display:flex;align-items:center;justify-content:center;gap:5px;padding:9px;border-radius:8px;font-size:11.5px;font-weight:600;color:#fff;text-decoration:none}
+    .back-link{text-align:center;margin-top:24px}
+    .back-link a{font-size:12.5px;color:#18AD4A;font-weight:600}
+    .back-link .manage{display:block;font-size:10.5px;color:#999;margin-top:5px;text-decoration:underline;cursor:pointer}
+
+    /* ──── GO ADS-FREE (homepage ads) ──── */
+    .home-ad-banner{background:#FFFFC6;padding:6px 12px;text-align:center;font-size:.8em;color:#004B97;position:absolute;top:0;left:0;right:0;z-index:5}
+
+    @media(max-width:700px){
+      .home-grid,.testimonials,.stats-grid,.checkout-express{grid-template-columns:1fr 1fr}
+      .topnav-tabs{flex-wrap:wrap}
+      .dw-card{width:100%}
+    }
+    @media(max-width:500px){
+      .testimonials,.stats-grid{grid-template-columns:1fr}
+      .share-grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════ TOP NAV ═══════════════ -->
+<div class="topnav">
+  <div class="topnav-inner">
+    <span class="topnav-logo" onclick="showScreen('home')">Wordsmyth</span>
+    <div class="topnav-tabs">
+      <button class="topnav-tab active" data-screen="home" onclick="showScreen('home')">Homepage</button>
+      <button class="topnav-tab" data-screen="support" onclick="showScreen('support')">Support Page</button>
+      <button class="topnav-tab" data-screen="checkout" onclick="showScreen('checkout')">Checkout</button>
+      <button class="topnav-tab" data-screen="success" onclick="showScreen('success')">Certificate</button>
+    </div>
+    <span class="topnav-badge">Interactive Demo</span>
+  </div>
+</div>
+
+<!-- ═══════════════ SCREEN: HOMEPAGE ═══════════════ -->
+<div id="screen-home" class="screen active">
+  <!-- Header ad + overlay -->
+  <div class="home-ad" style="margin:0">
+    <div class="home-ad-inner" style="height:90px;background:linear-gradient(135deg,#7c3aed,#4f46e5)">Leaderboard Ad — 728x90</div>
+    <div class="home-ad-overlay">
+      <div class="txt"><span class="ico">&#x2728;</span><span class="cp">Tired of ads? Read without distractions.</span></div>
+      <a class="gafw-pill" href="#" onclick="showScreen('support');return false">Go Ads-Free &#x2192;</a>
+    </div>
+  </div>
+
+  <!-- Go Ads-Free yellow banner -->
+  <div class="home-goads">
+    <strong>Ads are like speed bumps on the road to learning.</strong><br>
+    Go ads-free for just $20/year and give your child a smooth ride.
+    <a href="#" onclick="showScreen('support');return false" style="font-weight:700;color:#004B97"> Go Ads-Free &raquo;</a>
+  </div>
+
+  <div class="home-content">
+    <div class="home-grid">
+      <div>
+        <h3>Our Children's Dictionaries</h3>
+        <div style="background:#E8F5E9;border:1px solid #ccc;height:50px;display:flex;align-items:center;justify-content:center;font-size:.75em;color:#888;margin-bottom:6px;border-radius:4px">[WILD Dictionary Image]</div>
+        <p><strong style="color:#004B97">WILD (K-2)</strong> — An illustrated dictionary for young readers. Explore words through pictures and simple definitions.</p>
+        <div style="background:#E8F5E9;border:1px solid #ccc;height:50px;display:flex;align-items:center;justify-content:center;font-size:.75em;color:#888;margin-bottom:6px;border-radius:4px;margin-top:14px">[Word Explorer Image]</div>
+        <p><strong style="color:#004B97">Word Explorer (3-8)</strong> — Definitions, synonyms, antonyms, related words, and word parts for grades 3-8.</p>
+      </div>
+      <div>
+        <h3>Vocabulary Learning</h3>
+        <p><strong style="color:#004B97">Activities</strong> — Flashcards, crossword puzzles, word scrambles, quizzes, and spelling tests.</p>
+        <p><strong style="color:#004B97">WVI Levels</strong> — Difficulty levels for each word, helping teachers select appropriate vocabulary.</p>
+        <p><strong style="color:#004B97">Wordlist Maker</strong> — Create custom word lists, generate glossaries, and export for classroom use.</p>
+      </div>
+    </div>
+
+    <div class="home-sub-block">
+      <strong>Individual Subscription</strong> — Go ads-free and get all 14 Wordsmyth eBooks free! Only $20/year.
+      <a href="#" onclick="showScreen('support');return false"> Subscribe now &raquo;</a>
+    </div>
+    <div class="home-sub-block">
+      <strong>Educational Group Subscription</strong> — Schools and districts can go ads-free for all students and teachers.
+    </div>
+  </div>
+
+  <!-- Footer ad + overlay -->
+  <div class="home-ad" style="margin:0">
+    <div class="home-ad-inner" style="height:90px;background:linear-gradient(135deg,#ea580c,#c2410c)">Footer Banner Ad — 728x90</div>
+    <div class="home-ad-overlay">
+      <div class="txt"><span class="ico">&#x2728;</span><span class="cp">Less noise. More learning.</span></div>
+      <a class="gafw-pill" href="#" onclick="showScreen('support');return false">Go Ads-Free &#x2192;</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ SCREEN: SUPPORT ═══════════════ -->
+<div id="screen-support" class="screen">
+  <div class="support-hero">
+    <p style="font-size:.8em;opacity:.6;margin-bottom:12px"><a href="#" onclick="showScreen('home');return false" style="color:rgba(255,255,255,.7)">Home</a> <span style="margin:0 6px">/</span> Support</p>
+    <h1>Every Child Deserves<br>the Gift of Words</h1>
+    <p>Free since 1998. 50,000+ students daily. 120+ countries. Your support keeps it that way.</p>
+  </div>
+
+  <div class="support-body" style="display:flex;justify-content:center">
+    <div class="dw-card" id="support-widget"></div>
+  </div>
+
+  <div class="support-why">
+    <div class="support-why-inner">
+      <h2>Why It Matters</h2>
+      <p>Wordsmyth was built in 1998 with one belief: <strong>no child should be denied access to a great dictionary because of money.</strong></p>
+      <p>No venture capital. No data harvesting. No paywalls. Just a small team keeping quality education free for every child who needs it.</p>
+      <p><strong>Keeping it free gets harder every year.</strong> Server costs rise, ad revenue declines, and demand for new languages and tools keeps growing. We refuse to compromise — so we're asking you.</p>
+      <div class="support-quote">
+        "My teacher found Wordsmyth online and suddenly I could look up any English word. That dictionary helped me learn English. Today I'm studying to become a teacher myself."
+        <div>— Maria, age 22, Guatemala</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="support-stats">
+    <div class="support-stats-inner">
+      <h2>The Impact So Far</h2>
+      <div class="stats-grid">
+        <div><div class="num" style="color:#333">27</div><div class="lbl">Years free</div></div>
+        <div><div class="num" style="color:#18AD4A">50K+</div><div class="lbl">Daily students</div></div>
+        <div><div class="num" style="color:#3d9739">120+</div><div class="lbl">Countries</div></div>
+        <div><div class="num" style="color:#333">14,000+</div><div class="lbl">Words defined</div></div>
+      </div>
+      <div class="testimonials">
+        <div class="tcard"><div class="avatar" style="background:#18AD4A">M</div><div class="qt">"My students love the illustrations and activities. Wordsmyth keeps them engaged with new vocabulary every week."</div><div class="nm">Mrs. Rodriguez</div><div class="rl">3rd Grade Teacher, Austin TX</div></div>
+        <div class="tcard"><div class="avatar" style="background:#3d9739">D</div><div class="qt">"One of the few sites I trust completely for age-appropriate definitions. A lifesaver for homeschooling."</div><div class="nm">David K.</div><div class="rl">Homeschool Parent</div></div>
+        <div class="tcard"><div class="avatar" style="background:#18AD4A">A</div><div class="qt">"The Word Explorer helps me understand big words, and the games make learning fun!"</div><div class="nm">Amara, age 11</div><div class="rl">Student</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ SCREEN: CHECKOUT ═══════════════ -->
+<div id="screen-checkout" class="screen">
+  <div class="checkout">
+    <div class="checkout-bar"><div class="checkout-bar-inner">
+      <a href="#" onclick="showScreen('support');return false" style="color:#999;font-size:13px">&larr; Back</a>
+      <span style="font-size:13px;font-weight:600;color:#18AD4A">Wordsmyth</span>
+      <span style="font-size:11px;color:#999">&#x1F512; Secure</span>
+    </div></div>
+
+    <div class="checkout-body">
+      <div class="checkout-amount">
+        <div class="label">You're supporting</div>
+        <div class="big" id="checkout-amount">$10</div>
+        <div class="note">Helping children discover new words every day</div>
+      </div>
+
+      <div class="checkout-field">
+        <label>Email address</label>
+        <input class="checkout-input" type="email" placeholder="you@example.com" id="checkout-email">
+      </div>
+
+      <p style="font-size:13px;font-weight:600;margin:0 0 12px">Select payment method</p>
+
+      <div class="checkout-method" id="method-bank" onclick="toggleMethod('bank')">
+        <div class="left"><span class="icon">&#x1F3E6;</span><div><span class="name">Direct Bank Transfer (ACH)</span><span class="desc" style="display:block">Best for long-term support</span></div></div>
+        <span class="arrow">&#x25BE;</span>
+      </div>
+
+      <div style="text-align:center;margin:16px 0 10px"><span style="font-size:12px;color:#999">Express checkout</span></div>
+
+      <div class="checkout-express">
+        <button>Apple Pay</button>
+        <button>Google Pay</button>
+        <button>PayPal</button>
+        <button>Venmo</button>
+      </div>
+
+      <div class="checkout-method" id="method-card" onclick="toggleMethod('card')">
+        <div class="left"><span class="icon">&#x1F4B3;</span><span class="name">Card payment</span></div>
+        <span class="arrow">&#x25BE;</span>
+      </div>
+
+      <div id="card-form" style="display:none" class="checkout-card-form">
+        <div class="checkout-field"><label>Name on card</label><input class="checkout-input" type="text" placeholder="John Doe" id="card-name"></div>
+        <div class="checkout-field"><label>Card number</label><input class="checkout-input" type="text" placeholder="1234 5678 9012 3456"></div>
+        <div class="checkout-card-row">
+          <div class="checkout-field"><label>Expiry</label><input class="checkout-input" type="text" placeholder="MM / YY"></div>
+          <div class="checkout-field"><label>CVC</label><input class="checkout-input" type="text" placeholder="123"></div>
+        </div>
+      </div>
+
+      <div class="checkout-trust">&#x1F512; Secure payment &bull; Powered by Stripe</div>
+
+      <button class="checkout-cta" id="checkout-cta-btn" onclick="processPayment()">Complete Payment — $10</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ SCREEN: SUCCESS ═══════════════ -->
+<div id="screen-success" class="screen">
+  <div class="success">
+    <div class="success-header">
+      <div style="max-width:420px;margin:0 auto">
+        <div class="success-check">&#x2714;</div>
+        <p id="success-confirm">Your $10 one-time support is confirmed.</p>
+        <p>You're now one of us — helping keep learning free for children worldwide.</p>
+        <div class="success-badge">&#x1F49A; Official Supporter of Free Learning</div>
+      </div>
+    </div>
+
+    <div class="cert">
+      <div class="cert-card">
+        <div class="cert-dark">
+          <div class="cert-heart">&#x1F49A;</div>
+          <div class="cert-share-icon">&#x2197;</div>
+          <div class="cert-label">Certificate of Support</div>
+          <div class="cert-line"></div>
+          <div class="cert-sub">This certifies that</div>
+          <div class="cert-name" id="cert-name">John Doe</div>
+          <div class="cert-sub">is a proud supporter of</div>
+          <div class="cert-logo">
+            <div class="w">W</div>
+            <span style="font-size:1.2em;font-weight:700;letter-spacing:1px"><span style="color:#18AD4A">WORD</span><span style="color:rgba(255,255,255,.6)">SMYTH</span></span>
+          </div>
+          <div class="cert-line-thin"></div>
+          <div class="cert-italic">For keeping learning free &amp; accessible for every child</div>
+          <div class="cert-amt" id="cert-amt">$10 one-time</div>
+          <div class="cert-date" id="cert-date"></div>
+        </div>
+        <div class="cert-white">
+          <div class="cert-perk">&#x2714;&nbsp; Your Wordsmyth experience will be <strong>&nbsp;ads-free</strong>&nbsp; while your support is active.</div>
+        </div>
+      </div>
+
+      <div class="share-section">
+        <div class="label">Show others you support free learning</div>
+        <div class="share-grid">
+          <a class="share-btn" style="background:#333" href="#" target="_blank">&#x1D54F; X</a>
+          <a class="share-btn" style="background:#0A66C2" href="#" target="_blank">in LinkedIn</a>
+          <a class="share-btn" style="background:#25D366" href="#" target="_blank">WhatsApp</a>
+        </div>
+      </div>
+
+      <div class="back-link">
+        <a href="#" onclick="showScreen('home');return false">Back to Wordsmyth &rarr;</a>
+        <span class="manage" onclick="showScreen('support')">Manage your support</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ STICKY DONATION PILL ═══════════════ -->
+<div id="sticky-widget" style="display:none">
+  <button class="sticky-pill" id="sticky-pill" onclick="expandSticky()">
+    <span class="pip">&#x1F49A;</span>
+    <span>Help a child learn</span>
+  </button>
+</div>
+<div id="sticky-expanded" class="sticky-expanded" style="display:none">
+  <div class="dw-card" id="sticky-card"></div>
+</div>
+
+<!-- ═══════════════ JAVASCRIPT ═══════════════ -->
+<script>
+// ── State ──
+var widgetState = { frequency: 'one-time', preset: 10, custom: '', isCustom: false };
+var currentScreen = 'home';
+var stickyExpanded = false;
+
+function getAmount() { return widgetState.isCustom ? (parseInt(widgetState.custom,10)||0) : widgetState.preset; }
+function getFreqLabel() { return widgetState.frequency === 'monthly' ? ' / month' : ''; }
+function getFreqText() { return widgetState.frequency === 'monthly' ? 'every month' : 'one-time'; }
+
+// ── Screen nav ──
+function showScreen(name) {
+  document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('active') });
+  document.getElementById('screen-' + name).classList.add('active');
+  document.querySelectorAll('.topnav-tab').forEach(function(t){ t.classList.toggle('active', t.dataset.screen === name) });
+  currentScreen = name;
+  window.scrollTo(0,0);
+
+  // Show/hide sticky on homepage
+  var showSticky = (name === 'home');
+  document.getElementById('sticky-widget').style.display = showSticky ? 'block' : 'none';
+  if (!showSticky) { document.getElementById('sticky-expanded').style.display = 'none'; stickyExpanded = false; }
+
+  // Update checkout
+  if (name === 'checkout') {
+    var a = getAmount();
+    document.getElementById('checkout-amount').textContent = '$' + a + getFreqLabel();
+    document.getElementById('checkout-cta-btn').textContent = 'Complete Payment — $' + a + getFreqLabel();
+    document.getElementById('checkout-cta-btn').className = 'checkout-cta';
+  }
+}
+
+// ── Render donation widget ──
+function renderWidget(container, showDismiss) {
+  var a = getAmount();
+  var m = widgetState.frequency === 'monthly';
+  var d = m && a > 0 ? (a/30).toFixed(2) : null;
+
+  var h = '<div class="dw-body"><div style="position:relative;margin-bottom:16px">';
+  if (showDismiss) h += '<button class="dw-close" onclick="collapseSticky()">&times;</button>';
+  h += '<div class="dw-title">Support Free Learning</div>';
+  h += '<div class="dw-sub">Skip one takeout order\u2014help a child discover new words today.</div></div>';
+  // Frequency
+  h += '<div class="dw-freq"><div class="dw-freq-inner">';
+  h += '<button class="dw-freq-btn' + (widgetState.frequency==='one-time'?' active':'') + '" onclick="setFreq(\'one-time\')">One-time</button>';
+  h += '<button class="dw-freq-btn' + (widgetState.frequency==='monthly'?' active':'') + '" onclick="setFreq(\'monthly\')">Monthly</button>';
+  h += '</div></div>';
+  // Amount
+  h += '<div class="dw-amount">$' + (a>0?a:'0');
+  if (d) h += '<span class="daily">$'+d+'/day</span>';
+  h += '</div>';
+  // Presets
+  h += '<div class="dw-presets">';
+  [5,10,25,50].forEach(function(p){
+    var ac = !widgetState.isCustom && widgetState.preset === p;
+    h += '<div class="dw-preset">';
+    if (p===10) h += '<span class="dw-pop">Popular</span>';
+    h += '<button class="dw-preset-btn'+(ac?' active':'')+'" onclick="setPreset('+p+')">$'+p+'</button></div>';
+  });
+  h += '</div>';
+  // Custom
+  h += '<div class="dw-custom'+(widgetState.isCustom?' active':'')+'"><span>$</span>';
+  h += '<input type="number" min="1" placeholder="Enter custom amount" value="'+(widgetState.isCustom?widgetState.custom:'')+'" onfocus="activateCustom()" oninput="updateCustom(this.value)"></div>';
+  // Perk
+  h += '<div class="dw-perk">&#x2714; Go ads-free on all pages</div>';
+  // CTA
+  var lb = a > 0 ? 'Continue with $'+a+getFreqLabel() : 'Give Now';
+  h += '<button class="dw-cta" onclick="showScreen(\'checkout\')">' + lb + '</button>';
+  // Trust
+  h += '<div class="dw-trust">&#x1F512; Secure payment | Visa &middot; MC &middot; PayPal</div>';
+  h += '<div class="dw-trust-row"><span>Secure &amp; encrypted</span><span>Cancel anytime</span><span>Takes 10 seconds</span></div>';
+  if (showDismiss) h += '<button class="dw-dismiss" onclick="collapseSticky()">Maybe later</button>';
+  h += '</div>';
+
+  container.innerHTML = h;
+}
+
+function refreshWidgets() {
+  var sw = document.getElementById('support-widget');
+  if (sw) renderWidget(sw, false);
+  if (stickyExpanded) {
+    var sc = document.getElementById('sticky-card');
+    if (sc) renderWidget(sc, true);
+  }
+}
+
+function setFreq(f) { widgetState.frequency = f; refreshWidgets(); }
+function setPreset(p) { widgetState.preset = p; widgetState.isCustom = false; widgetState.custom = ''; refreshWidgets(); }
+function activateCustom() { widgetState.isCustom = true; refreshWidgets(); }
+function updateCustom(v) { widgetState.custom = v; widgetState.isCustom = true; refreshWidgets(); }
+
+// ── Sticky ──
+function expandSticky() {
+  stickyExpanded = true;
+  document.getElementById('sticky-widget').style.display = 'none';
+  var el = document.getElementById('sticky-expanded');
+  el.style.display = 'block';
+  renderWidget(document.getElementById('sticky-card'), true);
+}
+function collapseSticky() {
+  stickyExpanded = false;
+  document.getElementById('sticky-expanded').style.display = 'none';
+  document.getElementById('sticky-widget').style.display = 'block';
+}
+
+// ── Checkout ──
+var activeMethod = null;
+function toggleMethod(m) {
+  activeMethod = activeMethod === m ? null : m;
+  document.getElementById('method-bank').classList.toggle('active', activeMethod==='bank');
+  document.getElementById('method-card').classList.toggle('active', activeMethod==='card');
+  document.getElementById('card-form').style.display = activeMethod==='card' ? 'block' : 'none';
+}
+
+function processPayment() {
+  var btn = document.getElementById('checkout-cta-btn');
+  btn.textContent = 'Processing...';
+  btn.className = 'checkout-cta processing';
+  setTimeout(function() {
+    var name = document.getElementById('card-name')?.value || 'Supporter';
+    var a = getAmount();
+    document.getElementById('cert-name').textContent = name;
+    document.getElementById('cert-amt').textContent = '$' + a + ' ' + getFreqText();
+    document.getElementById('cert-date').textContent = new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+    document.getElementById('success-confirm').textContent = 'Your $' + a + ' ' + getFreqText() + ' support is confirmed.';
+    showScreen('success');
+  }, 1800);
+}
+
+// ── Init ──
+renderWidget(document.getElementById('support-widget'), false);
+document.getElementById('cert-date').textContent = new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+
+// Show sticky pill on homepage after 2s
+setTimeout(function() {
+  if (currentScreen === 'home') {
+    document.getElementById('sticky-widget').style.display = 'block';
+  }
+}, 2000);
+</script>
+
+</body>
+</html>

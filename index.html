@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wordsmyth — Complete Demo</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Verdana,Geneva,sans-serif;color:#333;background:#fff;font-size:14px;line-height:1.5}
+a{color:#004B97;text-decoration:none}
+a:hover{text-decoration:underline}
+button{font-family:inherit;cursor:pointer}
+input{font-family:inherit}
+input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none}
+input[type=number]{-moz-appearance:textfield}
+.poppins{font-family:'Poppins',sans-serif}
+.screen{display:none}.screen.active{display:block}
+
+/* ─── TOP NAV (demo) ─── */
+.demo-nav{background:#fafafa;border-bottom:2px solid #18AD4A;padding:8px 16px;position:sticky;top:0;z-index:10000;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.demo-nav-tabs{display:flex;gap:4px;flex-wrap:wrap}
+.demo-tab{padding:5px 12px;border-radius:5px;font-size:11px;font-weight:600;border:1px solid #ddd;background:#fff;color:#666;cursor:pointer}
+.demo-tab.active{background:#18AD4A;color:#fff;border-color:#18AD4A}
+.demo-tab:hover:not(.active){border-color:#18AD4A;color:#18AD4A}
+.demo-label{font-size:10px;color:#999;font-weight:500}
+
+/* ─── HEADER ─── */
+.hdr{background:#fff}
+.hdr-inner{max-width:960px;margin:0 auto;padding:8px 16px;display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.hdr-logo{font-size:1.8em;font-weight:bold;font-style:italic;color:#2E7D32;text-decoration:none}
+.hdr-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+.hdr-login{background:#F0F0F0;border:1px solid #91a093;padding:2px 8px;font-size:11px}
+.hdr-login a{color:#004B97}
+.hdr-nav{font-size:11px}.hdr-nav a{color:#C12E48;font-weight:bold;text-decoration:none}.hdr-nav a:hover{text-decoration:underline}.hdr-nav .sep{color:#C12E48;margin:0 3px}
+.hdr-line{border-top:3px solid #000}
+.hdr-banner{background:#FFFFC6;min-height:70px;position:relative}
+.hdr-banner-inner{max-width:960px;margin:0 auto;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13px}
+.hdr-banner-cta{padding:6px 16px;font-size:13px;font-weight:bold;color:#fff;background:#2E7D32;border:none;border-radius:4px}
+.hdr-banner-x{font-size:16px;font-weight:bold;color:#666;background:none;border:none;margin-left:8px}
+
+/* ─── DATA MENU ─── */
+.dmenu{background:#C4E4CD;width:100%}
+.dmenu-inner{max-width:960px;margin:0 auto;display:flex;font-size:9px}
+.dmenu-item{flex:1;text-align:center;padding:6px 2px;font-weight:bold;font-size:1.1em;cursor:pointer;position:relative;user-select:none}
+.dmenu-item:hover{background:#DCEDD8}
+.dmenu-item.active{background:#87CC8F}
+.dmenu-item .arr{font-size:.55em;vertical-align:middle;margin-left:2px}
+.dmenu-dd{display:none;position:absolute;left:0;min-width:100%;background:#DCEDD8;border:1px solid #a8c8a8;z-index:20;text-align:left;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.dmenu-item:hover .dmenu-dd{display:block}
+.dmenu-dd a{display:block;padding:4px 10px;font-size:1em;color:#333;white-space:nowrap}.dmenu-dd a:hover{background:#C4E4CD;text-decoration:none}
+.dmenu-dd .dis{color:#999;padding:4px 10px;font-size:1em;cursor:default}
+
+/* ─── SIDEBAR LAYOUT ─── */
+.sl{max-width:960px;margin:0 auto;display:flex;min-height:500px}
+.sl-left{width:190px;flex-shrink:0;padding:8px}
+.sl-center{flex:1;min-width:0;padding:8px}
+.sl-right{width:170px;flex-shrink:0;padding:8px}
+.sl-title{font-size:.85em;font-weight:bold;color:#18AD4A;margin-bottom:6px;line-height:1.3}
+.sl-search{display:flex;gap:3px;margin-bottom:6px}
+.sl-search input{width:110px;border:1px solid lightgray;padding:2px 4px;font-size:1em}
+.sl-search button{background:#3d9739;color:#fff;font-weight:bold;padding:2px 8px;border:none;font-size:.85em}
+.sl-radio{font-size:.65em;margin-bottom:6px}
+.sl-radio label{display:flex;align-items:center;gap:3px;cursor:pointer;margin-bottom:1px}
+.sl-radio label span{font-weight:bold;color:#004B97}
+.sl-panel{border:1px solid #747ac8}
+.sl-panel-hdr{text-align:center;font-size:.65em;font-weight:bold;padding:4px;background:#C4E4CD}
+.sl-panel-body{height:160px;overflow-y:auto;background:#fff;padding:4px;font-size:.7em;color:#aaa;font-style:italic}
+.sl-tabs{margin-top:4px;border:1px solid #747ac8}
+.sl-tabs-hdr{display:flex}
+.sl-tabs-hdr div{flex:1;text-align:center;font-size:.65em;font-weight:bold;padding:4px;cursor:pointer}
+
+/* ─── ADS ─── */
+.ad-fake{position:relative;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:12px;border-radius:2px;overflow:hidden;flex-direction:column}
+.ad-fake small{font-size:9px;opacity:.7;font-weight:400;margin-top:1px}
+.ad-overlay{position:absolute;top:0;left:0;right:0;height:30px;background:linear-gradient(135deg,#1a1a2e,#16213e);display:flex;align-items:center;justify-content:space-between;padding:0 6px 0 10px;font-size:10px;z-index:5;animation:fadeIn .35s ease-out}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.ad-overlay .otxt{display:flex;align-items:center;gap:5px;color:rgba(255,255,255,.75);flex:1;overflow:hidden}
+.ad-overlay .oico{width:14px;height:14px;border-radius:50%;background:linear-gradient(135deg,#18AD4A,#0d8a3a);display:flex;align-items:center;justify-content:center;font-size:8px;color:#fff;flex-shrink:0}
+.ad-overlay .ocp{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:500}
+.ad-pill{padding:3px 12px;background:linear-gradient(135deg,#18AD4A,#12963f);color:#fff!important;font-size:9px;font-weight:700;border-radius:20px;text-decoration:none!important;white-space:nowrap;flex-shrink:0;margin-left:5px;box-shadow:0 2px 6px rgba(24,173,74,.3)}
+
+/* ─── FOOTER ─── */
+.ftr{background:#F0F0F0;border-top:3px solid #fff;padding:14px;text-align:center;font-size:11px;margin-top:auto}
+.ftr a{color:#005CB9}.ftr .sep{margin:0 3px}
+.ftr .social{display:flex;justify-content:center;gap:8px;margin:6px 0;font-size:12px}
+
+/* ─── DONATION WIDGET ─── */
+.dw{width:380px;max-width:100%;background:#fff;border-radius:16px;border:1px solid #f0f0f0;box-shadow:0 4px 24px rgba(0,0,0,.07);overflow:hidden}
+.dw-bd{padding:24px 22px}
+.dw-t{font-size:1.25em;font-weight:700;text-align:center;margin-bottom:4px}
+.dw-s{font-size:11px;color:#666;text-align:center;margin-bottom:15px;line-height:1.4}
+.dw-fg{display:flex;justify-content:center;margin-bottom:14px}
+.dw-fg-in{display:inline-flex;background:#fafafa;border-radius:8px;padding:3px;border:1px solid #f0f0f0}
+.dw-fb{padding:6px 16px;border-radius:6px;border:none;font-size:12px;font-weight:600;background:transparent;color:#999;transition:all .15s}
+.dw-fb.act{background:#fff;color:#333;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.dw-am{text-align:center;font-size:2.2em;font-weight:800;margin-bottom:12px}.dw-am .dy{font-size:12px;color:#999;font-weight:500;margin-left:6px}
+.dw-pr{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:7px}
+.dw-pb{width:100%;padding:9px 0;border-radius:8px;font-size:13px;font-weight:600;border:2px solid #e0e0e0;background:#fff;color:#333;transition:all .15s}
+.dw-pb.act{border-color:#18AD4A;background:#f0faf0;color:#18AD4A}
+.dw-pop{position:absolute;top:-9px;left:50%;transform:translateX(-50%);font-size:8px;font-weight:700;color:#fff;background:#18AD4A;padding:1px 5px;border-radius:4px;white-space:nowrap}
+.dw-ci{display:flex;align-items:center;border:2px solid #e0e0e0;border-radius:8px;padding:0 10px;margin-bottom:13px;transition:all .15s}
+.dw-ci.act{border-color:#18AD4A;background:#f0faf0}
+.dw-ci span{font-size:13px;font-weight:600;color:#666}
+.dw-ci input{flex:1;border:none;outline:none;padding:9px 5px;font-size:12px;font-weight:600;color:#333;background:transparent}
+.dw-pk{text-align:center;font-size:11px;color:#18AD4A;font-weight:500;margin-bottom:13px}
+.dw-cta{display:block;text-align:center;padding:13px;background:#18AD4A;color:#fff;border-radius:10px;font-weight:700;font-size:13px;border:none;width:100%;transition:background .15s;text-decoration:none;cursor:pointer}
+.dw-cta:hover{background:#3d9739;color:#fff}
+.dw-tr{margin-top:11px;text-align:center;font-size:10px;color:#999}
+.dw-trb{margin-top:7px;display:flex;justify-content:center;gap:10px;font-size:9px;color:#999}
+.dw-dis{display:block;width:100%;text-align:center;margin-top:7px;background:none;border:none;color:#999;font-size:10px;cursor:pointer}
+.dw-x{position:absolute;top:-2px;right:-2px;background:none;border:none;color:#999;font-size:17px;cursor:pointer;padding:3px;line-height:1}
+
+/* Sticky pill */
+.st-pill{position:fixed;bottom:20px;left:20px;z-index:9999999;display:flex;align-items:center;gap:7px;padding:9px 16px;background:#18AD4A;color:#fff;border:none;border-radius:50px;font-size:12px;font-weight:600;box-shadow:0 4px 16px rgba(24,173,74,.3);transition:transform .2s;cursor:pointer}
+.st-pill:hover{transform:scale(1.05)}
+.st-exp{position:fixed;bottom:20px;left:20px;z-index:9999999}
+
+/* Sticky footer banner */
+.sfb{position:fixed;bottom:0;left:0;right:0;background:#004B97;color:#fff;padding:10px 16px;z-index:999;display:flex;align-items:center;justify-content:center;gap:12px;font-size:13px;box-shadow:0 -2px 8px rgba(0,0,0,.15)}
+.sfb-cta{padding:5px 14px;background:#f5a623;color:#004B97;font-weight:700;border:none;border-radius:6px;font-size:12px}
+.sfb-x{color:rgba(255,255,255,.5);background:none;border:none;font-size:15px;margin-left:6px}
+
+/* ─── CHECKOUT ─── */
+.co-bar{background:#fff;border-bottom:1px solid #f0f0f0;padding:12px 16px}
+.co-bar-in{max-width:480px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+.co-body{max-width:480px;margin:0 auto;padding:24px 16px}
+.co-big{font-size:2em;font-weight:800;margin:2px 0}
+.co-fld{margin-bottom:14px}
+.co-fld label{display:block;font-size:10.5px;font-weight:600;color:#666;margin-bottom:3px}
+.co-inp{width:100%;padding:10px 12px;border:1px solid #e0e0e0;border-radius:8px;font-size:13px;color:#333;outline:none;background:#fff;transition:border-color .15s}
+.co-inp:focus{border-color:#18AD4A}
+.co-meth{width:100%;padding:13px;margin-bottom:8px;border:2px solid #e0e0e0;border-radius:10px;background:#fff;display:flex;align-items:center;justify-content:space-between;transition:all .15s;cursor:pointer}
+.co-meth.act{border-color:#18AD4A;background:#f0faf0}
+.co-meth .lft{display:flex;align-items:center;gap:10px}
+.co-meth .ico{width:32px;height:32px;border-radius:7px;background:#f5f5f5;display:flex;align-items:center;justify-content:center;font-size:14px}
+.co-meth .nm{font-size:13px;font-weight:600}
+.co-meth .ds{font-size:10px;color:#18AD4A;display:block}
+.co-expr{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:14px}
+.co-expr button{padding:9px 5px;border-radius:7px;border:1px solid #e0e0e0;background:#fff;font-size:11px;font-weight:600;color:#333;cursor:pointer;transition:border-color .15s}
+.co-expr button:hover{border-color:#18AD4A}
+.co-cf{border:1px solid #e0e0e0;border-top:none;border-radius:0 0 10px 10px;padding:12px;background:#fff;margin-bottom:6px}
+.co-cf-row{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.co-cta{width:100%;padding:14px;background:#18AD4A;color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(24,173,74,.25);transition:background .15s}
+.co-cta:hover{background:#3d9739}
+.co-cta.proc{background:#C4E4CD;cursor:default}
+
+/* ─── SUCCESS ─── */
+.su-hdr{background:#fff;padding:32px 16px;text-align:center;border-bottom:1px solid #f0f0f0}
+.su-chk{width:50px;height:50px;border-radius:50%;background:#f0faf0;border:2px solid #18AD4A;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:20px;color:#18AD4A}
+.su-bdg{display:inline-flex;align-items:center;gap:5px;padding:6px 14px;border-radius:20px;border:1px solid #18AD4A;background:#f0faf0;font-size:11px;font-weight:600;color:#18AD4A;margin-top:12px}
+.cert{max-width:420px;margin:0 auto;padding:24px 16px}
+.cert-dk{background:#1a2332;color:#fff;padding:26px 22px 22px;text-align:center;position:relative;border-radius:16px 16px 0 0}
+.cert-wh{background:#fff;padding:14px 22px;border-radius:0 0 16px 16px}
+.cert-prk{display:flex;align-items:center;gap:7px;padding:9px 11px;border-radius:10px;background:#f0faf0;border:1px solid #C4E4CD;font-size:11px;color:#333;line-height:1.4}
+.sh-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:10px}
+.sh-btn{display:flex;align-items:center;justify-content:center;padding:8px;border-radius:7px;font-size:11px;font-weight:600;color:#fff;text-decoration:none}
+
+/* ─── SUBSCRIBE ─── */
+.sub-cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;align-items:start;margin-bottom:36px}
+.sub-card{border:1px solid #e0e0e0;border-radius:16px;padding:24px 20px;background:#fff;position:relative;box-shadow:0 2px 12px rgba(0,0,0,.04)}
+.sub-card.pop{border:2px solid #18AD4A;box-shadow:0 8px 30px rgba(24,173,74,.12);transform:scale(1.03)}
+.sub-badge{display:inline-block;padding:2px 12px;border-radius:20px;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px}
+.sub-pop-badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);padding:4px 16px;border-radius:20px;background:#18AD4A;color:#fff;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;white-space:nowrap}
+.sub-price{font-size:2.2em;font-weight:800;margin-bottom:2px}
+.sub-btn{display:block;text-align:center;padding:11px;font-weight:700;font-size:.9em;border-radius:10px;text-decoration:none;border:none;width:100%;cursor:pointer;transition:opacity .15s}
+.cmp-table{width:100%;border-collapse:collapse;font-size:.8em}
+.cmp-table th{padding:9px;text-align:left;border-bottom:2px solid #e0e0e0;font-weight:700}
+.cmp-table td{padding:7px 9px;border-bottom:1px solid #f0f0f0}
+.cmp-chk{color:#18AD4A;font-size:1.1em}
+.cmp-no{color:#ddd}
+
+/* ─── HOME EXTRAS ─── */
+.hm-shop{background:#FFFFC6;border:1px solid #E0D890;padding:7px 10px;margin-bottom:10px;font-size:.8em;border-radius:3px}
+.hm-grid{display:grid;grid-template-columns:48% 48%;gap:4%;font-size:.8em;margin-bottom:12px}
+.hm-grid h3{color:#18AD4A;font-size:1em;font-weight:bold;border-bottom:1px solid #ccc;padding-bottom:3px;margin-bottom:8px}
+.hm-grid p{color:#444;margin-bottom:7px}
+.hm-img{width:100%;height:48px;background:#E8F5E9;border:1px solid #ccc;display:flex;align-items:center;justify-content:center;font-size:.7em;color:#888;margin-bottom:5px;border-radius:3px}
+.hm-goads{background:#FFFFC6;border:1px solid #E0D890;padding:8px 10px;margin-bottom:8px;text-align:center;font-size:.8em;border-radius:3px}
+.hm-sub{background:#F0F8F0;border:1px solid #ccc;padding:8px 10px;margin-bottom:8px;font-size:.8em;border-radius:3px}
+.hm-sub strong{color:#18AD4A}
+
+@media(max-width:800px){.sl{flex-direction:column}.sl-left,.sl-right{width:100%}.hm-grid,.sub-cards,.co-expr{grid-template-columns:1fr 1fr}.dw{width:100%}}
+@media(max-width:500px){.sub-cards,.sh-grid{grid-template-columns:1fr}.stats-g{grid-template-columns:1fr 1fr!important}.testi{grid-template-columns:1fr!important}}
+</style>
+</head>
+<body>
+
+<!-- ════════ DEMO NAV ════════ -->
+<div class="demo-nav">
+  <span class="poppins" style="font-weight:700;color:#18AD4A;font-size:13px">Wordsmyth Demo</span>
+  <div class="demo-nav-tabs">
+    <button class="demo-tab active" onclick="go('home')">Homepage</button>
+    <button class="demo-tab" onclick="go('support')">Support</button>
+    <button class="demo-tab" onclick="go('checkout')">Checkout</button>
+    <button class="demo-tab" onclick="go('success')">Certificate</button>
+    <button class="demo-tab" onclick="go('subscribe')">Subscribe</button>
+  </div>
+  <span class="demo-label">Self-contained HTML</span>
+</div>
+
+<!-- ════════ SCREEN: HOME ════════ -->
+<div id="s-home" class="screen active">
+<!-- Header -->
+<div class="hdr">
+<div class="hdr-inner">
+<a class="hdr-logo" href="#">Wordsmyth</a>
+<div class="hdr-right">
+<div class="hdr-login"><a href="#">Log In</a> <span style="color:#004B97">|</span> <a href="#">Register</a></div>
+<div class="hdr-nav"><a href="#">home</a><span class="sep">|</span><a href="#" onclick="go('subscribe');return false">subscription</a><span class="sep">|</span><a href="#">feedback</a><span class="sep">|</span><a href="#">about us</a><span class="sep">|</span><a href="#">blog</a><span class="sep">|</span><a href="#">widget</a><span class="sep">|</span><a href="#">shop</a><span class="sep">|</span><a href="#">FAQ</a></div>
+</div></div>
+<div class="hdr-line">
+<div class="hdr-banner" id="shopBanner">
+<div class="hdr-banner-inner"><p><strong>Just Launched!</strong> Explore the new Wordsmyth online bookstore. eBooks starting at just $2.99!</p><div style="display:flex;align-items:center"><button class="hdr-banner-cta">Go to store</button><button class="hdr-banner-x" onclick="document.getElementById('shopBanner').style.display='none'">&#x2715;</button></div></div>
+</div></div></div>
+
+<!-- DataMenu -->
+<div class="dmenu"><div class="dmenu-inner">
+<div class="dmenu-item active">Dictionaries<span class="arr">&#9660;</span><div class="dmenu-dd"><span class="dis">Comprehensive</span><a href="#">Children's</a><a href="#">WILD (Illustrated)</a></div></div>
+<div class="dmenu-item active">Word Exploration<span class="arr">&#9660;</span><div class="dmenu-dd"><a href="#">Word Explorer</a><a href="#">Browse</a><a href="#">Search Filter</a><a href="#">Reverse Search</a><a href="#">A-Z Word Parts</a></div></div>
+<div class="dmenu-item">Puzzle Solvers<span class="arr">&#9660;</span><div class="dmenu-dd"><a href="#">Anagram Solver</a><a href="#">Crossword Solver</a></div></div>
+<div class="dmenu-item">Teacher Tools<span class="arr">&#9660;</span><div class="dmenu-dd"><a href="#">Classes</a><a href="#">Students</a><a href="#">Lessons</a><a href="#">Assignments</a><a href="#">Reports</a></div></div>
+<div class="dmenu-item">Vocabulary Center<span class="arr">&#9660;</span><div class="dmenu-dd"><a href="#">Activities</a><a href="#">Wordlist Maker</a><a href="#">Writing Tool (Beta)</a></div></div>
+<div class="dmenu-item">My Wordsmyth<span class="arr">&#9660;</span><div class="dmenu-dd"><a href="#">Lookup History</a><a href="#">My Wordlists</a></div></div>
+</div></div>
+
+<!-- Sidebar Layout -->
+<div class="sl">
+<!-- Left -->
+<div class="sl-left">
+<div class="sl-title">Word Explorer<br>Children's<br>Dictionary Suite</div>
+<div class="sl-search"><input type="text" placeholder=""><button>Go</button></div>
+<div class="sl-radio">
+<label><input type="radio" name="dl" checked><span>Elementary dictionary</span></label>
+<label><input type="radio" name="dl"><span>Intermediate dictionary</span></label>
+</div>
+<div class="sl-panel"><div class="sl-panel-hdr">Alpha results</div><div class="sl-panel-body">Type a word to search...</div></div>
+<div class="sl-tabs"><div class="sl-tabs-hdr"><div style="background:#87CC8F">Broad</div><div style="background:#C4E4CD">Similar</div></div><div class="sl-panel-body">Search results appear here...</div></div>
+<div style="margin-top:12px">
+<div class="ad-fake" style="width:160px;height:500px;background:linear-gradient(135deg,#1a73e8,#1565c0)">Skyscraper Ad<small>160x600</small>
+<div class="ad-overlay"><div class="otxt"><span class="oico">&#x2728;</span><span class="ocp">Distraction-free</span></div><a class="ad-pill" href="#" onclick="go('subscribe');return false">Go Ads-Free &#x2192;</a></div></div>
+</div>
+</div>
+
+<!-- Center -->
+<div class="sl-center">
+<!-- Header ad -->
+<div class="ad-fake" style="width:100%;max-width:728px;height:90px;background:linear-gradient(135deg,#7c3aed,#4f46e5);margin-bottom:8px">Leaderboard Ad — 728x90<small>Simulated</small>
+<div class="ad-overlay"><div class="otxt"><span class="oico">&#x2728;</span><span class="ocp">Tired of ads? Read without distractions.</span></div><a class="ad-pill" href="#" onclick="go('subscribe');return false">Go Ads-Free &#x2192;</a></div></div>
+
+<div class="hm-shop"><strong>Visit our Bookstore!</strong> Wordsmyth eBooks, workbooks, and classroom resources. <a href="#">Shop now &raquo;</a></div>
+
+<div class="hm-grid">
+<div>
+<h3>Our Children's Dictionaries</h3>
+<div class="hm-img">[WILD Dictionary Image]</div>
+<p><a href="#" style="font-weight:bold">WILD (K-2)</a></p>
+<p>The Wordsmyth Illustrated Learner's Dictionary for young readers in grades K-2. Explore words through pictures and simple definitions.</p>
+<div class="hm-img" style="margin-top:10px">[Word Explorer Image]</div>
+<p><a href="#" style="font-weight:bold">Word Explorer Children's Dictionary Suite (3-8)</a></p>
+<p>Definitions, example sentences, synonyms, antonyms, related words, and word parts for grades 3-8.</p>
+</div>
+<div>
+<h3>Vocabulary Learning</h3>
+<p><a href="#" style="font-weight:bold">Activities</a></p>
+<p><strong>Study</strong> vocabulary with flashcards. <strong>Play</strong> word games including crossword puzzles, word scrambles, and hangman. <strong>Assess</strong> learning with quizzes.</p>
+<p style="font-weight:bold;color:#004B97;margin-top:8px">WVI Levels</p>
+<p>The Wordsmyth Vocabulary Index assigns a difficulty level to each word for grade-appropriate vocabulary.</p>
+<p><a href="#" style="font-weight:bold">Wordlist Maker</a></p>
+<p>Create custom word lists for your classroom. Generate glossaries, export lists, and use them with activities.</p>
+</div></div>
+
+<div style="border-top:1px solid #ccc;padding-top:10px;margin-top:8px">
+<div class="hm-goads"><strong>Ads are like speed bumps on the road to learning.</strong><br>Go ads-free for just $20/year and give your child a smooth ride. <a href="#" onclick="go('subscribe');return false" style="font-weight:bold">Go Ads-Free &raquo;</a></div>
+<div class="hm-sub"><strong>Individual Subscription</strong> — Go ads-free and get all 14 Wordsmyth eBooks free! Only $20/year. <a href="#" onclick="go('subscribe');return false">Subscribe now &raquo;</a></div>
+<div class="hm-sub"><strong>Educational Group Subscription</strong> — Schools and districts can go ads-free for all students and teachers. Contact support@wordsmyth.net</div>
+</div>
+
+<!-- Footer ad -->
+<div class="ad-fake" style="width:100%;max-width:728px;height:90px;background:linear-gradient(135deg,#ea580c,#c2410c);margin-top:10px">Footer Banner Ad — 728x90<small>Simulated</small>
+<div class="ad-overlay"><div class="otxt"><span class="oico">&#x2728;</span><span class="ocp">Less noise. More learning.</span></div><a class="ad-pill" href="#" onclick="go('subscribe');return false">Go Ads-Free &#x2192;</a></div></div>
+</div>
+
+<!-- Right -->
+<div class="sl-right">
+<div class="ad-fake" style="width:160px;height:500px;background:linear-gradient(135deg,#e8453c,#c62828)">Rectangle Ad<small>160x600</small>
+<div class="ad-overlay"><div class="otxt"><span class="oico">&#x2728;</span><span class="ocp">Clean reading</span></div><a class="ad-pill" href="#" onclick="go('subscribe');return false">Go Ads-Free &#x2192;</a></div></div>
+</div>
+</div>
+
+<!-- Footer -->
+<div class="ftr">
+<div><a href="#">Home</a><span class="sep">|</span><a href="#">Send Feedback</a><span class="sep">|</span><a href="#">Having a problem?</a><span class="sep">|</span><a href="#">Suggest a Word</a><span class="sep">|</span><a href="#">Privacy Policy</a><span class="sep">|</span><a href="#">Accessibility Roadmap</a></div>
+<div class="social">f &#x25B6; &#x1F4F7;</div>
+<p style="color:#666">&copy;2025 Wordsmyth</p>
+</div>
+
+<!-- Sticky footer banner -->
+<div class="sfb" id="sfb"><span>Skip one coffee, go ads-free for a whole year. Just $20.</span><button class="sfb-cta" onclick="go('subscribe')">Go Ads-Free</button><button class="sfb-x" onclick="document.getElementById('sfb').style.display='none'">&times;</button></div>
+</div>
+
+<!-- ════════ SCREEN: SUPPORT ════════ -->
+<div id="s-support" class="screen">
+<div style="background:#18AD4A;color:#fff;padding:44px 16px;text-align:center">
+<p style="font-size:.75em;opacity:.6;margin-bottom:10px"><a href="#" onclick="go('home');return false" style="color:rgba(255,255,255,.7)">Home</a> / Support</p>
+<h1 class="poppins" style="font-size:2em;font-weight:800;margin-bottom:8px;line-height:1.2">Every Child Deserves<br>the Gift of Words</h1>
+<p style="font-size:1em;opacity:.85;max-width:480px;margin:0 auto">Free since 1998. 50,000+ students daily. 120+ countries. Your support keeps it that way.</p>
+</div>
+<div style="max-width:860px;margin:0 auto;padding:28px 16px;display:flex;justify-content:center">
+<div class="dw" id="widget-support"></div>
+</div>
+<div style="background:#fafafa;padding:36px 16px">
+<div style="max-width:640px;margin:0 auto">
+<h2 class="poppins" style="font-size:1.4em;font-weight:800;text-align:center;margin-bottom:18px">Why It Matters</h2>
+<p style="margin-bottom:12px;color:#444;line-height:1.8">Wordsmyth was built in 1998 with one belief: <strong>no child should be denied access to a great dictionary because of money.</strong></p>
+<p style="margin-bottom:12px;color:#444;line-height:1.8">No venture capital. No data harvesting. No paywalls. Just a small team keeping quality education free for every child.</p>
+<p style="margin-bottom:12px;color:#444;line-height:1.8"><strong>Keeping it free gets harder every year.</strong> Server costs rise, ad revenue declines. We refuse to compromise — so we're asking you.</p>
+<div style="border-left:4px solid #18AD4A;padding:11px 16px;margin:18px 0;background:#f0faf0;border-radius:0 8px 8px 0;font-style:italic;color:#333;font-size:.9em;line-height:1.7">
+"My teacher found Wordsmyth online and suddenly I could look up any English word. That dictionary helped me learn English. Today I'm studying to become a teacher myself."
+<div style="margin-top:6px;font-style:normal;font-weight:600;font-size:.85em">— Maria, age 22, Guatemala</div></div>
+</div></div>
+<div style="padding:36px 16px;background:#fff">
+<div style="max-width:720px;margin:0 auto">
+<h2 class="poppins" style="text-align:center;font-size:1.3em;font-weight:800;margin-bottom:20px">The Impact So Far</h2>
+<div class="stats-g" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;text-align:center;margin-bottom:28px">
+<div><div class="poppins" style="font-size:1.8em;font-weight:800;color:#333">27</div><div style="font-size:.7em;color:#999">Years free</div></div>
+<div><div class="poppins" style="font-size:1.8em;font-weight:800;color:#18AD4A">50K+</div><div style="font-size:.7em;color:#999">Daily students</div></div>
+<div><div class="poppins" style="font-size:1.8em;font-weight:800;color:#3d9739">120+</div><div style="font-size:.7em;color:#999">Countries</div></div>
+<div><div class="poppins" style="font-size:1.8em;font-weight:800;color:#333">14,000+</div><div style="font-size:.7em;color:#999">Words defined</div></div>
+</div>
+<div class="testi" style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+<div style="background:#fafafa;border-radius:10px;padding:14px;border:1px solid #f0f0f0"><div style="width:30px;height:30px;border-radius:50%;background:#18AD4A;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:.8em;margin-bottom:8px">M</div><p style="font-size:.78em;color:#555;font-style:italic;line-height:1.5;margin-bottom:8px">"My students love the illustrations and activities. Wordsmyth keeps them engaged every week."</p><p style="font-size:.78em;font-weight:700">Mrs. Rodriguez</p><p style="font-size:.68em;color:#999">3rd Grade Teacher, Austin TX</p></div>
+<div style="background:#fafafa;border-radius:10px;padding:14px;border:1px solid #f0f0f0"><div style="width:30px;height:30px;border-radius:50%;background:#3d9739;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:.8em;margin-bottom:8px">D</div><p style="font-size:.78em;color:#555;font-style:italic;line-height:1.5;margin-bottom:8px">"One of the few sites I trust completely for age-appropriate definitions. A lifesaver for homeschooling."</p><p style="font-size:.78em;font-weight:700">David K.</p><p style="font-size:.68em;color:#999">Homeschool Parent</p></div>
+<div style="background:#fafafa;border-radius:10px;padding:14px;border:1px solid #f0f0f0"><div style="width:30px;height:30px;border-radius:50%;background:#18AD4A;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:.8em;margin-bottom:8px">A</div><p style="font-size:.78em;color:#555;font-style:italic;line-height:1.5;margin-bottom:8px">"The Word Explorer helps me understand big words, and the games make learning fun!"</p><p style="font-size:.78em;font-weight:700">Amara, age 11</p><p style="font-size:.68em;color:#999">Student</p></div>
+</div></div></div>
+</div>
+
+<!-- ════════ SCREEN: CHECKOUT ════════ -->
+<div id="s-checkout" class="screen">
+<div style="background:#fafafa;min-height:100vh">
+<div class="co-bar"><div class="co-bar-in"><a href="#" onclick="go('support');return false" style="color:#999;font-size:12px">&larr; Back</a><span class="poppins" style="font-size:13px;font-weight:600;color:#18AD4A">Wordsmyth</span><span style="font-size:10px;color:#999">&#x1F512; Secure</span></div></div>
+<div class="co-body">
+<div style="margin-bottom:22px"><p style="font-size:12px;color:#999">You're supporting</p><p class="co-big poppins" id="co-amt">$10</p><p style="font-size:11px;color:#18AD4A;font-weight:500">Helping children discover new words every day</p></div>
+<div class="co-fld"><label>Email address</label><input class="co-inp" type="email" placeholder="you@example.com" id="co-email"></div>
+<p style="font-size:12px;font-weight:600;margin-bottom:10px">Select payment method</p>
+<div class="co-meth" id="m-bank" onclick="togM('bank')"><div class="lft"><span class="ico">&#x1F3E6;</span><div><span class="nm">Direct Bank Transfer (ACH)</span><span class="ds">Best for long-term support</span></div></div><span style="font-size:12px;color:#999">&#x25BE;</span></div>
+<div style="text-align:center;margin:14px 0 8px"><span style="font-size:11px;color:#999">Express checkout</span></div>
+<div class="co-expr"><button>Apple Pay</button><button>Google Pay</button><button>PayPal</button><button>Venmo</button></div>
+<div class="co-meth" id="m-card" onclick="togM('card')"><div class="lft"><span class="ico">&#x1F4B3;</span><span class="nm">Card payment</span></div><span style="font-size:12px;color:#999">&#x25BE;</span></div>
+<div id="cf" class="co-cf" style="display:none">
+<div class="co-fld"><label>Name on card</label><input class="co-inp" type="text" placeholder="John Doe" id="co-name"></div>
+<div class="co-fld"><label>Card number</label><input class="co-inp" type="text" placeholder="1234 5678 9012 3456"></div>
+<div class="co-cf-row"><div class="co-fld"><label>Expiry</label><input class="co-inp" type="text" placeholder="MM / YY"></div><div class="co-fld"><label>CVC</label><input class="co-inp" type="text" placeholder="123"></div></div>
+</div>
+<p style="text-align:center;font-size:10px;color:#999;margin:14px 0">&#x1F512; Secure payment &bull; Powered by Stripe</p>
+<div style="position:sticky;bottom:0;padding:12px 0 16px;background:#fafafa"><button class="co-cta" id="co-btn" onclick="pay()">Complete Payment — $10</button></div>
+</div></div>
+</div>
+
+<!-- ════════ SCREEN: SUCCESS ════════ -->
+<div id="s-success" class="screen">
+<div style="background:#fafafa;min-height:100vh">
+<div class="su-hdr"><div style="max-width:400px;margin:0 auto">
+<div class="su-chk">&#x2714;</div>
+<p style="font-size:13px;color:#666;line-height:1.5" id="su-txt">Your $10 one-time support is confirmed.</p>
+<p style="font-size:13px;color:#666;line-height:1.5">You're now one of us — helping keep learning free for children worldwide.</p>
+<div class="su-bdg">&#x1F49A; Official Supporter of Free Learning</div>
+</div></div>
+<div class="cert">
+<div style="border-radius:16px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.1)">
+<div class="cert-dk">
+<div style="position:absolute;top:12px;left:16px;width:28px;height:28px;border-radius:50%;background:rgba(24,173,74,.15);display:flex;align-items:center;justify-content:center;font-size:13px">&#x1F49A;</div>
+<div style="position:absolute;top:12px;right:16px;font-size:13px;color:rgba(255,255,255,.4)">&#x2197;</div>
+<p style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.5);margin:8px 0 16px">Certificate of Support</p>
+<div style="width:36px;height:2px;background:#18AD4A;margin:0 auto 12px"></div>
+<p style="font-size:11px;color:rgba(255,255,255,.5)">This certifies that</p>
+<p class="poppins" style="font-size:1.5em;font-weight:800;margin:4px 0 12px" id="c-name">John Doe</p>
+<p style="font-size:11px;color:rgba(255,255,255,.5);margin-bottom:10px">is a proud supporter of</p>
+<div style="display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:12px"><div style="width:30px;height:30px;border-radius:50%;background:#18AD4A;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#fff">W</div><span style="font-size:1.15em;font-weight:700;letter-spacing:1px"><span style="color:#18AD4A">WORD</span><span style="color:rgba(255,255,255,.6)">SMYTH</span></span></div>
+<div style="width:36px;height:1px;background:rgba(255,255,255,.1);margin:0 auto 12px"></div>
+<p style="font-size:11px;color:rgba(255,255,255,.4);font-style:italic;margin-bottom:10px">For keeping learning free &amp; accessible for every child</p>
+<p style="font-size:1em;font-weight:700;margin-bottom:2px" id="c-amt">$10 one-time</p>
+<p style="font-size:11px;color:rgba(255,255,255,.4)" id="c-date"></p>
+</div>
+<div class="cert-wh"><div class="cert-prk">&#x2714;&nbsp; Your Wordsmyth experience will be <strong style="color:#18AD4A">&nbsp;ads-free&nbsp;</strong> while your support is active.</div></div>
+</div>
+<div style="margin-top:22px;text-align:center">
+<p style="font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#999;margin-bottom:8px">Show others you support free learning</p>
+<div class="sh-grid"><a class="sh-btn" style="background:#333" href="#">&#x1D54F; X</a><a class="sh-btn" style="background:#0A66C2" href="#">in LinkedIn</a><a class="sh-btn" style="background:#25D366" href="#">WhatsApp</a></div>
+</div>
+<div style="text-align:center;margin-top:20px"><a href="#" onclick="go('home');return false" style="font-size:12px;color:#18AD4A;font-weight:600">Back to Wordsmyth &rarr;</a><br><a href="#" onclick="go('support');return false" style="font-size:10px;color:#999;text-decoration:underline">Manage your support</a></div>
+</div></div>
+</div>
+
+<!-- ════════ SCREEN: SUBSCRIBE ════════ -->
+<div id="s-subscribe" class="screen">
+<div class="dmenu"><div class="dmenu-inner">
+<div class="dmenu-item active">Dictionaries<span class="arr">&#9660;</span></div>
+<div class="dmenu-item active">Word Exploration<span class="arr">&#9660;</span></div>
+<div class="dmenu-item">Puzzle Solvers<span class="arr">&#9660;</span></div>
+<div class="dmenu-item">Teacher Tools<span class="arr">&#9660;</span></div>
+<div class="dmenu-item">Vocabulary Center<span class="arr">&#9660;</span></div>
+<div class="dmenu-item">My Wordsmyth<span class="arr">&#9660;</span></div>
+</div></div>
+<div style="max-width:960px;margin:0 auto;padding:28px 16px 44px">
+<div style="text-align:center;margin-bottom:30px">
+<h1 class="poppins" style="font-size:1.9em;font-weight:800;color:#1a1a2e;margin-bottom:6px">Choose Your Plan</h1>
+<p style="font-size:1em;color:#666;max-width:480px;margin:0 auto">Go ads-free and get the full Wordsmyth experience. Pick the plan that fits your needs.</p>
+</div>
+<div class="sub-cards">
+<!-- Silver -->
+<div class="sub-card">
+<div class="sub-badge" style="background:#f5f5f5;color:#888">Silver</div>
+<div class="sub-price poppins" style="color:#1a1a2e">$9.95<span style="font-size:.4em;font-weight:400;color:#999">/year</span></div>
+<button class="sub-btn" style="background:#1a1a2e;color:#fff;margin:14px 0">Get Silver</button>
+<div style="border-top:1px solid #f0f0f0;padding-top:16px;margin-top:4px">
+<p style="font-weight:700;font-size:.78em;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">What's included</p>
+<p style="color:#004B97;font-weight:700;font-size:.82em;margin:8px 0 3px">Enhanced Dictionary</p>
+<ul style="padding-left:14px;font-size:.8em;color:#444;line-height:1.8;margin-bottom:6px"><li>Word Parts (roots &amp; affixes)</li><li>Word Combinations</li><li>Grammatical Patterns</li><li>Spanish &amp; Chinese support</li><li>Advanced search functions</li></ul>
+<p style="color:#004B97;font-weight:700;font-size:.82em;margin:8px 0 3px">Full Vocabulary Center</p>
+<ul style="padding-left:14px;font-size:.8em;color:#444;line-height:1.8"><li>Wordsmyth Vocabulary Inventory</li><li>Unlimited wordlists &amp; sharing</li><li>Vocabulary activities</li><li>Text Analysis</li></ul>
+<p style="font-size:.82em;font-weight:600;margin-top:8px"><span style="color:#18AD4A">&#10003;</span> Ads-free experience</p>
+</div></div>
+<!-- Gold -->
+<div class="sub-card pop">
+<div class="sub-pop-badge">Most Popular</div>
+<div class="sub-badge" style="background:#e8f5e9;color:#18AD4A">Gold</div>
+<div class="sub-price poppins" style="color:#18AD4A">$19.95<span style="font-size:.4em;font-weight:400;color:#999">/year</span></div>
+<p style="font-size:.75em;color:#666;margin-bottom:10px">Everything in Silver + Book Bundle</p>
+<button class="sub-btn" style="background:#18AD4A;color:#fff;margin-bottom:4px">Get Gold</button>
+<div style="border-top:1px solid #e8f5e9;padding-top:16px;margin-top:12px">
+<p style="font-weight:700;font-size:.78em;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Everything in Silver, plus</p>
+<div style="background:#f0faf0;border-radius:10px;padding:12px;margin-bottom:12px">
+<p style="color:#18AD4A;font-weight:700;font-size:.88em;margin-bottom:5px">Book Bundle</p>
+<p style="font-size:.82em;color:#333"><span style="color:#18AD4A">&#10003;</span> <strong>40% off</strong> all kids books &amp; eBooks</p>
+<p style="font-size:.82em;color:#333"><span style="color:#18AD4A">&#10003;</span> <strong>14 eBooks FREE</strong> (worth $50+)</p>
+</div>
+<p style="font-weight:700;font-size:.75em;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">14 eBooks included</p>
+<div style="max-height:240px;overflow-y:auto;font-size:.78em">
+<div style="padding:4px 0;border-bottom:1px solid #f0f0f0;display:flex;justify-content:space-between"><span>&#x1F4D6; Sight Words Workbook</span><span><s style="color:#bbb">$2.99</s> <strong style="color:#18AD4A">FREE</strong></span></div>
+<div style="padding:4px 0;border-bottom:1px solid #f0f0f0;display:flex;justify-content:space-between"><span>&#x1F4D6; Phonics Practice</span><span><s style="color:#bbb">$3.99</s> <strong style="color:#18AD4A">FREE</strong></span></div>
+<div style="padding:4px 0;border-bottom:1px solid #f0f0f0;display:flex;justify-content:space-between"><span>&#x1F4D6; Vocabulary Builder K-2</span><span><s style="color:#bbb">$3.99</s> <strong style="color:#18AD4A">FREE</strong></span></div>
+<div style="padding:4px 0;border-bottom:1px solid #f0f0f0;display:flex;justify-content:space-between"><span>&#x1F4D6; Reading Comprehension 1</span><span><s style="color:#bbb">$4.49</s> <strong style="color:#18AD4A">FREE</strong></span></div>
+<div style="padding:4px 0;border-bottom:1px solid #f0f0f0;display:flex;justify-content:space-between"><span>&#x1F4D6; Spelling Bee Prep</span><span><s style="color:#bbb">$2.99</s> <strong style="color:#18AD4A">FREE</strong></span></div>
+<div style="padding:4px 0;border-bottom:1px solid #f0f0f0;display:flex;justify-content:space-between"><span>&#x1F4D6; Grammar Essentials</span><span><s style="color:#bbb">$3.49</s> <strong style="color:#18AD4A">FREE</strong></span></div>
+<div style="padding:4px 0;border-bottom:1px solid #f0f0f0;display:flex;justify-content:space-between"><span>&#x1F4D6; Writing Workshop</span><span><s style="color:#bbb">$4.99</s> <strong style="color:#18AD4A">FREE</strong></span></div>
+<div style="padding:4px 0;border-bottom:1px solid #f0f0f0;display:flex;justify-content:space-between"><span>&#x1F4D6; Word Puzzles &amp; Games</span><span><s style="color:#bbb">$2.99</s> <strong style="color:#18AD4A">FREE</strong></span></div>
+<div style="padding:4px 0;border-bottom:1px solid #f0f0f0;display:flex;justify-content:space-between"><span>&#x1F4D6; Vocabulary Builder 3-5</span><span><s style="color:#bbb">$3.99</s> <strong style="color:#18AD4A">FREE</strong></span></div>
+<div style="padding:4px 0;border-bottom:1px solid #f0f0f0;display:flex;justify-content:space-between"><span>&#x1F4D6; Reading Comprehension 2</span><span><s style="color:#bbb">$4.49</s> <strong style="color:#18AD4A">FREE</strong></span></div>
+<div style="padding:4px 0;border-bottom:1px solid #f0f0f0;display:flex;justify-content:space-between"><span>&#x1F4D6; Science Vocabulary</span><span><s style="color:#bbb">$3.49</s> <strong style="color:#18AD4A">FREE</strong></span></div>
+<div style="padding:4px 0;border-bottom:1px solid #f0f0f0;display:flex;justify-content:space-between"><span>&#x1F4D6; Math Word Problems</span><span><s style="color:#bbb">$3.49</s> <strong style="color:#18AD4A">FREE</strong></span></div>
+<div style="padding:4px 0;border-bottom:1px solid #f0f0f0;display:flex;justify-content:space-between"><span>&#x1F4D6; Social Studies Words</span><span><s style="color:#bbb">$2.99</s> <strong style="color:#18AD4A">FREE</strong></span></div>
+<div style="padding:4px 0;display:flex;justify-content:space-between"><span>&#x1F4D6; Test Prep Vocabulary</span><span><s style="color:#bbb">$4.99</s> <strong style="color:#18AD4A">FREE</strong></span></div>
+</div>
+<div style="background:#e8f5e9;border-radius:7px;padding:6px;text-align:center;font-size:.8em;margin-top:8px">Total value: <s style="color:#999">$51.26</s> <strong style="color:#18AD4A">FREE</strong></div>
+</div></div>
+<!-- Enterprise -->
+<div class="sub-card">
+<div class="sub-badge" style="background:#eee8ff;color:#5b21b6">Enterprise</div>
+<div class="sub-price poppins" style="color:#1a1a2e">Custom</div>
+<p style="font-size:.75em;color:#666;margin-bottom:10px">Starting from $20 for 20 users</p>
+<button class="sub-btn" style="background:#fff;color:#1a1a2e;border:2px solid #1a1a2e">Contact Sales</button>
+<div style="border-top:1px solid #f0f0f0;padding-top:16px;margin-top:12px">
+<p style="font-weight:700;font-size:.78em;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">What's included</p>
+<p style="font-size:.82em;color:#444;margin-bottom:4px;font-weight:600">Tiered pricing:</p>
+<ul style="padding-left:14px;font-size:.8em;color:#444;line-height:1.8;margin-bottom:8px"><li>21-50 users: <strong>$1.00</strong>/yr per user</li><li>51-400 users: <strong>$0.75</strong>/yr per user</li><li>401+: <strong>$0.50</strong>/yr per user</li></ul>
+<p style="color:#004B97;font-weight:700;font-size:.82em;margin:8px 0 3px">Everything in Gold, plus</p>
+<ul style="padding-left:14px;font-size:.8em;color:#444;line-height:1.8"><li>Unique URL for your school/class</li><li>Class and student management</li><li>Vocabulary lessons &amp; assignments</li><li>Report on students' vocabulary growth</li></ul>
+<p style="color:#004B97;font-weight:700;font-size:.82em;margin:8px 0 3px">Teacher Tools</p>
+<p style="font-size:.8em;color:#444;line-height:1.5">Learning management system fully integrated with Wordsmyth Vocabulary Center.</p>
+</div></div>
+</div>
+
+<!-- Compare table -->
+<h2 class="poppins" style="text-align:center;font-size:1.3em;font-weight:800;color:#1a1a2e;margin-bottom:16px">Compare Plans</h2>
+<div style="border-radius:12px;overflow:hidden;border:1px solid #e0e0e0">
+<table class="cmp-table">
+<thead><tr style="background:#fafafa"><th>Feature</th><th style="text-align:center;width:90px;color:#888">Silver<br><span style="font-weight:400;font-size:.85em">$9.95/yr</span></th><th style="text-align:center;width:90px;color:#18AD4A;background:#f0faf0;border-bottom:2px solid #18AD4A">Gold<br><span style="font-weight:400;font-size:.85em">$19.95/yr</span></th><th style="text-align:center;width:90px;color:#5b21b6">Enterprise<br><span style="font-weight:400;font-size:.85em">Custom</span></th></tr></thead>
+<tbody id="cmp-body"></tbody>
+</table></div>
+</div>
+</div>
+
+<!-- ════════ STICKY WIDGET (homepage) ════════ -->
+<button class="st-pill" id="st-pill" onclick="stExp()" style="display:none"><span style="width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:12px">&#x1F49A;</span> Help a child learn</button>
+<div class="st-exp" id="st-exp" style="display:none"><div class="dw" id="widget-sticky"></div></div>
+
+<!-- ════════ JAVASCRIPT ════════ -->
+<script>
+var W={freq:'one-time',preset:10,custom:'',isCustom:false};
+var curScreen='home',stOpen=false;
+function amt(){return W.isCustom?(parseInt(W.custom,10)||0):W.preset}
+function fl(){return W.freq==='monthly'?' / month':''}
+function ft(){return W.freq==='monthly'?'every month':'one-time'}
+
+// Compare table data
+var features=[
+["Comprehensive dictionary lookup",1,1,1],["Children's dictionary lookup",1,1,1],["Integrated thesaurus",1,1,1],
+["Word Parts (roots & affixes)",1,1,1],["Word Combinations",1,1,1],["Grammatical Patterns",1,1,1],
+["Spanish support",1,1,1],["Chinese support",1,1,1],["Personalized entry display",1,1,1],
+["Advanced search functions",1,1,1],["Wordsmyth Vocabulary Inventory",1,1,1],["Unlimited user-made wordlists",1,1,1],
+["Vocabulary activities",1,1,1],["Text Analysis",1,1,1],["Ads-free",1,1,1],
+["40% off kids books & eBooks",0,1,1],["14 eBooks worth $50+ — FREE",0,1,1],
+["Unique URL for school/class",0,0,1],["Class and student management",0,0,1],
+["Vocabulary lessons & assignments",0,0,1],["Report on students' vocabulary growth",0,0,1]
+];
+var tb=document.getElementById('cmp-body');
+features.forEach(function(r,i){
+var bg=i%2===0?'#fff':'#fafafa';
+var gbg=i%2===0?'#f8fdf8':'#f0faf0';
+var chk='<span class="cmp-chk">&#10003;</span>',no='<span class="cmp-no">&mdash;</span>';
+tb.innerHTML+='<tr style="background:'+bg+'"><td>'+r[0]+'</td><td style="text-align:center">'+(r[1]?chk:no)+'</td><td style="text-align:center;background:'+gbg+'">'+(r[2]?chk:no)+'</td><td style="text-align:center">'+(r[3]?chk:no)+'</td></tr>';
+});
+
+function go(s){
+document.querySelectorAll('.screen').forEach(function(e){e.classList.remove('active')});
+document.getElementById('s-'+s).classList.add('active');
+document.querySelectorAll('.demo-tab').forEach(function(t){t.classList.toggle('active',t.textContent.toLowerCase().replace(' ','').indexOf(s)>-1||
+(s==='home'&&t.textContent==='Homepage')||(s==='success'&&t.textContent==='Certificate'))});
+curScreen=s;window.scrollTo(0,0);
+// Sticky
+var show=s==='home';
+if(!stOpen){document.getElementById('st-pill').style.display=show?'flex':'none'}
+document.getElementById('st-exp').style.display=(show&&stOpen)?'block':'none';
+if(!show)stOpen=false;
+// Checkout sync
+if(s==='checkout'){var a=amt();document.getElementById('co-amt').textContent='$'+a+fl();document.getElementById('co-btn').textContent='Complete Payment — $'+a+fl();document.getElementById('co-btn').className='co-cta'}
+}
+
+function renderW(el,dismiss){
+var a=amt(),m=W.freq==='monthly',d=m&&a>0?(a/30).toFixed(2):null;
+var h='<div class="dw-bd"><div style="position:relative;margin-bottom:14px">';
+if(dismiss)h+='<button class="dw-x" onclick="stCol()">&times;</button>';
+h+='<div class="dw-t poppins">Support Free Learning</div>';
+h+='<div class="dw-s">Skip one takeout order\u2014help a child discover new words today.</div></div>';
+h+='<div class="dw-fg"><div class="dw-fg-in"><button class="dw-fb'+(W.freq==='one-time'?' act':'')+'" onclick="sF(\'one-time\')">One-time</button><button class="dw-fb'+(W.freq==='monthly'?' act':'')+'" onclick="sF(\'monthly\')">Monthly</button></div></div>';
+h+='<div class="dw-am poppins">$'+(a>0?a:'0');if(d)h+='<span class="dy">$'+d+'/day</span>';h+='</div>';
+h+='<div class="dw-pr">';
+[5,10,25,50].forEach(function(p){var ac=!W.isCustom&&W.preset===p;h+='<div style="position:relative;text-align:center">';if(p===10)h+='<span class="dw-pop">Popular</span>';h+='<button class="dw-pb'+(ac?' act':'')+'" onclick="sP('+p+')">$'+p+'</button></div>'});
+h+='</div>';
+h+='<div class="dw-ci'+(W.isCustom?' act':'')+'"><span>$</span><input type="number" min="1" placeholder="Enter custom amount" value="'+(W.isCustom?W.custom:'')+'" onfocus="aC()" oninput="uC(this.value)"></div>';
+h+='<div class="dw-pk">&#x2714; Go ads-free on all pages</div>';
+var lb=a>0?'Continue with $'+a+fl():'Give Now';
+h+='<button class="dw-cta" onclick="go(\'checkout\')">'+lb+'</button>';
+h+='<div class="dw-tr">&#x1F512; Secure payment | Visa &middot; MC &middot; PayPal</div>';
+h+='<div class="dw-trb"><span>Secure &amp; encrypted</span><span>Cancel anytime</span><span>Takes 10 seconds</span></div>';
+if(dismiss)h+='<button class="dw-dis" onclick="stCol()">Maybe later</button>';
+h+='</div>';el.innerHTML=h;
+}
+function rAll(){renderW(document.getElementById('widget-support'),false);if(stOpen)renderW(document.getElementById('widget-sticky'),true)}
+function sF(f){W.freq=f;rAll()}
+function sP(p){W.preset=p;W.isCustom=false;W.custom='';rAll()}
+function aC(){W.isCustom=true;rAll()}
+function uC(v){W.custom=v;W.isCustom=true;rAll()}
+
+function stExp(){stOpen=true;document.getElementById('st-pill').style.display='none';document.getElementById('st-exp').style.display='block';renderW(document.getElementById('widget-sticky'),true)}
+function stCol(){stOpen=false;document.getElementById('st-exp').style.display='none';document.getElementById('st-pill').style.display='flex'}
+
+var am=null;
+function togM(m){am=am===m?null:m;document.getElementById('m-bank').classList.toggle('act',am==='bank');document.getElementById('m-card').classList.toggle('act',am==='card');document.getElementById('cf').style.display=am==='card'?'block':'none'}
+
+function pay(){var b=document.getElementById('co-btn');b.textContent='Processing...';b.className='co-cta proc';
+setTimeout(function(){var n=document.getElementById('co-name')?document.getElementById('co-name').value:'';if(!n)n='Supporter';var a=amt();
+document.getElementById('c-name').textContent=n;document.getElementById('c-amt').textContent='$'+a+' '+ft();
+document.getElementById('c-date').textContent=new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+document.getElementById('su-txt').textContent='Your $'+a+' '+ft()+' support is confirmed.';
+go('success')},1800)}
+
+// Init
+renderW(document.getElementById('widget-support'),false);
+document.getElementById('c-date').textContent=new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+setTimeout(function(){if(curScreen==='home')document.getElementById('st-pill').style.display='flex'},2000);
+</script>
+</body>
+</html>
