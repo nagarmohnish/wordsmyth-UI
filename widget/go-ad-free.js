@@ -71,26 +71,24 @@
     css.textContent = '\
 [data-gafw]{overflow:hidden!important}\
 .gafw4{position:absolute;top:0;left:0;right:0;z-index:999999;display:flex;align-items:center;justify-content:space-between;\
-height:32px;padding:0 8px 0 12px;\
-background:linear-gradient(135deg,#1a2332 0%,#1e3a4f 100%);\
-font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;font-size:11px;line-height:1;box-sizing:border-box;\
-opacity:0;animation:gafw4in .35s ease-out .1s forwards;cursor:pointer}\
+height:34px;padding:0 10px 0 12px;\
+background:rgba(255,255,255,0.88);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);\
+border-bottom:1px solid rgba(0,0,0,0.06);\
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;opacity:0;animation:gafw4in .35s ease-out .1s forwards;cursor:pointer}\
 @keyframes gafw4in{to{opacity:1}}\
-.gafw4-txt{display:flex;align-items:center;gap:6px;color:rgba(255,255,255,0.7);overflow:hidden;flex:1;min-width:0}\
-.gafw4-icon{flex-shrink:0;width:16px;height:16px;border-radius:50%;background:linear-gradient(135deg,'+P+','+PD+');display:flex;align-items:center;justify-content:center;font-size:8px;color:#fff}\
-.gafw4-copy{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:500;letter-spacing:.2px;font-size:11px}\
-.gafw4-cta{display:inline-flex;align-items:center;gap:4px;padding:4px 14px;margin-left:6px;\
-background:linear-gradient(135deg,'+P+','+PD+');color:#fff!important;font-size:10px;font-weight:700;\
-text-decoration:none!important;border-radius:20px;cursor:pointer;white-space:nowrap;\
-box-shadow:0 2px 8px '+PT+';transition:transform .15s,box-shadow .15s;border:none;flex-shrink:0}\
-.gafw4-cta:hover{transform:scale(1.06);box-shadow:0 4px 14px '+PT+'}\
-.gafw4-cta:active{transform:scale(.96)}\
+.gafw4-txt{color:#555;font-size:11.5px;font-weight:500;letter-spacing:.15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;min-width:0}\
+.gafw4-cta{display:inline-flex;align-items:center;gap:5px;padding:5px 16px;\
+background:'+P+';color:#fff!important;font-size:11px;font-weight:700;\
+border-radius:50px;text-decoration:none!important;cursor:pointer;white-space:nowrap;\
+box-shadow:0 2px 8px '+PT+';transition:all .2s;border:none;flex-shrink:0;margin-left:8px}\
+.gafw4-cta:hover{transform:scale(1.05);box-shadow:0 4px 14px '+PT+'}\
+.gafw4-cta:active{transform:scale(.97)}\
 .gafw4-cta .dot{display:none}\
-.gafw4-cta .arr{display:inline-block;transition:transform .2s;font-size:10px}\
+.gafw4-cta .arr{transition:transform .2s;font-size:10px}\
 .gafw4-cta:hover .arr{transform:translateX(2px)}\
-.gafw4--sm{height:28px;padding:0 4px;justify-content:center;background:linear-gradient(135deg,#1a2332,#1e3a4f)}\
+.gafw4--sm{height:28px;padding:0 6px;justify-content:center}\
 .gafw4--sm .gafw4-txt{display:none}\
-.gafw4--sm .gafw4-cta{font-size:9px;padding:3px 10px;margin:0;box-shadow:none}\
+.gafw4--sm .gafw4-cta{padding:4px 12px;font-size:10px;margin-left:0}\
 \
 .gafw4-modal{position:fixed;inset:0;z-index:9999999;display:flex;align-items:center;justify-content:center;\
 background:rgba(0,0,0,.45);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);\
@@ -378,11 +376,11 @@ input[type=number]{-moz-appearance:textfield}\
 
     var txt = document.createElement("div");
     txt.className = "gafw4-txt";
-    txt.innerHTML = '<span class="gafw4-icon">\u2728</span><span class="gafw4-copy">' + copy + '</span>';
+    txt.textContent = copy;
 
     var cta = document.createElement("button");
     cta.className = "gafw4-cta";
-    cta.innerHTML = 'Go Ads-Free <span class="arr">\u2192</span>';
+    cta.innerHTML = '<span class="dot"></span>Go Ads-Free<span class="arr">&rarr;</span>';
 
     overlay.appendChild(txt);
     overlay.appendChild(cta);
