@@ -70,22 +70,25 @@
     css.id = sid;
     css.textContent = '\
 [data-gafw]{overflow:hidden!important}\
-.gafw4{position:absolute;inset:0;z-index:999999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;\
-background:rgba(0,0,0,0.25);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);\
-font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;opacity:0;animation:gafw4in .4s ease-out .1s forwards;cursor:pointer;text-align:center;padding:8px}\
+.gafw4{position:absolute;top:0;left:0;right:0;z-index:999999;display:flex;align-items:center;justify-content:space-between;\
+height:34px;padding:0 10px 0 12px;\
+background:rgba(255,255,255,0.88);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);\
+border-bottom:1px solid rgba(0,0,0,0.06);\
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;opacity:0;animation:gafw4in .35s ease-out .1s forwards;cursor:pointer}\
 @keyframes gafw4in{to{opacity:1}}\
-.gafw4-txt{color:rgba(255,255,255,.85);font-size:12px;font-weight:500;letter-spacing:.2px;text-shadow:0 1px 4px rgba(0,0,0,.3);max-width:90%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}\
-.gafw4-cta{display:inline-flex;align-items:center;gap:5px;padding:7px 20px;\
-background:rgba(255,255,255,0.95);color:#333!important;font-size:12px;font-weight:700;\
+.gafw4-txt{color:#555;font-size:11.5px;font-weight:500;letter-spacing:.15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;min-width:0}\
+.gafw4-cta{display:inline-flex;align-items:center;gap:5px;padding:5px 16px;\
+background:'+P+';color:#fff!important;font-size:11px;font-weight:700;\
 border-radius:50px;text-decoration:none!important;cursor:pointer;white-space:nowrap;\
-box-shadow:0 2px 12px rgba(0,0,0,.15);transition:all .2s;border:none}\
-.gafw4-cta:hover{transform:scale(1.05);box-shadow:0 4px 20px rgba(0,0,0,.2);background:#fff}\
+box-shadow:0 2px 8px '+PT+';transition:all .2s;border:none;flex-shrink:0;margin-left:8px}\
+.gafw4-cta:hover{transform:scale(1.05);box-shadow:0 4px 14px '+PT+'}\
 .gafw4-cta:active{transform:scale(.97)}\
-.gafw4-cta .dot{width:8px;height:8px;border-radius:50%;background:'+P+';flex-shrink:0}\
-.gafw4-cta .arr{transition:transform .2s;font-size:11px}\
+.gafw4-cta .dot{display:none}\
+.gafw4-cta .arr{transition:transform .2s;font-size:10px}\
 .gafw4-cta:hover .arr{transform:translateX(2px)}\
+.gafw4--sm{height:28px;padding:0 6px;justify-content:center}\
 .gafw4--sm .gafw4-txt{display:none}\
-.gafw4--sm .gafw4-cta{padding:5px 14px;font-size:10px}\
+.gafw4--sm .gafw4-cta{padding:4px 12px;font-size:10px;margin-left:0}\
 \
 .gafw4-modal{position:fixed;inset:0;z-index:9999999;display:flex;align-items:center;justify-content:center;\
 background:rgba(0,0,0,.45);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);\
